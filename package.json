@@ -1,21 +1,23 @@
 {
-  "name": "noob_easy_deployer",
+  "name": "csr",
   "version": "1.0.0",
-  "description": "For Easy Deploy New Project",
+  "description": "Course Recommend System",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test.js",
+    "dev": "node server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/NoobTW/Noob-Easy-Deployer.git"
+    "url": "git+ssh://git@github.com/NoobTW/crs.git"
   },
   "author": "NoobTW",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/NoobTW/Noob-Easy-Deployer/issues"
+    "url": "https://github.com/NoobTW/crs/issues"
   },
-  "homepage": "https://github.com/NoobTW/Noob-Easy-Deployer#readme",
+  "homepage": "https://github.com/NoobTW/crs#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
