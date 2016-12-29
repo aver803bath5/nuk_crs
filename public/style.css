@@ -1,5 +1,5 @@
 body{
-	background: #5C90C0;
+	background: #477C9C;
 	color: #333;
 	width: 100%;
 	height: 100%;
@@ -212,7 +212,7 @@ label{
 
 .button:hover{
 	transition: .1s all ease-in;
-	background: #5C90C0;
+	background: #477C9C;
 }
 
 #add-profile-data, #add-equipment-data{
@@ -232,6 +232,7 @@ nav ul li{
 nav ul li a{
 	text-decoration: none;
 	color: inherit;
+	font-weight: 600;
 }
 
 .category{
@@ -318,7 +319,7 @@ nav ul li a{
 }
 
 .default{
-	background: #5C90C0;
+	background: #477C9C;
 }
 
 .label-disabled, .chk-disabled{

@@ -1,0 +1,21 @@
+extends common/header
+
+block title
+	title 課程推薦系統 | 高大通識中心
+block body
+	div.wrapper
+		h1.title-admin 課程推薦系統 | 高大通識中心
+		include common/nav
+		div.container
+			h2.title-admin 推薦課程
+			div.category 欲推薦課程名稱
+			input(type="textbox").textbox.half
+			div.category 欲推薦課程內容說明、推薦師資...等等
+			input(type="textbox").textbox.half
+			div.category 申請人/系級
+			input(type="textbox").textbox.half
+			div.category 申請人電子郵件
+			input(type="textbox").textbox.half
+			div.category 申請人連絡電話
+			input(type="textbox").textbox.half
+			div.button.ok 推薦課程！
