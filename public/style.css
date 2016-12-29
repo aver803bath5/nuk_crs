@@ -1,3 +1,9 @@
+*{
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
 body{
 	background: #477C9C;
 	color: #333;
@@ -42,6 +48,8 @@ body{
 .container_nav{
 	text-align: center;
 	padding: .5rem 1rem;
+	margin-bottom: -0.5rem;
+	border-bottom: 1px solid #ccc;
 }
 
 .container-small{
@@ -50,6 +58,47 @@ body{
 
 .title-admin{
 	text-align: center;
+}
+
+.courses{
+
+}
+
+.courses ul{
+	padding: 0;
+}
+
+.courses ul li{
+	display: block;
+	list-style: none;
+	padding: 1rem 2rem;
+	position: relative;
+	border-bottom: 1px dotted #ccc;
+}
+
+.courses-name{
+	font-size: 1.4rem;
+	line-height: 1.8rem;
+}
+
+.courses-date{
+	font-size: 0.8rem;
+	padding-left: .5rem;
+	line-height: 1.5rem;
+}
+
+.courses-count{
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	font-size: 1rem;
+}
+
+.courses-desc{
+	padding: .5rem;
+	font-size: .9rem;
+	line-height: 1.2rem;
+	letter-spacing: .5px;
 }
 
 .msg-wrapper{
@@ -202,17 +251,17 @@ label{
 
 .button{
 	text-align: center;
-	border: 1px solid black;
+	border-radius: 5px;
+	color: #fff;
 	background: transparent;
-	padding: .5rem 1rem;
+	padding: 1rem 1rem;
 	margin: 1rem auto;
 	display: block;
 	cursor: pointer;
 }
 
 .button:hover{
-	transition: .1s all ease-in;
-	background: #477C9C;
+	background: #0f9150;
 }
 
 #add-profile-data, #add-equipment-data{

@@ -34,6 +34,18 @@ app
 	res.render('suggest');
 })
 
+.get('/petition', (req, res) => {
+	res.render('list', {
+		verb: '連署'
+	})
+})
+
+.get('/vote', (req, res) => {
+	res.render('list', {
+		verb: '投票'
+	})
+})
+
 .get('/public/:file', (req, res) => {
 	var file = req.params.file;
 	fs.stat('public/' + file, (err) => {
