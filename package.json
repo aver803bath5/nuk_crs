@@ -1,0 +1,29 @@
+{
+  "name": "noob_easy_deployer",
+  "version": "1.0.0",
+  "description": "For Easy Deploy New Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/NoobTW/Noob-Easy-Deployer.git"
+  },
+  "author": "NoobTW",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NoobTW/Noob-Easy-Deployer/issues"
+  },
+  "homepage": "https://github.com/NoobTW/Noob-Easy-Deployer#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "pug": "^2.0.0-beta5"
+  },
+  "devDependencies": {
+    "mocha": "^3.0.2",
+    "pug": "^2.0.0-beta5",
+    "should": "^11.0.0"
+  }
+}
