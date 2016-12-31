@@ -79,7 +79,8 @@ body{
 
 .courses-name{
 	text-align: center;
-	font-size: 2.5rem;
+	font-weight: bold;
+	font-size: 2rem;
 	line-height: 1.8rem;
 }
 
@@ -99,7 +100,7 @@ body{
 .courses-desc{
 	margin-top: .5rem;
 	padding: .5rem;
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	line-height: 2rem;
 	letter-spacing: .5px;
 }
