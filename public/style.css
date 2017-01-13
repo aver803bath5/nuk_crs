@@ -12,6 +12,12 @@ body{
 	font-family: 'Noto Sans TC', sans-serif;
 }
 
+h1 a{
+	text-decoration: none;
+	display: block;
+	color: #111
+}
+
 .login-wrapper{
 	width: 100%;
 	margin: 5vh auto 0;
@@ -284,6 +290,7 @@ nav ul li{
 }
 
 nav ul li a{
+	display: block;
 	text-decoration: none;
 	color: inherit;
 	/*font-weight: 600;*/
@@ -399,9 +406,12 @@ nav ul li a{
 	background: #BD471B;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 468px) {
 	.title-admin {
-		font-size: 1.3rem;
+		margin: 0;
+		font-size: 1.5rem;
+		padding: 1rem 0;
+		border-bottom: 1px solid #111
 	}
 
 	.container_nav {
@@ -415,10 +425,10 @@ nav ul li a{
 	}
 
 	.container_nav nav ul li {
+		font-size: 1rem;
 		margin: 0;
 		padding: .5rem;
-		width: 100%;
-		border-bottom: 1px solid #111
+		border-bottom: 1px solid #AAA;
 	}
 
 	.container_nav nav ul li a{
@@ -431,7 +441,7 @@ nav ul li a{
 	}
 
 	.courses-name {
-		font-size: 1.2rem;
+		font-size: 1.5rem;
 		font-weight: bold;
 	}
 
@@ -451,7 +461,7 @@ nav ul li a{
 	.courses-desc {
 		margin-top: .2rem;
 		font-size: 1.2rem;
-		line-height: 1.8rem
+		line-height: 2rem
 	}
 
 }
