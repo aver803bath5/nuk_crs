@@ -177,7 +177,7 @@ app
 			if(course.stage === 1){
 				let hasPetited = false;
 				for(let i=0;i<course.petition_people.length;i++){
-					if(course.petition_people[i].user.username === sess.user.username) {
+					if(course.petition_people[i].username === sess.user.username) {
 						hasPetited = true;
 						break;
 					}
@@ -198,7 +198,7 @@ app
 			}else{
 				let hasVote = false;
 				for(let i=0;i<course.vote_people.length;i++){
-					if(course.vote_people[i].user.username === sess.user.username) {
+					if(course.vote_people[i].username === sess.user.username) {
 						hasVote = true;
 						break;
 					}
@@ -234,7 +234,7 @@ app
 			if(course.stage === 1){
 				let hasPetited = false;
 				for(let i=0;i<course.petition_people.length;i++){
-					if(course.petition_people[i].user.username === sess.user.username) {
+					if(course.petition_people[i].username === sess.user.username) {
 						delete course.petition_people[i];
 						hasPetited = true;
 						break;
@@ -251,7 +251,7 @@ app
 			}else{
 				let hasVoted = false;
 				for(let i=0;i<course.vote_people.length;i++){
-					if(course.vote_people[i].user.username === sess.user.username) {
+					if(course.vote_people[i].username === sess.user.username) {
 						delete course.vote_people[i];
 						hasVoted = true;
 						break;
