@@ -7,15 +7,30 @@ $(document).ready(function() {
 		event.preventDefault();
 		var id = $(this).data('id');
 		var pathname = window.location.pathname;
-		console.log(pathname);
 
 		$.ajax({
 			url: '/suggest/'+id,
 			type: 'delete',
-			data: {next: pathname},
 			dataType: 'application/json; charset=utf-8',
 			complete: function(res) {
-				console.log($.parseJSON(res.responseText).result);
+				var result = $.parseJSON(res.responseText).result;
+				
+				if (result === 0) {
+					alert('成功！');
+					location.reload();
+					return false;
+				} else if (result === -1) {
+					alert('你還沒登入哦！');
+					$(location).attr('href', '/login');
+					return false;
+				} else if (result === -2) {
+					alert('課程不存哦！');
+					return false;
+				} else if (result === -3) {
+					alert('你似乎不是管理員哦！');
+					return false;
+				}
+
 			}
 		});
 		/* Act on the event */
