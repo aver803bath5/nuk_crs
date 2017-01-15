@@ -92,16 +92,20 @@ h1 a{
 }
 
 .courses-date{
+	text-align: center;
 	font-size: 1.2rem;
-	padding-left: .5rem;
+	margin-top: 1rem;
 	line-height: 1.5rem;
 }
 
 .courses-count{
-	position: absolute;
-	right: 1rem;
-	top: 1rem;
+	text-align: right;
 	font-size: 1.2rem;
+}
+
+.courses-references {
+	margin-top: .5rem;
+	margin-left: 1rem
 }
 
 .courses-desc{
@@ -448,6 +452,10 @@ nav ul li a{
 	.courses-date {
 		margin-top: .5rem;
 		text-align: center;
+	}
+
+	.courses-end-count {
+		display: block;
 	}
 
 	.courses-count {
