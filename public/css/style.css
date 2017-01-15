@@ -33,17 +33,48 @@ button {
 
 }
 
-.btn-danger {
+.btn {
 	cursor: pointer;
-	background-color: #ed2323;
-	color: #fff;
 	font-size: 1.2rem;
 	padding: .7rem;
 	border-radius: 5px
+
+}
+
+.root-buttons-container{
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.root-buttons-container button {
+	margin-left: 2rem
+}
+
+.btn-danger {
+	background-color: #ed2323;
+	color: #fff;
 }
 
 .btn-danger:hover {
 	background-color: #ad0a0a
+}
+
+.btn-success {
+	background-color: #13B665;;
+	color: #fff;
+}
+
+.btn-success:hover {
+	background-color: #0f9150;;
+}
+
+.btn-Primary {
+	background-color: #0c68cc;
+	color: #fff;
+}
+
+.btn-Primary:hover {
+	background-color: #09509b;
 }
 
 .nav {
