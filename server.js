@@ -5,6 +5,7 @@ const config = require('./config');
 
 const app = express();
 const mc = mongo.MongoClient;
+const ObjectId = mongo.ObjectID;
 let db;
 
 app
@@ -28,15 +29,70 @@ mc.connect(config.db.host, (err, database) => {
 
 app
 .get('/', (req, res) => {
-	res.render('index');
+	const sess = req.session;
+
+	if(sess.username){
+		res.render('index');
+	}else{
+		res.redirect('/login');
+	}
 })
 
 .get('/login', (req, res) => {
 	res.render('login');
 })
 
+.post('/login', (req, res) => {
+	const data = req.body;
+	const sess = req.session;
+
+	db.collection('user').findOne({student_id: data.student_id}).toArray((err, usr) => {
+		if(usr.password === data.password){
+			sess.student_id = usr.student_id;
+			sess.username = usr.username;
+			sess._id = usr._id;
+			res.redirect('/');
+		}else{
+			res.redirct('/login#loginFailed');
+		}
+	});
+})
+
 .get('/suggest', (req, res) => {
-	res.render('suggest');
+	const sess = req.session;
+
+	if(sess.username){
+		res.render('suggest', {
+			name: sess.username,
+		});
+	}else{
+		res.redirect('/login');
+	}
+})
+
+.post('/suggest', (req, res) => {
+	const data = req.body;
+	const sess = req.session;
+
+	if(sess.username){
+		if(data.name && data.desc && data.teacher){
+			db.collection('course').insert({
+				name: data.name,
+				desc: data.desc,
+				stage: 1,
+				creator: sess._id,
+				create_time: new Date().setHours(0, 0, 0, 0),
+				vote_time: null,
+				petition_people: [],
+				vote_people: [],
+			});
+			res.redirect('/petition');
+		}else{
+			res.redirect('/suggest#invalidData');
+		}
+	}else{
+		res.redirect('/login');
+	}
 })
 
 .get('/petition', (req, res) => {
@@ -45,10 +101,75 @@ app
 	});
 })
 
+.post('/petition/:id', (req, res) => {
+	const courseId = req.params.id;
+	const sess = req.session;
+
+	res.header('Content-Type', 'application/json');
+	if(sess.username){
+		db.collection('course').findOne({_id: new ObjectId(courseId)}).toArray((err, course) => {
+			let hasPetited = false;
+			for(let i=0;i<course.petition_people.length;i++){
+				if(course.petition_people[i].user === sess._id) {
+					hasPetited = true;
+					break;
+				}
+			}
+			if(hasPetited !== true){
+				const newPetitionPeople = course.petition_people.push({
+					time: new Date(),
+					user: sess._id,
+				});
+				db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople}});
+				res.status(200).write(JSON.stringify({result: 0}));
+				res.end();
+			}else{
+				res.status(400).write(JSON.stringify({result: -2}));
+				res.end();
+			}
+		});
+	}else{
+		res.status(401).write(JSON.stringify({result: -1}));
+		res.end();
+	}
+})
+
 .get('/vote', (req, res) => {
 	res.render('list', {
 		verb: '投票',
 	});
+})
+
+.post('/vote/:id', (req, res) => {
+	const courseId = req.params.id;
+	const sess = req.session;
+
+	res.header('Content-Type', 'application/json');
+	if(sess.username){
+		db.collection('course').findOne({_id: new ObjectId(courseId)}).toArray((err, course) => {
+			let hasPetited = false;
+			for(let i=0;i<course.vote_people.length;i++){
+				if(course.vote_people[i].user === sess._id) {
+					hasPetited = true;
+					break;
+				}
+			}
+			if(hasPetited !== true){
+				const newVotePeople = course.vote_people.push({
+					time: new Date(),
+					user: sess._id,
+				});
+				db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople}});
+				res.status(200).write(JSON.stringify({result: 0}));
+				res.end();
+			}else{
+				res.status(400).write(JSON.stringify({result: -2}));
+				res.end();
+			}
+		});
+	}else{
+		res.status(401).write(JSON.stringify({result: -1}));
+	}
 })
 
 .use('/public', express.static(`${__dirname}/public`));
