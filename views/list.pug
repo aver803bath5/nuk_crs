@@ -16,7 +16,7 @@ block body
 							div.courses-name
 								=course.name
 							div.root-buttons-container
-								button.btn.btn-danger 刪除
+								button.btn.btn-danger.delete-course(data-id=course._id) 刪除
 								button.btn.btn-success 可以投票了
 								button.btn.btn-Primary 可以開課了
 							div.courses-date
@@ -31,3 +31,4 @@ block body
 							div.courses-desc
 								=course.desc
 							div.button.ok.vote(data-id=course._id) 我要#{verb}
+							div.btn.btn-danger.anti-vote(data-id=course._id) 我要反#{verb}
