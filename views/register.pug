@@ -10,11 +10,15 @@ block body
 			form(method="post")#login
 				label.error.hide 驗證失敗，帳號密碼錯誤？
 				label
-					| 帳號
-					span.category  學號
-				input(type="text", name="user", autofocus).textbox#user
+					| 信箱
+				input(type="email", name="email", autofocus).textbox#user
 				label 
-					| 密碼
-					span.category  預設為身份證字號
-				input(type="password", name="pass").textbox#pass
-				input(type="submit", value="登入").button#login-button 
+					| 姓名
+				input(type="text", name="username").textbox#pass
+				label 
+					| 系所
+				input(type="text", name="dept").textbox#pass
+				label 
+					| 電話
+				input(type="tel", name="phone").textbox#pass
+				input(type="submit", value="完成").button#login-button 

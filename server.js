@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 const session = require('express-session');
-const cookieParser = require('cookie-parser');
 const config = require('./config');
 
 const app = express();
@@ -18,7 +17,7 @@ app
 	secret: config.secret.session,
 	cookie: { maxAge: 100 * 60 * 1000 },
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
 }));
 
 mc.connect(config.db.host, (err, database) => {
