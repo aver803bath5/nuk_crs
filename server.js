@@ -191,7 +191,7 @@ app
 					res.status(200).write(JSON.stringify({result: 0}));
 					res.end();
 				}else{
-					res.status(400).write(JSON.stringify({result: -2}));
+					res.status(200).write(JSON.stringify({result: -2}));
 					res.end();
 				}
 			}else{
@@ -211,13 +211,13 @@ app
 					res.status(200).write(JSON.stringify({result: 0}));
 					res.end();
 				}else{
-					res.status(400).write(JSON.stringify({result: -2}));
+					res.status(200).write(JSON.stringify({result: -2}));
 					res.end();
 				}
 			}
 		});
 	}else{
-		res.status(401).write(JSON.stringify({result: -1}));
+		res.status(200).write(JSON.stringify({result: -1}));
 		res.end();
 	}
 })
@@ -240,7 +240,7 @@ app
 					}
 				}
 				if(hasPetited === false){
-					res.status(400).write(JSON.stringify({result: -2}));
+					res.status(200).write(JSON.stringify({result: -2}));
 					res.end();
 				}else{
 					db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: course.petition_people}});
@@ -257,7 +257,7 @@ app
 					}
 				}
 				if(hasVoted === false){
-					res.status(400).write(JSON.stringify({result: -2}));
+					res.status(200).write(JSON.stringify({result: -2}));
 					res.end();
 				}else{
 					db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: course.vote_people}});
