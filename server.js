@@ -158,13 +158,23 @@ app
 	const data = req.body;
 	const sess = req.session;
 
+	res.header('Content-Type', 'application/json');
 	if(sess.user.is_root){
-		db.collection('course').remove({_id: new ObjectId(courseId)});
-		res.header('Content-Type', 'application/json');
-		res.status(200).write({result: 0});
+		db.collection('course').remove({_id: new ObjectId(courseId)}, (err, resp) => {
+			if(!err){
+				res.status(200).write({result: 0});
+				res.end();
+			}else{
+				res.status(200).write({result: -2});
+				res.end();
+			}
+		});
+	}else if(sess.user){
+		res.status(200).write({result: -1});
 		res.end();
 	}else{
-		res.redirect('/');
+		res.status(200).write({result: -3});
+		res.end();
 	}
 })
 
