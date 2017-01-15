@@ -64,8 +64,8 @@ app
 			}
 		}else{
 			// 串 API 檢查帳號密碼，如果正確的話：
-			sess.user.student_id = data.student_id;
-			sess.user.password = data.password;
+			// sess.user.student_id = data.student_id;
+			// sess.user.password = data.password;
 			res.redirect('/');
 			// 如果失敗的話
 			// res.redirect('/login#loginFailed');
@@ -178,7 +178,6 @@ app
 				let hasPetited = false;
 				if(course.petition_people.length){
 					for(let i=0;i<course.petition_people.length;i++){
-						console.log(course.petition_people[i].username + ' ' + sess.user.username);
 						if(course.petition_people[i].user.username === sess.user.username) {
 							hasPetited = true;
 							break;
@@ -241,7 +240,8 @@ app
 				if(course.petition_people.length){
 					for(let i=0;i<course.petition_people.length;i++){
 						if(course.petition_people[i].user.username === sess.user.username) {
-							delete course.petition_people[i];
+							console.log(course.petition_people[i].user.username + ' ' + sess.user.username);
+							course.petition_people.splice(i, 1);
 							hasPetited = true;
 							break;
 						}
@@ -260,7 +260,7 @@ app
 				if(course.vote_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
 						if(course.vote_people[i].user.username === sess.user.username) {
-							delete course.vote_people[i];
+							course.vote_people.splice(i, 1);
 							hasVoted = true;
 							break;
 						}
