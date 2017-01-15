@@ -155,25 +155,24 @@ app
 
 .delete('/suggest/:id', (req, res) => {
 	const courseId = req.params.id;
-	const data = req.body;
 	const sess = req.session;
 
 	res.header('Content-Type', 'application/json');
 	if(sess.user.is_root){
-		db.collection('course').remove({_id: new ObjectId(courseId)}, (err, resp) => {
+		db.collection('course').remove({_id: new ObjectId(courseId)}, (err) => {
 			if(!err){
-				res.status(200).write({result: 0});
+				res.status(200).write(JSON.stringify({result: 0}));
 				res.end();
 			}else{
-				res.status(200).write({result: -2});
+				res.status(200).write(JSON.stringify({result: -2}));
 				res.end();
 			}
 		});
 	}else if(sess.user){
-		res.status(200).write({result: -1});
+		res.status(200).write(JSON.stringify({result: -1}));
 		res.end();
 	}else{
-		res.status(200).write({result: -3});
+		res.status(200).write(JSON.stringify({result: -3}));
 		res.end();
 	}
 })
