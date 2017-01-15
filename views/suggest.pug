@@ -10,16 +10,23 @@ block body
 		include common/nav
 		div.container
 			h2.title-admin 推薦課程
-			div.category 欲推薦課程名稱
-			input(type="text").textbox.half
-			div.category 欲推薦課程內容說明
-			input(type="text").textbox.half
-			div.category 推薦師資
-			input(type="text").textbox.half
-			div.category 申請人/系級
-			input(type="text").textbox.half
-			div.category 申請人電子郵件
-			input(type="text").textbox.half
-			div.category 申請人連絡電話
-			input(type="text").textbox.half
+			.suggest-form.pull-left
+				div.category 欲推薦課程名稱
+				input(type="text").textbox.half
+				div.category 欲推薦課程內容說明
+				input(type="text").textbox.half
+				div.category 推薦師資
+				input(type="text").textbox.half
+				div.category 申請人/系級
+				input(type="text").textbox.half
+				div.category 申請人電子郵件
+				input(type="text").textbox.half
+				div.category 申請人連絡電話
+				input(type="text").textbox.half
+			.caution.pull-left.bounceIn.animated
+				h3 請注意
+				ul
+					li 申請課程請三思
+					li we are watching you
+			.clear
 			div.button.ok 推薦課程！

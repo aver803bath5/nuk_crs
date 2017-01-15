@@ -9,7 +9,11 @@ body{
 	width: 100%;
 	height: 100%;
 	font-family: 'Noto Sans TC', sans-serif;
-	background-color: #fcfcfc
+	background-color: #fcfcfc;
+	background-image: url(img/background.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
 }
 
 h1 a{
@@ -53,8 +57,20 @@ h1 a:hover {
 	width: 100%;
 	max-width: 1000px;
 	margin: 0 auto;
+	padding: 1rem;
 	font-size: 1.1rem;
-	background: #fff;
+	background: rgba(200,200,200,0.5);
+
+}
+
+.home-page-container {
+	font-size: 1.5rem;
+	color: #111;
+	
+}
+
+.open-course-steps li{
+	margin-top: .5rem
 }
 
 .container, .container_nav{
@@ -308,8 +324,22 @@ nav ul li a{
 	text-decoration: none;
 	color: inherit;
 	/*font-weight: 600;*/
-	font-size: 1.2rem;
-	color: #AAA
+	font-size: 1.3rem;
+	color: #111
+}
+
+.suggest-form {
+	width: 50%;
+}
+
+.caution {
+	width: 50%;
+	height: 45vh;
+	padding: 1rem
+}
+
+.caution h3 {
+	font-weight: normal;
 }
 
 .category{
@@ -421,6 +451,13 @@ nav ul li a{
 }
 
 @media screen and (max-width: 468px) {
+	.home-page-container {
+		font-size: 1.2rem;
+	}
+
+	.open-course-steps li {
+		line-height: 2rem
+	}
 
 	.title-admin {
 		margin: 0;
