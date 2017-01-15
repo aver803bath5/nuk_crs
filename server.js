@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 const session = require('express-session');
+const moment = require('moment');
 const config = require('./config');
 
 const app = express();
@@ -154,9 +155,13 @@ app
 
 .get('/petition', (req, res) => {
 	db.collection('course').find({stage: 1}).toArray((err, course) => {
+		const newCourse = course;
+		for(let i=0;i<course.length;i++){
+			newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
+		}
 		res.render('list', {
 			verb: '連署',
-			courses: course,
+			courses: newCourse,
 		});
 	});
 })
