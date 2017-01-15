@@ -160,7 +160,9 @@ app
 
 	if(sess.user.is_root){
 		db.collection('course').remove({_id: new ObjectId(courseId)});
-		res.redirect(data.next);
+		res.header('Content-Type', 'application/json');
+		res.status(200).write({result: 0});
+		res.end();
 	}else{
 		res.redirect('/');
 	}
