@@ -183,7 +183,8 @@ app
 					}
 				}
 				if(hasPetited !== true){
-					const newPetitionPeople = course.petition_people.push({
+					const newPetitionPeople = course.petition_people;
+					newPetitionPeople.push({
 						time: new Date(),
 						user: sess.user,
 					});
