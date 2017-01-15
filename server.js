@@ -176,10 +176,12 @@ app
 			const course = courses[0];
 			if(course.stage === 1){
 				let hasPetited = false;
-				for(let i=0;i<course.petition_people.length;i++){
-					if(course.petition_people[i].username === sess.user.username) {
-						hasPetited = true;
-						break;
+				if(course.petition_people.length){
+					for(let i=0;i<course.petition_people.length;i++){
+						if(course.petition_people[i].username === sess.user.username) {
+							hasPetited = true;
+							break;
+						}
 					}
 				}
 				if(hasPetited !== true){
@@ -195,12 +197,14 @@ app
 					res.status(200).write(JSON.stringify({result: -2}));
 					res.end();
 				}
-			}else{
+			}else{ // course.stage === 2
 				let hasVote = false;
-				for(let i=0;i<course.vote_people.length;i++){
-					if(course.vote_people[i].username === sess.user.username) {
-						hasVote = true;
-						break;
+				if(course.petition_people.length){
+					for(let i=0;i<course.vote_people.length;i++){
+						if(course.vote_people[i].username === sess.user.username) {
+							hasVote = true;
+							break;
+						}
 					}
 				}
 				if(hasVote !== true){
@@ -233,11 +237,13 @@ app
 			const course = courses[0];
 			if(course.stage === 1){
 				let hasPetited = false;
-				for(let i=0;i<course.petition_people.length;i++){
-					if(course.petition_people[i].username === sess.user.username) {
-						delete course.petition_people[i];
-						hasPetited = true;
-						break;
+				if(course.petition_people.length){
+					for(let i=0;i<course.petition_people.length;i++){
+						if(course.petition_people[i].username === sess.user.username) {
+							delete course.petition_people[i];
+							hasPetited = true;
+							break;
+						}
 					}
 				}
 				if(hasPetited === false){
@@ -248,13 +254,15 @@ app
 					res.status(200).write(JSON.stringify({result: 0}));
 					res.end();
 				}
-			}else{
+			}else{ // course.stage === 2
 				let hasVoted = false;
-				for(let i=0;i<course.vote_people.length;i++){
-					if(course.vote_people[i].username === sess.user.username) {
-						delete course.vote_people[i];
-						hasVoted = true;
-						break;
+				if(course.vote_people.length){
+					for(let i=0;i<course.vote_people.length;i++){
+						if(course.vote_people[i].username === sess.user.username) {
+							delete course.vote_people[i];
+							hasVoted = true;
+							break;
+						}
 					}
 				}
 				if(hasVoted === false){
