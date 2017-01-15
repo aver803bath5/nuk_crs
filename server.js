@@ -47,15 +47,51 @@ app
 	const sess = req.session;
 
 	db.collection('user').findOne({student_id: data.student_id}).toArray((err, usr) => {
-		if(usr.password === data.password){
-			sess.student_id = usr.student_id;
-			sess.username = usr.username;
-			sess._id = usr._id;
-			res.redirect('/');
+		if(usr){
+			if(usr.password === data.password){
+				sess.student_id = usr.student_id;
+				sess.username = usr.username;
+				sess._id = usr._id;
+				res.redirect('/');
+			}else{
+				res.redirct('/login#loginFailed');
+			}
 		}else{
-			res.redirct('/login#loginFailed');
+			// 串 API 檢查帳號密碼，如果正確的話：
+			sess.student_id = data.student_id;
+			sess.password = data.password;
+			res.redirect('/');
+			// 如果失敗的話
+			// res.redirect('/login#loginFailed');
 		}
 	});
+})
+
+.post('/logout', (req, res) => {
+	req.session.destroy();
+	res.redirect('/login');
+})
+
+.get('/register', (req, res) => {
+	// const data = req.body;
+	// const sess = req.session;
+
+	// if(sess.student_id && sess.password){
+	res.render('register');
+	// }else{
+	//	res.redirect('/login');
+	// }
+})
+
+.post('/register', (req, res) => {
+	//const data = req.body;
+	const sess = req.sess;
+
+	if(sess.student_id && sess.password){
+		db.collection('user').insertOne({
+
+		});
+	}
 })
 
 .get('/suggest', (req, res) => {
