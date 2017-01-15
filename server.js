@@ -52,8 +52,8 @@ app
 	const data = req.body;
 	const sess = req.session;
 
-	db.collection('user').findOne({student_id: data.student_id}).toArray((err, usrs) => {
-		if(usrs){
+	db.collection('user').find({student_id: data.student_id}).toArray((err, usrs) => {
+		if(usrs.length){
 			const usr = usrs[0];
 			if(usr.password === data.password){
 				sess.student_id = usr.student_id;
