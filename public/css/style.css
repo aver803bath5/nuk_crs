@@ -365,7 +365,13 @@ nav ul li a{
 }
 
 .suggest-form {
+	padding: .5rem;
 	width: 50%;
+}
+
+.suggest-form .category {
+		color: #111;
+		font-size: 1rem
 }
 
 .caution {
@@ -547,6 +553,17 @@ nav ul li a{
 		padding: .5rem;
 		width: 100%;
 		list-style: none;
+	}
+
+	.suggest-form {
+		width: 100%;
+	}
+
+
+
+	.caution {
+		width: 100%;
+		padding: 1rem
 	}
 
 	.courses-name {
