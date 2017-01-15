@@ -15,7 +15,20 @@ body{
 h1 a{
 	text-decoration: none;
 	display: block;
+	transition: color .5s;
 	color: #111
+}
+
+h1 a:hover {
+	color: #4286f4
+}
+
+.nav {
+	transition: color .5s;
+}
+
+.nav:hover {
+	color: red
 }
 
 .login-wrapper{
@@ -65,10 +78,6 @@ h1 a{
 
 .title-admin{
 	text-align: center;
-}
-
-.courses{
-
 }
 
 .courses ul{
