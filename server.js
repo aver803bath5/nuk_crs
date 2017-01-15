@@ -58,4 +58,5 @@ process.on('SIGINT', () => {
 	console.log('Mongodb disconnected on app termination');
 	/* eslint-enable no-console */
 	db.close();
+	process.exit();
 });

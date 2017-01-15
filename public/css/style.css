@@ -27,6 +27,25 @@ h1 a:hover {
 	color: #4286f4
 }
 
+button {
+	border: none;
+	outline: none;
+
+}
+
+.btn-danger {
+	cursor: pointer;
+	background-color: #ed2323;
+	color: #fff;
+	font-size: 1.2rem;
+	padding: .7rem;
+	border-radius: 5px
+}
+
+.btn-danger:hover {
+	background-color: #ad0a0a
+}
+
 .nav {
 	transition: color .5s;
 }
@@ -42,12 +61,12 @@ h1 a:hover {
 }
 
 .login{
-	background: #efefef;
+	background: rgba(200,200,200,0.4);
 	max-width: 350px;
 	width: 100vw;
 	margin: 0 auto;
 	text-align: left;
-	box-shadow: 1px 1px 5px 2px #ccc;
+	box-shadow: 1px 1px 5px 2px #777;
 	font-size: 1.2rem;
 	padding: 1rem;
 	text-align: center;
@@ -105,7 +124,7 @@ h1 a:hover {
 	list-style: none;
 	padding: 1rem 2rem;
 	position: relative;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #111;
 
 }
 
@@ -274,7 +293,7 @@ label{
 	padding: .5rem 1rem;
 	margin: .5rem;
 	width: calc(100% - 3rem);
-	border-bottom: 1px solid #777;
+	border-bottom: 1px solid #555;
 }
 
 .textbox:focus{
@@ -339,13 +358,15 @@ nav ul li a{
 }
 
 .caution h3 {
-	font-weight: normal;
+	font-weight: bold;
+	color: #fff;
+	letter-spacing: .3rem
 }
 
 .category{
 	margin: .5rem 0;
 	font-size: .9rem;
-	color: #777;
+	color: #555;
 }
 
 .equip{
@@ -458,6 +479,12 @@ nav ul li a{
 
 	.container {
 		padding: 0
+	}
+
+	.button-remove-course {
+		margin: 0 auto;
+		float: none !important;
+		display: block;
 	}
 
 	.home-page-container {

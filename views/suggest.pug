@@ -11,22 +11,17 @@ block body
 		div.container
 			h2.title-admin 推薦課程
 			.suggest-form.pull-left
+				div.category 申請人姓名
+				input(type="text", readonly, value=name).textbox.half
 				div.category 欲推薦課程名稱
 				input(type="text").textbox.half
 				div.category 欲推薦課程內容說明
 				input(type="text").textbox.half
 				div.category 推薦師資
 				input(type="text").textbox.half
-				div.category 申請人/系級
-				input(type="text").textbox.half
-				div.category 申請人電子郵件
-				input(type="text").textbox.half
-				div.category 申請人連絡電話
-				input(type="text").textbox.half
 			.caution.pull-left.bounceIn.animated
-				h3 請注意
-				ul
-					li 申請課程請三思
-					li 
+				h3.caution-title 請注意
+				p 連署過後，會由通識中心審查課程，不會馬上進入投票程序
+				p 不論審查通過與否，都會寄信去您註冊所填寫的信箱通知您結果
 			.clear
 			div.button.ok 推薦課程！
