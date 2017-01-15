@@ -55,6 +55,11 @@ button {
 	color: #fff;
 }
 
+.anti-vote {
+	padding: 1rem 0;
+	text-align: center;
+}
+
 .btn-danger:hover {
 	background-color: #ad0a0a
 }
