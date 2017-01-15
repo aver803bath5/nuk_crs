@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - "7"
+sudo: false
+branches:
+  only:
+    - master
+env:
+  global:
+    secure: "xe4/+FRoqfK58T0nnFP32YfEPjC/g3F+H4ZBSG6lnsuA8R8i9QpMsWTPY9sue2oYB9aWUkBUXS5H00wEI406oiNcgaBVSSDiq4Tb5jy/JOzQ8G8cn7sRR/tgvwC5P1GmLFF+kMaeFnx7fAk/be4eZzrbXNhVPp7a272enWtX6i7Eu2H6I8IpXWkGP42fonL0crFOrgFVDK8dN3C8lNvFiDG7jczDvGOri+w+F7Am/AK2W2wAUZLSWw6aDH4qf3sDzlvkkhINFZYu4z2t+7FCSLcVtTQlKWkbDFiYxsB6OGUxHgI3hSyXmbeNnoX3xL5EA5G6H5ulIklux2aJz4BCZhErdroZyMsp3NTPpPp5Ey/sfKlxMRi4J4PINqJqdU01IJG1hvZwkVEYnBk2AvO/W+tyxOFIklZXnZNSfSKbKukFij9TySPB/fEDqg0Rd9tfCc71WaHXGyFaMV8GASUk/0hUlUzbUlxzyTMLioi8PrT8pbdNONaijMVdIEuMIcU8Al5lfHpcH7eM/T5JQK/00HVIAXikt5hOlO3lIJ1xklKrfB+bulXfXyvTAboT0ptYQY80XKdMFuph8amcW7A1pHrH0tn9/jY25YPgsdgnSZBNcl8eWP+4Q2hqxwf+SVOajaybLpx5XRHvtU3kUejLWnWXt/NI/vtmqTlWb0K1d5c="
+    secure: "iNuaz2u3pQ60ZCTbcPiHQAnDq1nnb4SP4trkWVJM5B5ERvFC8nTUitqtrJS9gM8oxLkK+TLBSclniduZpLyF0IXJBRXkvTOZvqvEgGaBOb/y20OsMEGseJnbkRl8JL4MMvccXrjScyMQcdCiKyT4GEmsVaVYzcr7wV6W6cVHeTOZqgEuHm7a7+edqkiX1OkaqMxTHoHMHi4A65EIARWwcUyyQolY3PhFNvNYPlFll0ij7Tsa5WHBZzVR0cULP2EomhTqYrV0DJiINSmHBg97y1Q3C6ZoopoMKulXcKkHi0QqsHl/dfbce91t7tfWWHJCt9MaZ8QrJcWd4ozZxqDx5AJ+YINecHTC1VJ4nf+EgUnD+OGd1yIrnD5nG48ugHLs0oXNA4CGBZ/lcUJOpXRu/Rv6I1do7jG1zGQEaf6TC++rt01vYN4WtM5lzZUrY1iqGUWUrW/dDIdxVX+pQ8cAy18PH1eZ0YlQc7xNHoWgnB9ELi97kfLJ0fbn32+FLd/oHU43WgmxXRAGpUaINbY8OS7kJr3r4edNljNYpzzJ4UgDJoOOOWCFjLL1hjqJIB3DAYGjrna2egJQw2p599F6iU/CcXH/xIs1/bxZuKEOtD0jODLn7Wwlz5jFLe5Mvf+9Oc/e0/0+7ogMgzAwi/pSVP9A/HTnQTZZ+3HNikXCYGQ="
+    - DEPLOY_PATH=/var/www/node/crs
+addons:
+    ssh_known_hosts:
+      - vps.noob.tw
+    apt:
+      packages:
+        - sshpass
+before_script:
+  - npm install -g eslint-config-airbnb-base eslint-plugin-import eslint
+script:
+  - eslint --fix server.js
+after_success:
+  - tar -czf package.tar.gz --exclude='.git' --exclude='./node_modules' *
+  - export SSHPASS=$SERVER_PASS
+  - sshpass -e scp package.tar.gz Noob@$SERVER_HOST:$DEPLOY_PATH
+  - sshpass -e ssh Noob@$SERVER_HOST "cd /var/www/node/crs; tar -xzf package.tar.gz; rm package.tar.gz; npm install; echo Fine. Deployed.;"
+cache:
+  directories:
+   - node_modules

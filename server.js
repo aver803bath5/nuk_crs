@@ -16,7 +16,7 @@ mc.connect(config.db.host, (err, database) => {
 	/* eslint-disable no-console */
 	if(!err){
 		db = database;
-		app.listen(process.env.PORT || config.port.server, () => {
+		app.listen(process.env.PORT || config.port, () => {
 			console.log('SERVER STARTED');
 		});
 	}else{
