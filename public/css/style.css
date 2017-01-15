@@ -72,14 +72,31 @@ button {
 	text-align: center;
 }
 
+.login-link {
+	letter-spacing: .1rem;
+	color: #fff;
+	padding: .5rem;
+	background-color: #111;
+	border-radius: 5px
+}
+
+.login-link:hover {
+	background-color: #fff;
+	color: #111
+}
+
+.text-right {
+	text-align: right;
+}
+
 .wrapper{
 	width: 100%;
 	max-width: 1000px;
+	height: 100%;
 	margin: 0 auto;
 	padding: 1rem;
 	font-size: 1.1rem;
 	background: rgba(200,200,200,0.5);
-
 }
 
 .home-page-container {
@@ -471,7 +488,7 @@ nav ul li a{
 	background: #BD471B;
 }
 
-@media screen and (max-width: 468px) {
+@media screen and (max-width: 480px) {
 
 	.wrapper {
 		padding: 0
@@ -505,6 +522,20 @@ nav ul li a{
 		padding: 0;
 		margin: 0
 	}
+
+	.login-link {
+		letter-spacing: .1rem;
+		color: #111;
+		padding: .5rem;
+		background-color: transparent;
+		border-radius: 5px
+	}
+
+	.login-link:hover {
+		background-color: transparent;
+		color: #111
+	}
+
 
 	nav ul {
 		margin: 0
