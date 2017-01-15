@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongo = require('mongodb');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const config = require('./config');
 
 const app = express();
@@ -11,7 +13,13 @@ let db;
 app
 .set('view engine', 'pug')
 .use(bodyParser.urlencoded({ extended: true }))
-.use(bodyParser.json());
+.use(bodyParser.json())
+.use(session({
+	secret: config.secret.session,
+	cookie: { maxAge: 100 * 60 * 1000 },
+	resave: false,
+	saveUninitialized: true
+}));
 
 mc.connect(config.db.host, (err, database) => {
 	/* eslint-disable no-console */
@@ -30,7 +38,6 @@ mc.connect(config.db.host, (err, database) => {
 app
 .get('/', (req, res) => {
 	const sess = req.session;
-
 	if(sess.username){
 		res.render('index');
 	}else{
