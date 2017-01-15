@@ -1,24 +1,30 @@
-const fs = require('fs');
-const config = require('./config');
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
-const port = process.env.PORT || 8080;
-//const logger = require('morgan');
-//const cors = require('cors');
+const mongo = require('mongodb');
+const config = require('./config');
 
-//const logFile = fs.createWriteStream('/const/log/express/access.log');
+const app = express();
+const mc = mongo.MongoClient;
+let db;
 
 app
 .set('view engine', 'pug')
-.use(bodyParser.urlencoded({extended: true}))
-.use(bodyParser.json())
-//.use(cors())
-//.use(logger({stream: logFile}))
+.use(bodyParser.urlencoded({ extended: true }))
+.use(bodyParser.json());
 
-const server = app.listen(port, () => {
-	console.log("SERVER STARTED");
+mc.connect(config.db.host, (err, database) => {
+	/* eslint-disable no-console */
+	if(!err){
+		db = database;
+		app.listen(process.env.PORT || config.port.server, () => {
+			console.log('SERVER STARTED');
+		});
+	}else{
+		console.error('Cannot connect to database.');
+	}
+	/* eslint-enable no-console */
 });
+
 
 app
 .get('/', (req, res) => {
@@ -35,14 +41,21 @@ app
 
 .get('/petition', (req, res) => {
 	res.render('list', {
-		verb: '連署'
-	})
+		verb: '連署',
+	});
 })
 
 .get('/vote', (req, res) => {
 	res.render('list', {
-		verb: '投票'
-	})
+		verb: '投票',
+	});
 })
 
-.use('/public', express.static(__dirname + '/public'));
+.use('/public', express.static(`${__dirname}/public`));
+
+process.on('SIGINT', () => {
+	/* eslint-disable no-console */
+	console.log('Mongodb disconnected on app termination');
+	/* eslint-enable no-console */
+	db.close();
+});
