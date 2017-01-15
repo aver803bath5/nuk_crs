@@ -51,6 +51,12 @@ app
 	});
 })
 
+.get('/register', (req, res) =>  {
+	res.render('register', {
+		
+	});
+})
+
 .use('/public', express.static(`${__dirname}/public`));
 
 process.on('SIGINT', () => {
