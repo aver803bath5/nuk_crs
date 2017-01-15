@@ -37,7 +37,7 @@ mc.connect(config.db.host, (err, database) => {
 app
 .get('/', (req, res) => {
 	const sess = req.session;
-	if(sess.username){
+	if(sess.user.username){
 		res.render('index');
 	}else{
 		res.redirect('/login');
@@ -56,17 +56,15 @@ app
 		if(usrs.length){
 			const usr = usrs[0];
 			if(usr.password === data.password){
-				sess.student_id = usr.student_id;
-				sess.username = usr.username;
-				sess._id = usr._id;
+				sess.user = usr;
 				res.redirect('/');
 			}else{
 				res.redirct('/login#loginFailed');
 			}
 		}else{
 			// 串 API 檢查帳號密碼，如果正確的話：
-			sess.student_id = data.student_id;
-			sess.password = data.password;
+			sess.user.student_id = data.student_id;
+			sess.user.password = data.password;
 			res.redirect('/');
 			// 如果失敗的話
 			// res.redirect('/login#loginFailed');
@@ -82,7 +80,7 @@ app
 .get('/register', (req, res) => {
 	const sess = req.session;
 
-	if(sess.student_id && sess.password){
+	if(sess.user.student_id && sess.user.password){
 		res.render('register');
 	}else{
 		res.redirect('/login');
@@ -93,11 +91,11 @@ app
 	const data = req.body;
 	const sess = req.sess;
 
-	if(sess.student_id && sess.password){
+	if(sess.user.student_id && sess.user.password){
 		if(data.username && data.email && data.phone && data.dept){
 			db.collection('user').insert({
-				student_id: sess.student_id,
-				password: sess.password,
+				student_id: sess.user.student_id,
+				password: sess.user.password,
 				username: data.username,
 				email: data.email,
 				phone: data.phone,
@@ -115,9 +113,9 @@ app
 .get('/suggest', (req, res) => {
 	const sess = req.session;
 
-	if(sess.username){
+	if(sess.user.username){
 		res.render('suggest', {
-			name: sess.username,
+			name: sess.user.username,
 		});
 	}else{
 		res.redirect('/login');
@@ -128,19 +126,19 @@ app
 	const data = req.body;
 	const sess = req.session;
 
-	if(sess.username){
+	if(sess.user.username){
 		if(data.name && data.desc && data.teacher){
 			db.collection('course').insert({
 				name: data.name,
 				desc: data.desc,
 				stage: 1,
-				creator: sess._id,
+				creator: sess.user,
 				create_time: new Date().setHours(0, 0, 0, 0),
 				vote_time: null,
 				petition_people: [
 					{
 						time: new Date(),
-						user: sess._id,
+						user: sess.user,
 					},
 				],
 				vote_people: [],
@@ -163,32 +161,54 @@ app
 	});
 })
 
-.post('/petition/:id', (req, res) => {
+.post('/vote/:id', (req, res) => {
 	const courseId = req.params.id;
 	const sess = req.session;
 
 	res.header('Content-Type', 'application/json');
-	if(sess.username){
+	if(sess.user.username){
 		db.collection('course').find({_id: new ObjectId(courseId)}).toArray((err, courses) => {
 			const course = courses[0];
-			let hasPetited = false;
-			for(let i=0;i<course.petition_people.length;i++){
-				if(course.petition_people[i].user === sess._id) {
-					hasPetited = true;
-					break;
+			if(course.stage === 1){
+				let hasPetited = false;
+				for(let i=0;i<course.petition_people.length;i++){
+					if(course.petition_people[i].user === sess.user) {
+						hasPetited = true;
+						break;
+					}
 				}
-			}
-			if(hasPetited !== true){
-				const newPetitionPeople = course.petition_people.push({
-					time: new Date(),
-					user: sess._id,
-				});
-				db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople}});
-				res.status(200).write(JSON.stringify({result: 0}));
-				res.end();
+				if(hasPetited !== true){
+					const newPetitionPeople = course.petition_people.push({
+						time: new Date(),
+						user: sess.user,
+					});
+					db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople}});
+					res.status(200).write(JSON.stringify({result: 0}));
+					res.end();
+				}else{
+					res.status(400).write(JSON.stringify({result: -2}));
+					res.end();
+				}
 			}else{
-				res.status(400).write(JSON.stringify({result: -2}));
-				res.end();
+				let hasVote = false;
+				for(let i=0;i<course.vote_people.length;i++){
+					if(course.vote_people[i].user === sess.user) {
+						hasVote = true;
+						break;
+					}
+				}
+				if(hasVote !== true){
+					const newVotePeople = course.vote_people.push({
+						time: new Date(),
+						user: sess.user,
+					});
+					db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople}});
+					res.status(200).write(JSON.stringify({result: 0}));
+					res.end();
+				}else{
+					res.status(400).write(JSON.stringify({result: -2}));
+					res.end();
+				}
 			}
 		});
 	}else{
@@ -197,29 +217,48 @@ app
 	}
 })
 
-.delete('/petition/:id', (req, res) => {
+.delete('/vote/:id', (req, res) => {
 	const courseId = req.params.id;
 	const sess = req.session;
 
 	res.header('Content-Type', 'application/json');
-	if(sess.username){
+	if(sess.user.username){
 		db.collection('course').find({_id: new ObjectId(courseId)}).toArray((err, courses) => {
 			const course = courses[0];
-			let hasPetited = false;
-			for(let i=0;i<course.petition_people.length;i++){
-				if(course.petition_people[i].user === sess._id) {
-					delete course.petition_people[i];
-					hasPetited = true;
-					break;
+			if(course.stage === 1){
+				let hasPetited = false;
+				for(let i=0;i<course.petition_people.length;i++){
+					if(course.petition_people[i].user === sess.user) {
+						delete course.petition_people[i];
+						hasPetited = true;
+						break;
+					}
 				}
-			}
-			if(hasPetited === false){
-				res.status(400).write(JSON.stringify({result: -2}));
-				res.end();
+				if(hasPetited === false){
+					res.status(400).write(JSON.stringify({result: -2}));
+					res.end();
+				}else{
+					db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: course.petition_people}});
+					res.status(200).write(JSON.stringify({result: 0}));
+					res.end();
+				}
 			}else{
-				db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: course.petition_people}});
-				res.status(200).write(JSON.stringify({result: 0}));
-				res.end();
+				let hasVoted = false;
+				for(let i=0;i<course.vote_people.length;i++){
+					if(course.vote_people[i].user === sess.user) {
+						delete course.vote_people[i];
+						hasVoted = true;
+						break;
+					}
+				}
+				if(hasVoted === false){
+					res.status(400).write(JSON.stringify({result: -2}));
+					res.end();
+				}else{
+					db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: course.vote_people}});
+					res.status(200).write(JSON.stringify({result: 0}));
+					res.end();
+				}
 			}
 		});
 	}else{
@@ -235,70 +274,6 @@ app
 			courses: course,
 		});
 	});
-})
-
-.post('/vote/:id', (req, res) => {
-	const courseId = req.params.id;
-	const sess = req.session;
-
-	res.header('Content-Type', 'application/json');
-	if(sess.username){
-		db.collection('course').findOne({_id: new ObjectId(courseId)}).toArray((err, courses) => {
-			const course = courses[0];
-			let hasVoted = false;
-			for(let i=0;i<course.vote_people.length;i++){
-				if(course.vote_people[i].user === sess._id) {
-					hasVoted = true;
-					break;
-				}
-			}
-			if(hasVoted !== true){
-				const newVotePeople = course.vote_people.push({
-					time: new Date(),
-					user: sess._id,
-				});
-				db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople}});
-				res.status(200).write(JSON.stringify({result: 0}));
-				res.end();
-			}else{
-				res.status(400).write(JSON.stringify({result: -2}));
-				res.end();
-			}
-		});
-	}else{
-		res.status(401).write(JSON.stringify({result: -1}));
-	}
-})
-
-.delete('/vote/:id', (req, res) => {
-	const courseId = req.params.id;
-	const sess = req.session;
-
-	res.header('Content-Type', 'application/json');
-	if(sess.username){
-		db.collection('course').find({_id: new ObjectId(courseId)}).toArray((err, courses) => {
-			const course = courses[0];
-			let hasVoted = false;
-			for(let i=0;i<course.vote_people.length;i++){
-				if(course.vote_people[i].user === sess._id) {
-					delete course.vote_people[i];
-					hasVoted = true;
-					break;
-				}
-			}
-			if(hasVoted === false){
-				res.status(400).write(JSON.stringify({result: -2}));
-				res.end();
-			}else{
-				db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: course.vote_people}});
-				res.status(200).write(JSON.stringify({result: 0}));
-				res.end();
-			}
-		});
-	}else{
-		res.status(401).write(JSON.stringify({result: -1}));
-		res.end();
-	}
 })
 
 .use('/public', express.static(`${__dirname}/public`));

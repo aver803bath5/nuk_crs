@@ -11,6 +11,10 @@ block body
 		div.container
 			div.courses.bounceInUp.animated
 				ul
+					each course in courses
+						li
+							#{course.creator}
+
 					li
 						div.courses-name 人際關係與溝通
 							if isRoot
