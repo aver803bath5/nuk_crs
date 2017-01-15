@@ -37,7 +37,7 @@ mc.connect(config.db.host, (err, database) => {
 app
 .get('/', (req, res) => {
 	const sess = req.session;
-	if(sess.user.username){
+	if(sess.user){
 		res.render('index');
 	}else{
 		res.redirect('/login');
@@ -113,7 +113,7 @@ app
 .get('/suggest', (req, res) => {
 	const sess = req.session;
 
-	if(sess.user.username){
+	if(sess.user){
 		res.render('suggest', {
 			name: sess.user.username,
 		});
@@ -126,7 +126,7 @@ app
 	const data = req.body;
 	const sess = req.session;
 
-	if(sess.user.username){
+	if(sess.user){
 		if(data.name && data.desc && data.teacher){
 			db.collection('course').insert({
 				name: data.name,
@@ -166,7 +166,7 @@ app
 	const sess = req.session;
 
 	res.header('Content-Type', 'application/json');
-	if(sess.user.username){
+	if(sess.user){
 		db.collection('course').find({_id: new ObjectId(courseId)}).toArray((err, courses) => {
 			const course = courses[0];
 			if(course.stage === 1){
@@ -222,7 +222,7 @@ app
 	const sess = req.session;
 
 	res.header('Content-Type', 'application/json');
-	if(sess.user.username){
+	if(sess.user){
 		db.collection('course').find({_id: new ObjectId(courseId)}).toArray((err, courses) => {
 			const course = courses[0];
 			if(course.stage === 1){
