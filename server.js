@@ -155,8 +155,11 @@ app
 })
 
 .get('/petition', (req, res) => {
-	res.render('list', {
-		verb: '連署',
+	db.collection('course').find({stage: 1}).toArray((err, course) => {
+		res.render('list', {
+			verb: '連署',
+			courses: course,
+		});
 	});
 })
 
@@ -226,8 +229,11 @@ app
 })
 
 .get('/vote', (req, res) => {
-	res.render('list', {
-		verb: '投票',
+	db.collection('course').find({stage: 2}).toArray((err, course) => {
+		res.render('list', {
+			verb: '投票',
+			courses: course,
+		});
 	});
 })
 
