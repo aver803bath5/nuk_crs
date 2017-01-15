@@ -194,6 +194,37 @@ app
 	}
 })
 
+.delete('/petition/:id', (req, res) => {
+	const courseId = req.params.id;
+	const sess = req.session;
+
+	res.header('Content-Type', 'application/json');
+	if(sess.username){
+		db.collection('course').find({_id: new ObjectId(courseId)}).toArray((err, courses) => {
+			const course = courses[0];
+			let hasPetited = false;
+			for(let i=0;i<course.petition_people.length;i++){
+				if(course.petition_people[i].user === sess._id) {
+					delete course.petition_people[i];
+					hasPetited = true;
+					break;
+				}
+			}
+			if(hasPetited === false){
+				res.status(400).write(JSON.stringify({result: -2}));
+				res.end();
+			}else{
+				db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: course.petition_people}});
+				res.status(200).write(JSON.stringify({result: 0}));
+				res.end();
+			}
+		});
+	}else{
+		res.status(401).write(JSON.stringify({result: -1}));
+		res.end();
+	}
+})
+
 .get('/vote', (req, res) => {
 	res.render('list', {
 		verb: '投票',
@@ -208,14 +239,14 @@ app
 	if(sess.username){
 		db.collection('course').findOne({_id: new ObjectId(courseId)}).toArray((err, courses) => {
 			const course = courses[0];
-			let hasPetited = false;
+			let hasVoted = false;
 			for(let i=0;i<course.vote_people.length;i++){
 				if(course.vote_people[i].user === sess._id) {
-					hasPetited = true;
+					hasVoted = true;
 					break;
 				}
 			}
-			if(hasPetited !== true){
+			if(hasVoted !== true){
 				const newVotePeople = course.vote_people.push({
 					time: new Date(),
 					user: sess._id,
@@ -230,6 +261,37 @@ app
 		});
 	}else{
 		res.status(401).write(JSON.stringify({result: -1}));
+	}
+})
+
+.delete('/vote/:id', (req, res) => {
+	const courseId = req.params.id;
+	const sess = req.session;
+
+	res.header('Content-Type', 'application/json');
+	if(sess.username){
+		db.collection('course').find({_id: new ObjectId(courseId)}).toArray((err, courses) => {
+			const course = courses[0];
+			let hasVoted = false;
+			for(let i=0;i<course.vote_people.length;i++){
+				if(course.vote_people[i].user === sess._id) {
+					delete course.vote_people[i];
+					hasVoted = true;
+					break;
+				}
+			}
+			if(hasVoted === false){
+				res.status(400).write(JSON.stringify({result: -2}));
+				res.end();
+			}else{
+				db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: course.vote_people}});
+				res.status(200).write(JSON.stringify({result: 0}));
+				res.end();
+			}
+		});
+	}else{
+		res.status(401).write(JSON.stringify({result: -1}));
+		res.end();
 	}
 })
 
