@@ -27,7 +27,7 @@ block body
 								| 人#{verb}
 							div.courses-references 
 								|推薦人：
-								=course.creator
+								=course.creator.username
 							div.courses-desc
 								=course.desc
 							div.button.ok#vote(data-id=course._id) 我要#{verb}
