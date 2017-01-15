@@ -52,8 +52,9 @@ app
 	const data = req.body;
 	const sess = req.session;
 
-	db.collection('user').findOne({student_id: data.student_id}).toArray((err, usr) => {
-		if(usr){
+	db.collection('user').find({student_id: data.student_id}).toArray((err, usrs) => {
+		if(usrs.length){
+			const usr = usrs[0];
 			if(usr.password === data.password){
 				sess.student_id = usr.student_id;
 				sess.username = usr.username;
@@ -79,24 +80,30 @@ app
 })
 
 .get('/register', (req, res) => {
-	// const data = req.body;
-	// const sess = req.session;
+	const sess = req.session;
 
-	// if(sess.student_id && sess.password){
-	res.render('register');
-	// }else{
-	//	res.redirect('/login');
-	// }
+	if(sess.student_id && sess.password){
+		res.render('register');
+	}else{
+		res.redirect('/login');
+	}
 })
 
 .post('/register', (req, res) => {
-	//const data = req.body;
+	const data = req.body;
 	const sess = req.sess;
 
 	if(sess.student_id && sess.password){
 		db.collection('user').insertOne({
-
+			student_id: sess.student_id,
+			password: sess.password,
+			username: data.username,
+			email: data.eamil,
+			phone: data.phone,
+			dept: data.dept,
 		});
+	}else{
+		res.redirect('/login#invalidData');
 	}
 })
 
@@ -149,7 +156,8 @@ app
 
 	res.header('Content-Type', 'application/json');
 	if(sess.username){
-		db.collection('course').findOne({_id: new ObjectId(courseId)}).toArray((err, course) => {
+		db.collection('course').find({_id: new ObjectId(courseId)}).toArray((err, courses) => {
+			const course = courses[0];
 			let hasPetited = false;
 			for(let i=0;i<course.petition_people.length;i++){
 				if(course.petition_people[i].user === sess._id) {
@@ -188,7 +196,8 @@ app
 
 	res.header('Content-Type', 'application/json');
 	if(sess.username){
-		db.collection('course').findOne({_id: new ObjectId(courseId)}).toArray((err, course) => {
+		db.collection('course').findOne({_id: new ObjectId(courseId)}).toArray((err, courses) => {
+			const course = courses[0];
 			let hasPetited = false;
 			for(let i=0;i<course.vote_people.length;i++){
 				if(course.vote_people[i].user === sess._id) {
