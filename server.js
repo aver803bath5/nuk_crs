@@ -153,6 +153,19 @@ app
 	}
 })
 
+.delete('/suggest/:id', (req, res) => {
+	const courseId = req.params.id;
+	const data = req.body;
+	const sess = req.session;
+
+	if(sess.user.is_root){
+		db.collection('course').remove({_id: new ObjectId(courseId)});
+		res.redirect(data.next);
+	}else{
+		res.redirect('/');
+	}
+})
+
 .get('/petition', (req, res) => {
 	db.collection('course').find({stage: 1}).toArray((err, course) => {
 		const newCourse = course;
@@ -240,7 +253,6 @@ app
 				if(course.petition_people.length){
 					for(let i=0;i<course.petition_people.length;i++){
 						if(course.petition_people[i].user.username === sess.user.username) {
-							console.log(course.petition_people[i].user.username + ' ' + sess.user.username);
 							course.petition_people.splice(i, 1);
 							hasPetited = true;
 							break;
