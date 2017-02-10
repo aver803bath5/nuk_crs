@@ -10,10 +10,17 @@ body{
 	height: 100%;
 	font-family: 'Noto Sans TC', sans-serif;
 	/*background-color: #fcfcfc;*/
-	background-image: url(../img/indexBackground.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
+}
+
+.login-body{
+	background-image: url(../img/indexBackground.jpg);
+}
+
+.index-body{
+	background-image: url(../img/loginBackground.jpg);
 }
 
 h1 a{
