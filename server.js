@@ -39,9 +39,11 @@ app
 .get('/', (req, res) => {
 	const sess = req.session;
 	if(sess.user){
+		res.render('index', {
+			isLogin: true,
+		});
+	} else {
 		res.render('index');
-	}else{
-		res.redirect('/login');
 	}
 })
 
@@ -179,6 +181,7 @@ app
 })
 
 .get('/petition', (req, res) => {
+	const isLogin = (req.session.user) ? true : false;
 	db.collection('course').find({stage: 1}).toArray((err, course) => {
 		const newCourse = course;
 		for(let i=0;i<course.length;i++){
@@ -187,6 +190,7 @@ app
 		res.render('list', {
 			verb: '連署',
 			courses: newCourse,
+			isLogin,
 		});
 	});
 })
@@ -307,10 +311,12 @@ app
 })
 
 .get('/vote', (req, res) => {
+	const isLogin = (req.session.user) ? true : false;
 	db.collection('course').find({stage: 2}).toArray((err, course) => {
 		res.render('list', {
 			verb: '投票',
 			courses: course,
+			isLogin,
 		});
 	});
 })
