@@ -56,9 +56,6 @@ app
 	db.collection('user').find({student_id: data.student_id}).toArray((err, usrs) => {
 		if(usrs.length){
 			const usr = usrs[0];
-			console.log(usr);
-			console.log('--------------------');
-			console.log(data);
 			if(usr.password === data.password){
 				sess.user = {};
 				sess.user.student_id = data.student_id;
