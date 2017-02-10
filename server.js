@@ -56,17 +56,21 @@ app
 	db.collection('user').find({student_id: data.student_id}).toArray((err, usrs) => {
 		if(usrs.length){
 			const usr = usrs[0];
+			console.log(usr);
+			console.log('--------------------');
+			console.log(data);
 			if(usr.password === data.password){
-				sess.user = usr;
+				sess.user = {};
+				sess.user.student_id = data.student_id;
 				res.redirect('/');
 			}else{
-				res.redirct('/login#loginFailed');
+				res.redirect('/login#loginFailed');
 			}
 		}else{
 			// 串 API 檢查帳號密碼，如果正確的話：
 			// sess.user.student_id = data.student_id;
 			// sess.user.password = data.password;
-			res.redirect('/');
+			res.redirect('/register');
 			// 如果失敗的話
 			// res.redirect('/login#loginFailed');
 		}
@@ -90,7 +94,7 @@ app
 
 .post('/register', (req, res) => {
 	const data = req.body;
-	const sess = req.sess;
+	const sess = req.session;
 
 	if(sess.user.student_id && sess.user.password){
 		if(data.username && data.email && data.phone && data.dept){
