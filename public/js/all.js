@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	if(window.location.hash.indexOf('loginFailed') > 0){
+		$('#loginFailed').show();
+	}
 	$('#login').on('submit', function(){
 		$('input[name=password]').val(md5($('input[name=password]').val()));
 	});

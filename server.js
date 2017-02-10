@@ -48,32 +48,56 @@ app
 })
 
 .get('/login', (req, res) => {
-	res.render('login');
+	db.collection('options').find({name: 'isOpen'}, (err, docs) => {
+		if(!err && docs.length){
+			const isOpen = docs[0].value;
+			if(isOpen){
+				res.render('login');
+			}else{
+				res.render('closed');
+			}
+		}else if(!err){
+			res.render('login');
+		}else{
+			res.render('closed');
+		}
+	});
 })
 
 .post('/login', (req, res) => {
 	const data = req.body;
 	const sess = req.session;
-
+	if(!data.student_id && data.password){
+		res.redirect('/');
+		return;
+	}
+	data.student_id = data.student_id.toLowerCase();
 	db.collection('user').find({student_id: data.student_id}).toArray((err, usrs) => {
 		if(usrs.length){
 			const usr = usrs[0];
 			if(usr.password === data.password){
 				sess.user = {};
 				sess.user.student_id = data.student_id;
+				if(usr.is_root===true) sess.user.is_root = true;
 				res.redirect('/');
 			}else{
 				res.redirect('/login#loginFailed');
 			}
 		}else{
 			// 串 API 檢查帳號密碼，如果正確的話：
-			// sess.user.student_id = data.student_id;
-			// sess.user.password = data.password;
+			sess.user = {};
+			sess.user.student_id = data.student_id;
+			sess.user.password = data.password;
 			res.redirect('/register');
 			// 如果失敗的話
 			// res.redirect('/login#loginFailed');
 		}
 	});
+})
+
+.get('/logout', (req, res) => {
+	req.session.destroy();
+	res.redirect('/login');
 })
 
 .post('/logout', (req, res) => {
@@ -320,6 +344,17 @@ app
 			isLogin,
 		});
 	});
+})
+
+.get('/admin', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		res.render('admin');
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login');
+	}
 })
 
 .use('/public', express.static(`${__dirname}/public`));
