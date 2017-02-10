@@ -159,7 +159,7 @@ button {
 
 .footer-content li{
 	letter-spacing: .1rem;
-	margin-top: 1rem;
+	line-height: 1.8rem;
 }
 
 .home-page-container {
@@ -546,8 +546,8 @@ nav ul li a{
 	background: #BD471B;
 }
 
-.sidebar{
-	float: left;
+.rules li{
+	line-height: 1.6rem;;
 }
 
 @media screen and (max-width: 480px) {
