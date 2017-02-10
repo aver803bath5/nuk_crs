@@ -4,21 +4,22 @@ block title
 	title 登入 | 課程推薦系統
 
 block body
-	div.login-wrapper.bounceInDown.animated
-		h1 就差一步了，加油！
-		div.login
-			form(method="post")#login
-				label.error.hide 驗證失敗，帳號密碼錯誤？
-				label
-					| 信箱
-				input(type="email", name="email", autofocus).textbox#user
-				label 
-					| 姓名
-				input(type="text", name="username").textbox#pass
-				label 
-					| 系所
-				input(type="text", name="dept").textbox#pass
-				label 
-					| 電話
-				input(type="tel", name="phone").textbox#pass
-				input(type="submit", value="完成").button#login-button 
+	body.login
+		div.login-wrapper.bounceInDown.animated
+			h1 就差一步了，加油！
+			div.login
+				form(method="post")#login
+					label.error.hide 驗證失敗，帳號密碼錯誤？
+					label
+						| 信箱
+					input(type="email", name="email", autofocus).textbox#user
+					label 
+						| 姓名
+					input(type="text", name="username").textbox#pass
+					label 
+						| 系所
+					input(type="text", name="dept").textbox#pass
+					label 
+						| 電話
+					input(type="tel", name="phone").textbox#pass
+					input(type="submit", value="完成").button#login-button 
