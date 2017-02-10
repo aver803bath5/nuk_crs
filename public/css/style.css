@@ -37,15 +37,13 @@ h1 a:hover {
 button {
 	border: none;
 	outline: none;
-
 }
 
 .btn {
 	cursor: pointer;
 	font-size: 1.2rem;
 	padding: .7rem;
-	border-radius: 5px
-
+	border-radius: 5px;
 }
 
 .root-buttons-container{
@@ -54,7 +52,7 @@ button {
 }
 
 .root-buttons-container button {
-	margin-left: 2rem
+	margin-left: 2rem;
 }
 
 .btn-danger {
@@ -94,7 +92,7 @@ button {
 }
 
 .nav:hover {
-	color: red
+	color: red;
 }
 
 .login-wrapper{
@@ -126,7 +124,7 @@ button {
 
 .login-link:hover {
 	background-color: #fff;
-	color: #111
+	color: #111;
 }
 
 .text-right {
@@ -150,7 +148,7 @@ button {
 }
 
 .open-course-steps li{
-	margin-top: .5rem
+	margin-top: .5rem;
 }
 
 .container, .container_nav{
@@ -219,6 +217,7 @@ button {
 	font-size: 1.2rem;
 	line-height: 2rem;
 	letter-spacing: .5px;
+	word-wrap: break-word;
 }
 
 .msg-wrapper{

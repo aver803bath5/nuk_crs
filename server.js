@@ -78,6 +78,7 @@ app
 			if(usr.password === data.password){
 				sess.user = {};
 				sess.user.student_id = data.student_id;
+				sess.user.username = usr.username;
 				if(usr.is_root===true) sess.user.is_root = true;
 				res.redirect('/');
 			}else{
