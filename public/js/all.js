@@ -17,7 +17,7 @@ $(document).ready(function() {
 			dataType: 'application/json; charset=utf-8',
 			complete: function(res) {
 				var result = $.parseJSON(res.responseText).result;
-				
+
 				if (result === 0) {
 					alert('成功！');
 					location.reload();
@@ -27,7 +27,7 @@ $(document).ready(function() {
 					$(location).attr('href', '/login');
 					return false;
 				} else if (result === -2) {
-					alert('課程不存哦！');
+					alert('課程不存在哦！');
 					return false;
 				} else if (result === -3) {
 					alert('你似乎不是管理員哦！');
@@ -51,7 +51,7 @@ $(document).ready(function() {
 		// 		console.log($.parseJSON(res.responseText).result);
 		// 	}
 		// });
-		
+
 		$.post('/vote/'+id, function(res) {
 			console.log(res.result);
 			if (res.result === 0) {
