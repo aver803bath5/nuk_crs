@@ -1,12 +1,12 @@
 extends common/header
 
 block title
-	title 登入 | 課程推薦系統
+	title 登入 | 自主開課平台
 
 block body
 	body.login-body
 		div.login-wrapper.bounceInDown.animated
-			h1 登入 | 課程推薦系統
+			h1 登入 | 自主開課平台
 			div.login
 				form(method="post")#login
 					label.error.hide 驗證失敗，帳號密碼錯誤？
@@ -19,4 +19,4 @@ block body
 						span.category  預設為身份證字號
 					input(type="password", name="password").textbox#pass
 					input(type="submit", value="登入").button#login-button 
-	include common/footer
+		include common/footer

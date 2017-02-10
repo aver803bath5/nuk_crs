@@ -1,13 +1,13 @@
 extends common/header
 
 block title
-	title 課程推薦系統 | 高大通識中心
+	title 自主開課平台 | 高大通識中心
 block body
 	body.index-body
 		div.wrapper
 			h1.title-admin
 				a(href="/") 
-					|課程推薦系統 | 高大通識中心
+					|自主開課平台 | 高大通識中心
 			include common/nav
 			div.container
 				div.courses.bounceInUp.animated
@@ -33,4 +33,4 @@ block body
 									=course.desc
 								div.button.ok.vote(data-id=course._id) 我要#{verb}
 								div.btn.btn-danger.anti-vote(data-id=course._id) 我要反#{verb}
-	include common/footer
+		include common/footer
