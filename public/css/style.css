@@ -4,6 +4,10 @@
 	box-sizing:border-box;
 }
 
+html {
+	height: 100%
+}
+
 body{
 	color: #111;
 	width: 100%;
@@ -136,11 +140,24 @@ button {
 .wrapper{
 	width: 100%;
 	max-width: 1000px;
-	height: 100%;
 	margin: 0 auto;
 	padding: 1rem;
 	font-size: 1.1rem;
 	background: rgba(200,200,200,0.5);
+}
+
+#sec_footer {
+	margin: 0 auto;
+	max-width: 1000px;
+	text-align: center;
+	font-size: 1.2rem;
+	line-height: 1.2rem;
+	background: #4286f4;
+	padding: 2rem
+}
+
+.footer-content {
+	list-style: none;
 }
 
 .home-page-container {
@@ -271,18 +288,6 @@ button {
 	padding: .5rem 0;
 	background: #BD471B;
 	cursor: pointer;
-}
-
-footer{
-	margin: 1rem auto;
-	text-align: center;
-	font-size: .9rem;
-	line-height: 1.2rem;
-}
-
-footer a, footer a:visited, footer a:hover, footer a:visited:hover{
-	color: inherit;
-	text-decoration: underline
 }
 
 .table{
