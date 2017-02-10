@@ -120,6 +120,7 @@ app
 	if(sess.user){
 		res.render('suggest', {
 			name: sess.user.username,
+			isLogin: true,
 		});
 	}else{
 		res.redirect('/login');
