@@ -347,6 +347,10 @@ app
 	});
 })
 
+.get('/rule', (req, res) => {
+	res.render('rules');
+})
+
 .get('/admin', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
