@@ -409,7 +409,15 @@ app
 .get('/admin/posts', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
-		res.render('admin-post');
+		db.collection('post').find({}).toArray((resp, docs) => {
+			if(docs.length){
+				res.render('admin-post', {
+					posts: docs.reverse(),
+				});
+			}else{
+				res.render('admin-post');
+			}
+		})
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
@@ -417,7 +425,7 @@ app
 	}
 })
 
-.get('/admin/newposts', (req, res) => {
+.get('/admin/newpost', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
 		res.render('admin-newpost');
@@ -428,7 +436,25 @@ app
 	}
 })
 
-.post('/admin/newposts', (req, res) => {
+.get('/admin/delpost/:id', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		db.collection('post').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
+			if(docs){
+				if(docs.length){
+					db.collection('post').remove({_id: new ObjectId(req.params.id)})
+				}
+			}
+			res.redirect('/admin/posts');
+		});
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
+.post('/admin/newpost', (req, res) => {
 	const sess = req.session;
 	const data = req.body;
 	if(sess.user && sess.user.is_root){
@@ -439,6 +465,29 @@ app
 				body: data.body,
 			});
 		}
+		res.redirect('/admin/posts');
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
+.get('/admin/newpost/:id', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		db.collection('post').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
+			if(docs){
+				const doc = docs[0];
+				res.render('admin-newpost', {
+					title: doc.title,
+					content: encodeURIComponent(doc.body),
+					id: req.params.id,
+				});
+			}else{
+				res.redirect('/admin/posts');
+			}
+		})
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
