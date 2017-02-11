@@ -1,0 +1,44 @@
+extends common/header
+
+block title
+	title 後台 | 自主開課平台
+
+block body
+	body.index-body
+		div.wrapper
+			h1.title-admin
+				| 自主開課平台 | 高大通識中心
+			div.container_nav#con_nav
+				nav
+					ul
+						li
+							a(href="/logout").nav.login-link
+								i.fa.fa-user
+								| 登出
+						li
+							a(href="/admin") 系統設定
+						li
+							a(href="/admin/posts") 最新消息
+			div.container.news-admin-container
+				div.newsEditor-conainter
+					form(method="post", action="/admin/newpost")
+						if title
+							input.textbox(name='title', type='text', placeholder='標題', value=title, required='required')
+						else
+							input.textbox(name='title', type='text', placeholder='標題', required='required')
+						textarea#newsEditor(name='body')
+						button.btn.btn-success.sent-news-button 送出
+			script(src='/public/tinymce/tinymce.min.js')
+			script.
+				tinymce.init({
+				 	language:'zh_TW',
+				 	selector: '#newsEditor',
+				 	height: '20rem',
+					entity_encoding: 'named',
+				 	plugins : 'advlist autolink link lists charmap print preview table textcolor'})
+			if content
+				script.
+					setTimeout(function(){
+						tinyMCE.activeEditor.setContent(decodeURIComponent("!{content}"))
+					}, 1000);
+		include common/footer

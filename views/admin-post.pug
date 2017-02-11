@@ -1,0 +1,39 @@
+extends common/header
+
+block title
+	title 後台 | 自主開課平台
+
+block body
+	body.index-body
+		div.wrapper
+			h1.title-admin
+				| 自主開課平台 | 高大通識中心
+			div.container_nav#con_nav
+				nav
+					ul
+						li
+							a(href="/logout").nav.login-link
+								i.fa.fa-user
+								| 登出
+						li
+							a(href="/admin") 系統設定
+						li
+							a(href="/admin/posts") 最新消息
+			div.container.news-admin-container
+				div.news-admin-content
+					button.btn.btn-success
+						a(href="/admin/newpost") 新增最新消息
+					if posts
+						ul.news-admin-list
+							each post in posts
+								li.news-admin-news
+									div.new-admin-list-date-button-wrapper
+										span.new-admin-list-date #{post.date}
+										button.btn.btn-Primary
+											a(href="/admin/newpost/" + post._id) 編輯
+										button.btn.btn-danger
+											a(href="/admin/delpost/" + post._id) 刪除
+									div.news-admin-list-title
+										a(href=post.link) #{post.title}
+									div.clear
+		include common/footer
