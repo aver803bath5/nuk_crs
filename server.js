@@ -284,14 +284,18 @@ app
 						time: new Date(),
 						user: sess.user,
 					});
-					db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople}});
+					if(course.petition_people.length === 2){
+						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople, stage: 2}});
+					}else{
+						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople}});
+					}
 					res.status(200).write(JSON.stringify({result: 0}));
 					res.end();
 				}else{
 					res.status(200).write(JSON.stringify({result: -2}));
 					res.end();
 				}
-			}else{ // course.stage === 2
+			}else{ // course.stage === 3
 				let hasVote = false;
 				if(course.petition_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
@@ -306,7 +310,11 @@ app
 						time: new Date(),
 						user: sess.user,
 					});
-					db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople}});
+					if(course.petition_people.length === 2){
+						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople, stage: 4}});
+					}else{
+						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople}});
+					}
 					res.status(200).write(JSON.stringify({result: 0}));
 					res.end();
 				}else{
