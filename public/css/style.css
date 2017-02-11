@@ -584,6 +584,11 @@ nav ul li a{
 	margin-left: 1rem
 }
 
+.sent-news-button {
+	width: 100%;
+	margin-top: 1rem
+}
+
 @media screen and (max-width: 480px) {
 
 	.wrapper {
