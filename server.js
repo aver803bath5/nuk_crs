@@ -85,13 +85,23 @@ app
 				res.redirect('/login#loginFailed');
 			}
 		}else{
-			// 串 API 檢查帳號密碼，如果正確的話：
-			sess.user = {};
-			sess.user.student_id = data.student_id;
-			sess.user.password = data.password;
-			res.redirect('/register');
-			// 如果失敗的話
-			// res.redirect('/login#loginFailed');
+			request.get({
+				url: config.auth_page,
+				qs: {
+					id: 'Test0004',
+					a: data.student_id,
+					p: data.password,
+				},
+			}, (err2, resp, b) => {
+				if(!err2 && b){
+					sess.temp = {};
+					sess.temp.student_id = data.student_id;
+					sess.temp.password = data.password;
+					res.redirect('/register');
+				}else{
+					res.redirect('/login#loginFailed');
+				}
+			})
 		}
 	});
 })
@@ -109,7 +119,7 @@ app
 .get('/register', (req, res) => {
 	const sess = req.session;
 
-	if(sess.user.student_id && sess.user.password){
+	if(sess.temp.student_id && sess.temp.password){
 		res.render('register');
 	}else{
 		res.redirect('/login');
@@ -120,16 +130,17 @@ app
 	const data = req.body;
 	const sess = req.session;
 
-	if(sess.user.student_id && sess.user.password){
+	if(sess.temp.student_id && sess.temp.password){
 		if(data.username && data.email && data.phone && data.dept){
 			db.collection('user').insert({
-				student_id: sess.user.student_id,
-				password: sess.user.password,
+				student_id: sess.temp.student_id,
+				password: sess.temp.password,
 				username: data.username,
 				email: data.email,
 				phone: data.phone,
 				dept: data.dept,
 			});
+			sess.user = sess.temp;
 			res.redirect('/');
 		}else{
 			res.redirect('/register#invalidData');
