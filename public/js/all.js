@@ -42,7 +42,7 @@ $(document).ready(function() {
 				var result = $.parseJSON(res.responseText).result;
 
 				if (result === 0) {
-					alert('成功！');
+					alert('取消成功！');
 					location.reload();
 					return false;
 				} else if (result === -1) {
@@ -103,7 +103,7 @@ $(document).ready(function() {
 					var result = $.parseJSON(res.responseText).result;
 
 					if (result === 0) {
-						alert('成功！');
+						alert('取消成功！');
 						return false;
 					} else if (result === -1) {
 						alert('你還沒登入哦！');
