@@ -50,6 +50,11 @@ button {
 	border-radius: 5px;
 }
 
+.btn a {
+	color: inherit;
+	text-decoration: none;
+}
+
 .root-buttons-container{
 	margin-top: 1rem;
 	text-align: center;
