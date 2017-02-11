@@ -485,6 +485,10 @@ table, td{
 	border: 1px solid black;
 }
 
+table{
+	border-collapse: collapse;
+}
+
 .table-admin-option{
 	background: #333;
 	color: #efefef;
