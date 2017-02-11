@@ -406,6 +406,46 @@ app
 	}
 })
 
+.get('/admin/posts', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		res.render('admin-post');
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
+.get('/admin/newposts', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		res.render('admin-newpost');
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
+.post('/admin/newposts', (req, res) => {
+	const sess = req.session;
+	const data = req.body;
+	if(sess.user && sess.user.is_root){
+		if(data.title && data.body){
+			db.collection('post').insert({
+				title: data.title,
+				create_time: new Date().setHours(0, 0, 0, 0),
+				body: data.body,
+			});
+		}
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
 .use('/public', express.static(`${__dirname}/public`));
 
 process.on('SIGINT', () => {
