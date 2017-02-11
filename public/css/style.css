@@ -307,44 +307,34 @@ button {
 	cursor: pointer;
 }
 
-.table{
-	display: table;
-	width: 100%;
-	margin: 0 auto;
+.news-list {
+	border: 1px solid #111;
+	list-style: none;
+	padding-left: 0
 }
 
-.thead{
-	display: table-header-group;
-	font-weight: 600;
-	text-align: center;
+.news {
+	padding: 1rem;
+	border-bottom: 1px solid #111;
 }
 
-.tbody{
-	display: table-row-group;
-	text-align: left;
+.news a {
+	color: #111;
+	text-decoration: none;
+	transition: color .2s
 }
 
-.tr{
-	display: table-row;
-	border: 1px solid #333;
+.news a:hover {
+	color: #ba1d35
 }
 
-.th, .td{
-	display: table-cell;
-	border: 1px solid #333;
-	padding: .5rem 1rem;
+.news-date {
+	font-size: 1.2rem;
+	float: right;
 }
 
-.tr-a{
-	background: transparent;
-}
-
-.tr-b{
-	background: #ccc;
-}
-
-.tr:hover{
-	background: #fff;
+.news-title {
+	font-size: 1.2rem
 }
 
 .admin-edit, .admin-edit:visited{
@@ -601,6 +591,14 @@ nav ul li a{
 }
 
 @media screen and (max-width: 480px) {
+	.news-date {
+		float: none;
+		display: block;
+	}
+
+	.news-title {
+		margin-top: .5rem
+	}
 
 	.wrapper {
 		padding: 0
