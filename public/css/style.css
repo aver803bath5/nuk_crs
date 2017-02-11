@@ -337,6 +337,19 @@ button {
 	font-size: 1.2rem
 }
 
+.post-title {
+	text-align: center;
+}
+
+.post-date {
+	text-align: center;
+}
+
+.post-content {
+	padding: 0rem 1rem 1rem 1rem;
+	line-height: 1.5rem
+}
+
 .admin-edit, .admin-edit:visited{
 	color: #1565C0;
 }
