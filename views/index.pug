@@ -22,7 +22,7 @@ block body
 					ul.news-list
 						each post in posts
 							li.news
-								a(href='#')
+								a(href='/post/' + post._id)
 									div.news-date
 										i.fa.fa-calendar-o.fa-fw(aria-hidden='true')
 										| #{post.date}

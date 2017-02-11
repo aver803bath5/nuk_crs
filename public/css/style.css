@@ -481,6 +481,10 @@ nav ul li a{
 	background: #cdcdcd;
 }
 
+table, td{
+	border: 1px solid black;
+}
+
 .table-admin-option{
 	background: #333;
 	color: #efefef;

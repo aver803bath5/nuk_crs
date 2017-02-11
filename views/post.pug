@@ -9,13 +9,11 @@ block body
 				| 自主開課平台 | 高大通識中心
 			include common/nav
 			div.container.bounceInUp.animated.home-page-container
-				h2.post-title 測試消息，好長好長好長，很高興優秀超級優秀，莫那魯道1234
+				h2.post-title #{title}
 				div.post-date
 					i.fa.fa-calendar-o.fa-fw
-					|  2017/02/12
+					|  #{date}
 				div.post-content
-					p 123
-					p 123
-					b fdsafdsajklfhdsaulo
+					| !{content}
 
 		include common/footer
