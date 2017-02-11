@@ -378,7 +378,7 @@ app
 .get('/vote', (req, res) => {
 	let isLogin = false;
 	if(req.session.user) isLogin = true;
-	db.collection('course').find({stage: 2}).toArray((err, course) => {
+	db.collection('course').find({stage: 3}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
 			for(let i=0;i<course.length;i++){
