@@ -548,6 +548,7 @@ nav ul li a{
 
 .disabled:hover{
 	background: #cdcdcd;
+	cursor: default;
 }
 
 .ok{
