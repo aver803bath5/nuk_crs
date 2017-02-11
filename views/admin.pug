@@ -8,12 +8,32 @@ block body
 		div.wrapper
 			h1.title-admin
 				| 自主開課平台 | 高大通識中心
-			div.container_nav#con_nav
-				nav
-					ul
-						li
+			nav
+				ul
+					li
 							a(href="/logout").nav.login-link
 								i.fa.fa-user 登出
-						li 系統設定
-						li 最新消息
+					li 系統設定
+					li 最新消息
+			div.container.news-admin-container
+				div.news-admin-content
+					button.btn.btn-success 新增最新消息
+					ul.news-admin-list
+						li.news-admin-news
+							div.new-admin-list-date-button-wrapper
+								span.new-admin-list-date 2017-01-02
+								button.btn.btn-Primary 編輯
+								button.btn.btn-danger 刪除
+							div.news-admin-list-title
+								a(href="#") Jserv要上資管系的C語言
+							div.clear
+						li.news-admin-news
+							div.new-admin-list-date-button-wrapper
+								span.new-admin-list-date 2017-01-02
+								button.btn.btn-Primary 編輯
+								button.btn.btn-danger 刪除
+							div.news-admin-list-title
+								a(href="#") 106.01.05起修正發布本校「通識教育課程修習辦法」，其中1學期修習博雅通識之「服務學習」課程，可抵認1次共同必修「服務學習培養」課程。
+							div.clear
 		include common/footer
+>>>>>>> 1d5f22e2ff1d7a273f3813b602a5eaa2278ad3d7

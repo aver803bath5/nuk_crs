@@ -558,6 +558,32 @@ nav ul li a{
 	line-height: 1.6rem;;
 }
 
+.news-admin-list, .news-admin-news-container {
+	list-style: none;
+}
+
+.news-admin-list {
+	border: 1px solid #111;
+	padding-left: 0
+}
+
+.news-admin-news {
+	border-bottom: 1px solid #111;
+	padding: 1rem
+}
+
+.news-admin-list-title {
+	padding: 12px;
+}
+
+.new-admin-list-date-button-wrapper {
+	float: right;
+}
+
+.new-admin-list-date-button-wrapper * {
+	margin-left: 1rem
+}
+
 @media screen and (max-width: 480px) {
 
 	.wrapper {
