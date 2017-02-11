@@ -4,10 +4,12 @@ div.container_nav#con_nav
 			li
 				if !isLogin
 					a(href="/login").nav.login-link
-						i.fa.fa-user 登入
+						i.fa.fa-user
+						| 登入
 				else
 					a(href="/logout").nav.login-link
-						i.fa.fa-user 登出
+						i.fa.fa-user
+						| 登出
 			li
 				a(href="/suggest").nav 我要推薦課程
 			li
