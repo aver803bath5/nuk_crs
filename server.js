@@ -226,7 +226,7 @@ app
 	let isLogin = false;
 	if(req.session.user) isLogin = true;
 	db.collection('course').find({stage: 1}).toArray((err, course) => {
-		if(course){
+		if(course.length){
 			const newCourse = course.reverse();
 			for(let i=0;i<course.length;i++){
 				if((new Date()).getTime() - newCourse[i].create_time > 1000 * 86400 * 30 * 3){
@@ -243,7 +243,6 @@ app
 		}else{
 			res.render('list', {
 				verb: '連署',
-				courses: course,
 				isLogin,
 			});
 		}
@@ -369,7 +368,7 @@ app
 	let isLogin = false;
 	if(req.session.user) isLogin = true;
 	db.collection('course').find({stage: 2}).toArray((err, course) => {
-		if(course){
+		if(course.length){
 			const newCourse = course.reverse();
 			for(let i=0;i<course.length;i++){
 				if((new Date()).getTime() - newCourse[i].create_time > 1000 * 86400 * 30 * 3){
@@ -386,7 +385,6 @@ app
 		}else{
 			res.render('list', {
 				verb: '投票',
-				courses: course,
 				isLogin,
 			});
 		}
