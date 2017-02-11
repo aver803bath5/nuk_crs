@@ -20,18 +20,12 @@ block body
 				div.news-container
 					h2 最新消息
 					ul.news-list
-						li.news
-							a(href='#')
-								div.news-date
-									i.fa.fa-calendar-o.fa-fw(aria-hidden='true')
-									| 2017/02/27
-								div.news-title 測試消息，好長好長好長，很高興優秀超級優秀，莫那魯道12342343243243243242344
-								div.clear
-						li.news
-							a(href='#')
-								div.news-date
-									i.fa.fa-calendar-o.fa-fw(aria-hidden='true')
-									| 2017/02/27
-								div.news-title 測試消息，好長好長好長，很高興優秀超級優秀，莫那魯道12342343243243243242344
-								div.clear
+						each post in posts
+							li.news
+								a(href='#')
+									div.news-date
+										i.fa.fa-calendar-o.fa-fw(aria-hidden='true')
+										| post.date
+									div.news-title post.title
+									div.clear
 		include common/footer

@@ -495,6 +495,14 @@ app
 	}
 })
 
+.get('/post', (req, res) => {
+	let isLogin = false;
+	if(req.session.user) isLogin = true;
+	res.render('post', {
+		isLogin
+	});
+})
+
 .use('/public', express.static(`${__dirname}/public`));
 
 process.on('SIGINT', () => {
