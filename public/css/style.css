@@ -501,6 +501,10 @@ nav ul li a{
 	display: block;
 }
 
+.course.old{
+	color: #555;
+}
+
 .half{
 	max-width: 250px;
 }

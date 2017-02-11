@@ -229,6 +229,10 @@ app
 		if(course){
 			const newCourse = course.reverse();
 			for(let i=0;i<course.length;i++){
+				if((new Date()).getTime() - newCourse[i].create_time > 1000 * 86400 * 30 * 3){
+					newCourse[i].old = true;
+				}
+				newCourse[i].end_time = moment(newCourse[i].create_time + (1000 * 86400 * 30 * 3)).format('YYYY/MM/DD');
 				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
 			}
 			res.render('list', {
@@ -364,11 +368,19 @@ app
 .get('/vote', (req, res) => {
 	let isLogin = false;
 	if(req.session.user) isLogin = true;
-	db.collection('course').find({stage: 2}, {$orderby: {create_time: -1}}).toArray((err, course) => {
+	db.collection('course').find({stage: 2}).toArray((err, course) => {
 		if(course){
+			const newCourse = course.reverse();
+			for(let i=0;i<course.length;i++){
+				if((new Date()).getTime() - newCourse[i].create_time > 1000 * 86400 * 30 * 3){
+					newCourse[i].old = true;
+				}
+				newCourse[i].end_time = moment(newCourse[i].create_time + (1000 * 86400 * 30 * 3)).format('YYYY/MM/DD');
+				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
+			}
 			res.render('list', {
 				verb: '投票',
-				courses: course.reverse(),
+				courses: newCourse,
 				isLogin,
 			});
 		}else{
