@@ -107,7 +107,7 @@ button {
 }
 
 .login{
-	background: rgba(200,200,200,0.4);
+	background: rgba(200,200,200,0.8);
 	max-width: 350px;
 	width: 100vw;
 	margin: 0 auto;
@@ -220,16 +220,23 @@ button {
 	font-size: 1.2rem;
 	margin-top: 1rem;
 	line-height: 1.5rem;
+	position: relative;
 }
 
 .courses-count{
 	text-align: right;
 	font-size: 1.2rem;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 
 .courses-references {
 	margin-top: .5rem;
-	margin-left: 1rem
+	margin-left: 1rem;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 
 .courses-desc{
@@ -238,6 +245,7 @@ button {
 	font-size: 1.2rem;
 	line-height: 2rem;
 	letter-spacing: .5px;
+	white-space: pre-wrap;
 	word-wrap: break-word;
 }
 
@@ -637,17 +645,18 @@ nav ul li a{
 	}
 
 	.courses-count {
-		margin-top: .5rem;
-		position: relative;
-		text-align: center;
-		right: 0;
-		top: 0
+		position: static;
+	}
+
+	.courses-references {
+		position: static;
+		text-align: left;
 	}
 
 	.courses-desc {
 		margin-top: .2rem;
 		font-size: 1.2rem;
-		line-height: 2rem
+		line-height: 2rem;
 	}
 
 }

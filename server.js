@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 const session = require('express-session');
 const moment = require('moment');
+const request = require('request');
 const config = require('./config');
 
 const app = express();
@@ -80,7 +81,11 @@ app
 				sess.user.student_id = data.student_id;
 				sess.user.username = usr.username;
 				if(usr.is_root===true) sess.user.is_root = true;
-				res.redirect('/');
+				if(req.query.next && req.query.next === 'admin'){
+					res.redirect('/admin');
+				}else{
+					res.redirect('/');
+				}
 			}else{
 				res.redirect('/login#loginFailed');
 			}
@@ -101,7 +106,7 @@ app
 				}else{
 					res.redirect('/login#loginFailed');
 				}
-			})
+			});
 		}
 	});
 })
@@ -218,17 +223,26 @@ app
 })
 
 .get('/petition', (req, res) => {
-	const isLogin = (req.session.user) ? true : false;
+	let isLogin = false;
+	if(req.session.user) isLogin = true;
 	db.collection('course').find({stage: 1}).toArray((err, course) => {
-		const newCourse = course;
-		for(let i=0;i<course.length;i++){
-			newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
+		if(course){
+			const newCourse = course.reverse();
+			for(let i=0;i<course.length;i++){
+				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
+			}
+			res.render('list', {
+				verb: '連署',
+				courses: newCourse,
+				isLogin,
+			});
+		}else{
+			res.render('list', {
+				verb: '連署',
+				courses: course,
+				isLogin,
+			});
 		}
-		res.render('list', {
-			verb: '連署',
-			courses: newCourse,
-			isLogin,
-		});
 	});
 })
 
@@ -348,13 +362,22 @@ app
 })
 
 .get('/vote', (req, res) => {
-	const isLogin = (req.session.user) ? true : false;
-	db.collection('course').find({stage: 2}).toArray((err, course) => {
-		res.render('list', {
-			verb: '投票',
-			courses: course,
-			isLogin,
-		});
+	let isLogin = false;
+	if(req.session.user) isLogin = true;
+	db.collection('course').find({stage: 2}, {$orderby: {create_time: -1}}).toArray((err, course) => {
+		if(course){
+			res.render('list', {
+				verb: '投票',
+				courses: course.reverse(),
+				isLogin,
+			});
+		}else{
+			res.render('list', {
+				verb: '投票',
+				courses: course,
+				isLogin,
+			});
+		}
 	});
 })
 
@@ -369,7 +392,7 @@ app
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
-		res.redirect('/login');
+		res.redirect('/login?next=admin');
 	}
 })
 

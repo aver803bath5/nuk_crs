@@ -12,25 +12,29 @@ block body
 			div.container
 				div.courses.bounceInUp.animated
 					ul
-						each course in courses
-							li
-								div.courses-name
-									=course.name
-								div.root-buttons-container
-									button.btn.btn-danger.delete-course(data-id=course._id) 刪除
-									button.btn.btn-success 可以投票了
-									button.btn.btn-Primary 可以開課了
-								div.courses-date
-									i.fa.fa-calendar
-										=course.create_time
-										span.courses-end-count
-								div.courses-count= course.petition_people.length 
-									| 人#{verb}
-								div.courses-references 
-									|推薦人：
-									=course.creator.username
-								div.courses-desc
-									=course.desc
-								div.button.ok.vote(data-id=course._id) 我要#{verb}
-								div.btn.btn-danger.anti-vote(data-id=course._id) 我要反#{verb}
+						if courses
+							each course in courses
+								li
+									div.courses-name
+										=course.name
+									//- div.root-buttons-container
+									//- 	button.btn.btn-danger.delete-course(data-id=course._id) 刪除
+									//- 	button.btn.btn-success 可以投票了
+									//- 	button.btn.btn-Primary 可以開課了
+									div.courses-date
+										i.fa.fa-calendar
+											=course.create_time
+											span.courses-end-count
+										div.courses-count= course.petition_people.length 
+											| 人#{verb}
+										div.courses-references 
+											|推薦人：
+											=course.creator.username
+									div.clear
+									div.courses-desc
+										=course.desc
+									div.button.ok.vote(data-id=course._id) 我要#{verb}
+									div.btn.btn-danger.anti-vote(data-id=course._id) 我要取消#{verb}
+						else
+							div.courses-name 目前沒有#{verb}中的課程
 		include common/footer
