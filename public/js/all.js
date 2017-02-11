@@ -1,9 +1,24 @@
+/* eslint-disable */
 $(document).ready(function() {
 	if(window.location.hash.indexOf('loginFailed') > 0){
 		$('#loginFailed').show();
 	}
 	$('#login').on('submit', function(){
 		$('input[name=password]').val(md5($('input[name=password]').val()));
+	});
+
+	$('#formSuggest').on('submit', function(){
+		if (!$('#checkSuggest').is(':checked')){
+			return false;
+		}
+	});
+
+	$('#checkSuggest').on('change', function(){
+		if ($(this).is(':checked')) {
+			$('#btnSuggest').addClass('ok').removeClass('disabled');
+		}else{
+			$('#btnSuggest').addClass('disabled').removeClass('ok');
+		}
 	});
 
 	$('.delete-course').on('click', function(event) {
