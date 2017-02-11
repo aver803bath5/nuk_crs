@@ -25,7 +25,7 @@ block body
 								a(href='#')
 									div.news-date
 										i.fa.fa-calendar-o.fa-fw(aria-hidden='true')
-										| post.date
-									div.news-title post.title
+										| #{post.date}
+									div.news-title #{post.title}
 									div.clear
 		include common/footer

@@ -38,14 +38,25 @@ mc.connect(config.db.host, (err, database) => {
 
 app
 .get('/', (req, res) => {
-	const sess = req.session;
-	if(sess.user){
-		res.render('index', {
-			isLogin: true,
-		});
-	} else {
-		res.render('index');
-	}
+	let isLogin = false;
+	if(req.session.user) isLogin = true;
+	db.collection('post').find({}).toArray((resp, docs) => {
+		if(docs.length){
+			const post = [];
+			Object.keys(docs).forEach((i) => {
+				post.push(docs[i]);
+				post[i].date = moment(post.create_time).format('YYYY/MM/DD');
+			});
+			res.render('index', {
+				posts: post.reverse(),
+				isLogin,
+			});
+		}else{
+			res.render('index', {
+				isLogin,
+			});
+		}
+	});
 })
 
 .get('/login', (req, res) => {
@@ -417,7 +428,7 @@ app
 			}else{
 				res.render('admin-post');
 			}
-		})
+		});
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
@@ -442,7 +453,7 @@ app
 		db.collection('post').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
 			if(docs){
 				if(docs.length){
-					db.collection('post').remove({_id: new ObjectId(req.params.id)})
+					db.collection('post').remove({_id: new ObjectId(req.params.id)});
 				}
 			}
 			res.redirect('/admin/posts');
@@ -487,7 +498,7 @@ app
 			}else{
 				res.redirect('/admin/posts');
 			}
-		})
+		});
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
@@ -495,11 +506,21 @@ app
 	}
 })
 
-.get('/post', (req, res) => {
+.get('/post/:id', (req, res) => {
 	let isLogin = false;
 	if(req.session.user) isLogin = true;
-	res.render('post', {
-		isLogin
+	db.collection('post').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
+		if(docs){
+			const doc = docs[0];
+			res.render('post', {
+				title: doc.title,
+				content: doc.body,
+				date: moment(doc.create_time).format('YYYY/MM/DD'),
+				isLogin,
+			});
+		}else{
+			res.redirect('/');
+		}
 	});
 })
 
