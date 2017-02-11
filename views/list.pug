@@ -11,9 +11,9 @@ block body
 			include common/nav
 			div.container
 				div.courses.bounceInUp.animated
-					input(type="text", placeholder="搜尋課程...").textbox#listFilter
-					ul
-						if courses
+					if courses
+						input(type="text", placeholder="搜尋課程...").textbox#listFilter
+						ul
 							each course in courses
 								if course.old
 									.course.old
@@ -59,6 +59,6 @@ block body
 												=course.desc
 											div.button.ok.vote(data-id=course._id) 我要#{verb}
 											div.btn.btn-danger.anti-vote(data-id=course._id) 我要取消#{verb}
-						else
-							div.courses-name 目前沒有#{verb}中的課程
+					else
+						div.courses-name 目前沒有#{verb}中的課程
 		include common/footer
