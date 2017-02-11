@@ -11,6 +11,7 @@ block body
 			include common/nav
 			div.container
 				div.courses.bounceInUp.animated
+					input(type="text", placeholder="搜尋課程...").textbox#listFilter
 					ul
 						if courses
 							each course in courses

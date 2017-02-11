@@ -21,6 +21,14 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#listFilter').on('input', function(){
+		$('.course').hide();
+		$('.course').filter(function(){
+			return $($(this).find('.courses-name')).text().indexOf($('#listFilter').val()) > -1
+		}).show()
+		if($('#listFilter').val() === '') $('.course').show();
+	});
+
 	$('.delete-course').on('click', function(event) {
 		event.preventDefault();
 		var id = $(this).data('id');
