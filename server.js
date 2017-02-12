@@ -238,7 +238,9 @@ app
 
 .get('/petition', (req, res) => {
 	let isLogin = false;
+	let isRoot = false;
 	if(req.session.user) isLogin = true;
+	if(req.session.is_root) isRoot = true;
 	db.collection('course').find({stage: 1}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
@@ -253,6 +255,7 @@ app
 				verb: '連署',
 				courses: newCourse,
 				isLogin,
+				isRoot,
 			});
 		}else{
 			res.render('list', {
@@ -388,7 +391,9 @@ app
 
 .get('/vote', (req, res) => {
 	let isLogin = false;
+	let isRoot = false;
 	if(req.session.user) isLogin = true;
+	if(req.session.is_root) isRoot = true;
 	db.collection('course').find({stage: 3}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
@@ -403,6 +408,7 @@ app
 				verb: '投票',
 				courses: newCourse,
 				isLogin,
+				isRoot,
 			});
 		}else{
 			res.render('list', {
