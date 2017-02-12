@@ -178,6 +178,11 @@ button {
 	margin-top: .5rem;
 }
 
+.courses-teacher {
+	padding: 1rem;
+	font-size: 1rem
+}
+
 .container, .container_nav{
 	position: relative;
 	padding: 1rem;
