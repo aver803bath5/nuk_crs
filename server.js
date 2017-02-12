@@ -190,6 +190,7 @@ app
 			db.collection('course').insert({
 				name: data.name,
 				desc: data.desc,
+				teacher: data.teacher,
 				stage: 1,
 				creator: sess.user,
 				create_time: new Date().setHours(0, 0, 0, 0),
