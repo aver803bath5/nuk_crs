@@ -6,7 +6,7 @@ block body
 	body.index-body
 		div.wrapper
 			h1.title-admin
-				a(href="/") 
+				a(href="/")
 					|自主開課平台 | 高大通識中心
 			include common/nav
 			div.container
@@ -28,14 +28,16 @@ block body
 												i.fa.fa-calendar
 													|  #{course.create_time}~#{course.end_time}
 													span.courses-end-count
-												div.courses-count= course.petition_people.length 
+												div.courses-count= course.petition_people.length
 													| 人#{verb}
-												div.courses-references 
+												div.courses-references
 													|推薦人：
 													=course.creator.username
 											div.clear
 											div.courses-desc
 												=course.desc
+											div.courses-teacher
+												=course.teacher
 								else
 									.course
 										li
@@ -49,13 +51,15 @@ block body
 												i.fa.fa-calendar
 													|  #{course.create_time}~#{course.end_time}
 													span.courses-end-count
-												div.courses-count= course.petition_people.length 
+												div.courses-count= course.petition_people.length
 													| 人#{verb}
-												div.courses-references 
+												div.courses-references
 													|推薦人：
 													=course.creator.username
 											div.clear
 											div.courses-desc
+												=course.desc
+											div.courses-teacher
 												=course.teacher
 											div.button.ok.vote(data-id=course._id) 我要#{verb}
 											div.btn.btn-danger.anti-vote(data-id=course._id) 我要取消#{verb}
