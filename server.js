@@ -78,7 +78,7 @@ app
 		if (docs){
 			if(docs.isOpen === false) closed = true;
 		}
-		db.collection('user').find({student_id: data.student_id}).toArray((err, usrs) => {
+		db.collection('user').find({student_id: data.student_id}).toArray((err3, usrs) => {
 			if(usrs.length){
 				const usr = usrs[0];
 				if(usr.password === data.password){
@@ -453,16 +453,13 @@ app
 	if(sess.user && sess.user.is_root){
 		db.collection('options').find({name: 'option'}).toArray((err, docs) => {
 			if(!err && docs.length){
-				console.log('aaaa');
 				db.collection('options').update({name: 'option'}, {$set: data});
 				res.redirect('/admin');
 			}else if(!err){
-				console.log('bbbb');
 				data.name = 'option';
 				db.collection('options').insert(data);
 				res.redirect('/admin');
 			}else{
-				console.log('cccc');
 				res.redirect('/admin');
 			}
 		});
