@@ -21,10 +21,10 @@ block body
 											div.courses-name
 												=course.name
 											if isRoot
-												//- div.root-buttons-container
-												//- 	button.btn.btn-danger.delete-course(data-id=course._id) 刪除
-												//- 	button.btn.btn-success 可以投票了
-												//- 	button.btn.btn-Primary 可以開課了
+												div.root-buttons-container
+													button.btn.btn-danger.delete-course(data-id=course._id) 刪除
+													button.btn.btn-success 可以投票了
+													button.btn.btn-Primary 可以開課了
 											div.courses-date
 												i.fa.fa-calendar
 													|  #{course.create_time}~#{course.end_time}
@@ -44,10 +44,10 @@ block body
 										li
 											div.courses-name
 												=course.name
-											//- div.root-buttons-container
-											//- 	button.btn.btn-danger.delete-course(data-id=course._id) 刪除
-											//- 	button.btn.btn-success 可以投票了
-											//- 	button.btn.btn-Primary 可以開課了
+											div.root-buttons-container
+												button.btn.btn-danger.delete-course(data-id=course._id) 刪除
+												button.btn.btn-success 可以投票了
+												button.btn.btn-Primary 可以開課了
 											div.courses-date
 												i.fa.fa-calendar
 													|  #{course.create_time}~#{course.end_time}
