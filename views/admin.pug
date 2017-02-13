@@ -20,6 +20,12 @@ block body
 						li
 							a(href="/admin/posts") 最新消息
 			div.container.bounceInUp.animated.home-page-container
-				input(type="checkbox", name="enabled").checkbox
-				|  啟用本系統
+				form(method="post", action="/admin/option")
+					if(opt.isOpen === false)
+						input(type="checkbox", name="isOpen").checkbox
+						|  啟用本系統
+					else
+						input(type="checkbox", name="isOpen", checked).checkbox
+						|  啟用本系統
+					input(type="submit", value="儲存").button.full.ok
 		include common/footer

@@ -4,8 +4,8 @@ const mongo = require('mongodb');
 const session = require('express-session');
 const moment = require('moment');
 const request = require('request');
-const nodemailer = require('nodemailer');
-const smtpTransport = require('nodemailer-smtp-transport');
+// const nodemailer = require('nodemailer');
+// const smtpTransport = require('nodemailer-smtp-transport');
 const config = require('./config');
 
 const app = express();
@@ -62,20 +62,7 @@ app
 })
 
 .get('/login', (req, res) => {
-	db.collection('options').find({name: 'isOpen'}, (err, docs) => {
-		if(!err && docs.length){
-			const isOpen = docs[0].value;
-			if(isOpen){
-				res.render('login');
-			}else{
-				res.render('closed');
-			}
-		}else if(!err){
-			res.render('login');
-		}else{
-			res.render('closed');
-		}
-	});
+	res.render('login');
 })
 
 .post('/login', (req, res) => {
@@ -86,41 +73,53 @@ app
 		return;
 	}
 	data.student_id = data.student_id.toLowerCase();
-	db.collection('user').find({student_id: data.student_id}).toArray((err, usrs) => {
-		if(usrs.length){
-			const usr = usrs[0];
-			if(usr.password === data.password){
-				sess.user = {};
-				sess.user.student_id = data.student_id;
-				sess.user.username = usr.username;
-				if(usr.is_root===true) sess.user.is_root = true;
-				if(req.query.next && req.query.next === 'admin'){
-					res.redirect('/admin');
-				}else{
-					res.redirect('/');
-				}
-			}else{
-				res.redirect('/login#loginFailed');
-			}
-		}else{
-			request.get({
-				url: config.auth_page,
-				qs: {
-					id: 'Test0004',
-					a: data.student_id,
-					p: data.password,
-				},
-			}, (err2, resp, b) => {
-				if(!err2 && b){
-					sess.temp = {};
-					sess.temp.student_id = data.student_id;
-					sess.temp.password = data.password;
-					res.redirect('/register');
+	db.collection('options').find({name: 'isOpen'}, (err, docs) => {
+		let closed = false;
+		if (docs){
+			if(docs.isOpen === false) closed = true;
+		}
+		db.collection('user').find({student_id: data.student_id}).toArray((err, usrs) => {
+			if(usrs.length){
+				const usr = usrs[0];
+				if(usr.password === data.password){
+					sess.user = {};
+					sess.user.student_id = data.student_id;
+					sess.user.username = usr.username;
+					if(usr.is_root===true) sess.user.is_root = true;
+					if(usr.is_root===true || !closed){
+						if(req.query.next && req.query.next === 'admin'){
+							res.redirect('/admin');
+						}else{
+							res.redirect('/');
+						}
+					}else{
+						res.render('/closed');
+					}
 				}else{
 					res.redirect('/login#loginFailed');
 				}
-			});
-		}
+			}else if(!closed){
+				request.get({
+					url: config.auth_page,
+					qs: {
+						id: 'Test0004',
+						a: data.student_id,
+						p: data.password,
+					},
+				}, (err2, resp, b) => {
+					if(!err2 && b){
+						sess.temp = {};
+						sess.temp.student_id = data.student_id;
+						sess.temp.password = data.password;
+						res.redirect('/register');
+					}else{
+						res.redirect('/login#loginFailed');
+					}
+				});
+			}else{
+				res.render('/closed');
+			}
+		});
 	});
 })
 
@@ -426,7 +425,47 @@ app
 .get('/admin', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
-		res.render('admin');
+		db.collection('options').find({name: 'option'}).toArray((err, opts) => {
+			if(opts){
+				const opt = opts[0];
+				res.render('admin', {
+					opt,
+				});
+			}else{
+				res.render('admin');
+			}
+		});
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
+.post('/admin/option', (req, res) => {
+	const sess = req.session;
+	const data = req.body;
+	if(data.isOpen === 'on'){
+		data.isOpen = true;
+	}else{
+		data.isOpen = false;
+	}
+	if(sess.user && sess.user.is_root){
+		db.collection('options').find({name: 'option'}).toArray((err, docs) => {
+			if(!err && docs.length){
+				console.log('aaaa');
+				db.collection('options').update({name: 'option'}, {$set: data});
+				res.redirect('/admin');
+			}else if(!err){
+				console.log('bbbb');
+				data.name = 'option';
+				db.collection('options').insert(data);
+				res.redirect('/admin');
+			}else{
+				console.log('cccc');
+				res.redirect('/admin');
+			}
+		});
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
@@ -551,22 +590,22 @@ process.on('SIGINT', () => {
 	process.exit();
 });
 
-function mail(mailto, subject, body, callback) {
-	let transporter = nodemailer.createTransport(smtpTransport({
-		host: 'mail.nuk.edu.tw',
-		port: 25,
-	}));
+// function mail(mailto, subject, body, callback) {
+// 	let transporter = nodemailer.createTransport(smtpTransport({
+// 		host: 'mail.nuk.edu.tw',
+// 		port: 25,
+// 	}));
 
-	transporter.sendMail({
-		from: 'a1033312@nuk.edu.tw',
-		to: mailto,
-		subject: subject,
-		html: body
-	}, function(error, response) {
-		if (error) {
-			console.log(error);
-		} else {
-			callback();
-		}
-	});
-}
+// 	transporter.sendMail({
+// 		from: 'a1033312@nuk.edu.tw',
+// 		to: mailto,
+// 		subject: subject,
+// 		html: body
+// 	}, function(error, response) {
+// 		if (error) {
+// 			console.log(error);
+// 		} else {
+// 			callback();
+// 		}
+// 	});
+// }
