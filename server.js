@@ -260,8 +260,10 @@ app
 				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
 				newCourse[i].didIVote = false;
 				if(req.session.user){
-					Object.keys(newCourse[i].petition_people).forEach((i) => {
-						if(newCourse[i].petition_people[i].user.student_id === req.session.user.student_id) newCourse[i].didIVote = true;
+					Object.keys(newCourse[i].petition_people).forEach((j) => {
+						if(newCourse[i].petition_people[j].user.student_id === req.session.user.student_id){
+							newCourse[i].didIVote = true;
+						}
 					});
 				}
 			}
@@ -423,8 +425,10 @@ app
 				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
 				newCourse[i].didIVote = false;
 				if(req.session.user){
-					Object.keys(newCourse[i].petition_people).forEach((i) => {
-						if(newCourse[i].petition_people[i].user.student_id === req.session.user.student_id) newCourse[i].didIVote = true;
+					Object.keys(newCourse[i].petition_people).forEach((j) => {
+						if(newCourse[i].petition_people[j].user.student_id === req.session.user.student_id){
+							newCourse[i].didIVote = true;
+						}
 					});
 				}
 			}
