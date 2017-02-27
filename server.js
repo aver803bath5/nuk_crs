@@ -258,6 +258,10 @@ app
 				}
 				newCourse[i].end_time = moment(newCourse[i].create_time + (1000 * 86400 * 30 * 3)).format('YYYY/MM/DD');
 				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
+				newCourse[i].didIVote = false;
+				Object.keys(newCourse[i].petition_people).forEach((i) => {
+					if(newCourse[i].petition_people[i].user.student_id === req.session.student_id) newCourse[i].didIVote = true;
+				});
 			}
 			res.render('list', {
 				verb: '連署',
@@ -415,6 +419,10 @@ app
 				}
 				newCourse[i].end_time = moment(newCourse[i].create_time + (1000 * 86400 * 30 * 3)).format('YYYY/MM/DD');
 				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
+				newCourse[i].didIVote = false;
+				Object.keys(newCourse[i].petition_people).forEach((i) => {
+					if(newCourse[i].petition_people[i].user.student_id === req.session.student_id) newCourse[i].didIVote = true;
+				});
 			}
 			res.render('list', {
 				verb: '投票',
