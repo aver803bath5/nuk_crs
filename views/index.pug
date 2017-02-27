@@ -20,12 +20,15 @@ block body
 				div.news-container
 					h2 最新消息
 					ul.news-list
-						each post in posts
-							li.news
-								a(href='/post/' + post._id)
-									div.news-date
-										i.fa.fa-calendar-o.fa-fw(aria-hidden='true')
-										| #{post.date}
-									div.news-title #{post.title}
-									div.clear
+						if posts
+							each post in posts
+								li.news
+									a(href='/post/' + post._id)
+										div.news-date
+											i.fa.fa-calendar-o.fa-fw(aria-hidden='true')
+											| #{post.date}
+										div.news-title #{post.title}
+										div.clear
+						else
+							h2 目前沒有消息
 		include common/footer
