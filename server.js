@@ -43,8 +43,10 @@ app
 .get('/', (req, res) => {
 	let isLogin = false;
 	let isRoot = false;
-	if(req.session.user) isLogin = true;
-	if(req.session.is_root) isRoot = true;
+	if(req.session.user){
+		isLogin = true;
+		if(req.session.user.is_root) isRoot = true;
+	}
 	db.collection('post').find({}).toArray((resp, docs) => {
 		if(docs.length){
 			const post = [];
@@ -243,8 +245,10 @@ app
 .get('/petition', (req, res) => {
 	let isLogin = false;
 	let isRoot = false;
-	if(req.session.user) isLogin = true;
-	if(req.session.is_root) isRoot = true;
+	if(req.session.user){
+		isLogin = true;
+		if(req.session.user.is_root) isRoot = true;
+	}
 	db.collection('course').find({stage: 1}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
@@ -396,8 +400,10 @@ app
 .get('/vote', (req, res) => {
 	let isLogin = false;
 	let isRoot = false;
-	if(req.session.user) isLogin = true;
-	if(req.session.is_root) isRoot = true;
+	if(req.session.user){
+		isLogin = true;
+		if(req.session.user.is_root) isRoot = true;
+	}
 	db.collection('course').find({stage: 3}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
@@ -566,7 +572,11 @@ app
 
 .get('/post/:id', (req, res) => {
 	let isLogin = false;
-	if(req.session.user) isLogin = true;
+	let isRoot = false;
+	if(req.session.user){
+		isLogin = true;
+		if(req.session.user.is_root) isRoot = true;
+	}
 	db.collection('post').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
 		if(docs){
 			const doc = docs[0];
@@ -575,6 +585,7 @@ app
 				content: doc.body,
 				date: moment(doc.create_time).format('YYYY/MM/DD'),
 				isLogin,
+				isRoot,
 			});
 		}else{
 			res.redirect('/');
