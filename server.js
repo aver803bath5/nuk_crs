@@ -249,7 +249,7 @@ app
 		isLogin = true;
 		if(req.session.user.is_root) isRoot = true;
 	}
-	db.collection('course').find({stage: 1}).toArray((err, course) => {
+	db.collection('course').find({stage: {$in: [1, 2]}}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
 			for(let i=0;i<course.length;i++){
@@ -259,9 +259,13 @@ app
 				newCourse[i].end_time = moment(newCourse[i].create_time + (1000 * 86400 * 30 * 3)).format('YYYY/MM/DD');
 				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
 				newCourse[i].didIVote = false;
-				Object.keys(newCourse[i].petition_people).forEach((i) => {
-					if(newCourse[i].petition_people[i].user.student_id === req.session.student_id) newCourse[i].didIVote = true;
-				});
+				if(req.session.user){
+					Object.keys(newCourse[i].petition_people).forEach((j) => {
+						if(newCourse[i].petition_people[j].user.student_id === req.session.user.student_id){
+							newCourse[i].didIVote = true;
+						}
+					});
+				}
 			}
 			res.render('list', {
 				verb: '連署',
@@ -410,7 +414,7 @@ app
 		isLogin = true;
 		if(req.session.user.is_root) isRoot = true;
 	}
-	db.collection('course').find({stage: 3}).toArray((err, course) => {
+	db.collection('course').find({stage: {$in: [3, 4]}}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
 			for(let i=0;i<course.length;i++){
@@ -420,9 +424,13 @@ app
 				newCourse[i].end_time = moment(newCourse[i].create_time + (1000 * 86400 * 30 * 3)).format('YYYY/MM/DD');
 				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
 				newCourse[i].didIVote = false;
-				Object.keys(newCourse[i].petition_people).forEach((i) => {
-					if(newCourse[i].petition_people[i].user.student_id === req.session.student_id) newCourse[i].didIVote = true;
-				});
+				if(req.session.user){
+					Object.keys(newCourse[i].petition_people).forEach((j) => {
+						if(newCourse[i].petition_people[j].user.student_id === req.session.user.student_id){
+							newCourse[i].didIVote = true;
+						}
+					});
+				}
 			}
 			res.render('list', {
 				verb: '投票',
