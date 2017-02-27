@@ -21,7 +21,7 @@ block body
 							a(href="/admin/posts") 最新消息
 			div.container.news-admin-container
 				div.newsEditor-conainter
-					form(method="post", action="/admin/newpost")
+					form(method="post", action=post)
 						if title
 							input.textbox(name='title', type='text', placeholder='標題', value=title, required='required')
 						else
