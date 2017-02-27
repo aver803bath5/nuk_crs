@@ -65,7 +65,6 @@ $(document).ready(function() {
 	$('.vote').on('click', function(event) {
 		event.preventDefault();
 		var id = $(this).data('id');
-		console.log(id);
 		// $.ajax({
 		// 	url: '/vote/'+id,
 		// 	type: 'delete',
@@ -76,7 +75,6 @@ $(document).ready(function() {
 		// });
 
 		$.post('/vote/'+id, function(res) {
-			console.log(res.result);
 			if (res.result === 0) {
 				alert('投票成功！');
 				return false;
