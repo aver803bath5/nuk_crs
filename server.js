@@ -580,7 +580,7 @@ app
 					title: doc.title,
 					content: encodeURIComponent(doc.body),
 					id: req.params.id,
-					post: `/post/${req.params.id}`,
+					post: `/admin/newpost/${req.params.id}`,
 				});
 			}else{
 				res.redirect('/admin/posts');
