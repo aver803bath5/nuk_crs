@@ -65,7 +65,6 @@ $(document).ready(function() {
 	$('.vote').on('click', function(event) {
 		event.preventDefault();
 		var id = $(this).data('id');
-		console.log(id);
 		// $.ajax({
 		// 	url: '/vote/'+id,
 		// 	type: 'delete',
@@ -76,9 +75,13 @@ $(document).ready(function() {
 		// });
 
 		$.post('/vote/'+id, function(res) {
-			console.log(res.result);
 			if (res.result === 0) {
 				alert('投票成功！');
+				var coursesCountText = $('this').parent().find('.courses-count').text().split('人');
+				console.log(coursesCountText);
+				console.log($(this));
+				$('this').removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
+				$('this').parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
 				return false;
 			} else if(res.result === -1){
 				alert('你還沒登入哦！');
