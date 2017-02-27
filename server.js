@@ -4,6 +4,7 @@ const mongo = require('mongodb');
 const session = require('express-session');
 const moment = require('moment');
 const request = require('request');
+const xml2json = require('xml2json');
 // const nodemailer = require('nodemailer');
 // const smtpTransport = require('nodemailer-smtp-transport');
 const config = require('./config');
@@ -107,7 +108,7 @@ app
 						p: data.password,
 					},
 				}, (err2, resp, b) => {
-					if(!err2 && b){
+					if(!err2 && b && JSON.parse(xml2json.toJson(b))==='Y'){
 						sess.temp = {};
 						sess.temp.student_id = data.student_id;
 						sess.temp.password = data.password;
