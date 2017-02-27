@@ -550,6 +550,26 @@ app
 	}
 })
 
+.post('/admin/newpost/:id', (req, res) => {
+	const sess = req.session;
+	const data = req.body;
+	if(sess.user && sess.user.is_root){
+		if(data.title && data.body){
+			db.collection('post').update({ _id: new ObjectId(req.params.id) }, {
+				$set: {
+					title: data.title,
+					body: data.body,
+				},
+			});
+		}
+		res.redirect('/admin/posts');
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
 .get('/admin/newpost/:id', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
