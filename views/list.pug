@@ -42,12 +42,7 @@ block body
 											if isRoot
 												div.root-buttons-container
 													button.btn.btn-danger.delete-course(data-id=course._id) 刪除
-													button.btn.btn-success 可以投票了
-													button.btn.btn-Primary 可以開課了
-											div.root-buttons-container
-												button.btn.btn-danger.delete-course(data-id=course._id) 刪除
-												button.btn.btn-success 可以投票了
-												button.btn.btn-Primary 可以開課了
+													button.btn.btn-success 可以#{nextVerb}了
 											div.courses-date
 												i.fa.fa-calendar
 													|  #{course.create_time}~#{course.end_time}
