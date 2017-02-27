@@ -503,7 +503,9 @@ app
 .get('/admin/newpost', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
-		res.render('admin-newpost');
+		res.render('admin-newpost', {
+			post: '/admin/newpost',
+		});
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
@@ -558,6 +560,7 @@ app
 					title: doc.title,
 					content: encodeURIComponent(doc.body),
 					id: req.params.id,
+					post: `/post/${req.params.id}`,
 				});
 			}else{
 				res.redirect('/admin/posts');
