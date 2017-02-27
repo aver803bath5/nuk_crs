@@ -108,7 +108,7 @@ app
 						p: data.password,
 					},
 				}, (err2, resp, b) => {
-					if(!err2 && b && JSON.parse(xml2json.toJson(b))==='Y'){
+					if(!err2 && b && JSON.parse(xml2json.toJson(b)).result==='Y'){
 						sess.temp = {};
 						sess.temp.student_id = data.student_id;
 						sess.temp.password = data.password;
