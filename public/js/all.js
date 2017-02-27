@@ -65,6 +65,10 @@ $(document).ready(function() {
 	$('.vote').on('click', function(event) {
 		event.preventDefault();
 		var id = $(this).data('id');
+		var coursesCountText = $(this).parent().find('.courses-count').text().split('人');
+	  $(this).removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
+	  $(this).parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
+		console.log($(this));
 		// $.ajax({
 		// 	url: '/vote/'+id,
 		// 	type: 'delete',
@@ -79,6 +83,7 @@ $(document).ready(function() {
 				var coursesCountText = $(this).parent().find('.courses-count').text().split('人');
 				$(this).removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
 				$(this).parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
+				console.log($(this));
 				alert('投票成功！');
 				return false;
 			} else if(res.result === -1){
