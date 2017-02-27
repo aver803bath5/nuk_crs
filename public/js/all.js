@@ -78,6 +78,8 @@ $(document).ready(function() {
 			if (res.result === 0) {
 				alert('投票成功！');
 				var coursesCountText = $('this').parent().find('.courses-count').text().split('人');
+				console.log(coursesCountText);
+				console.log($(this));
 				$('this').removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
 				$('this').parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
 				return false;
