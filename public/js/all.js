@@ -62,7 +62,7 @@ $(document).ready(function() {
 		/* Act on the event */
 	});
 
-	$('.vote').on('click', function(event) {
+	$('body').on('click', '.vote', function(event) {
 		event.preventDefault();
 		var id = $(this).data('id');
 		var thisElement=$(this);
@@ -95,7 +95,8 @@ $(document).ready(function() {
 	});
 
 
-	$('.anti-vote').on('click', function(event) {
+	$('body').on('click', ".anti-vote", function(event) {
+		event.preventDefault();
 		var id = $(this).data('id');
 		var thisElement=$(this);
 
