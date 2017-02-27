@@ -105,7 +105,7 @@ $(document).ready(function() {
 
 					if (result === 0) {
 						var coursesCountText = $(this).parent().find('.courses-count').text().split('人');
-						$(this).removeClass().addClass(".btn.btn-danger.anti-vote").text("我要" + coursesCountText[1]);
+						$(this).removeClass().addClass("btn btn-danger anti-vote").text("我要" + coursesCountText[1]);
 						$(this).parent().find('.courses-count').text((parseInt(coursesCountText[0]) - 1) + '人' + coursesCountText[1]);
 						alert('取消成功！');
 						return false;
