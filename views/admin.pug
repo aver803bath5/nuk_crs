@@ -22,7 +22,7 @@ block body
 							a(href="/admin/posts") 最新消息
 			div.container.bounceInUp.animated.home-page-container
 				form(method="post", action="/admin/option")
-					if(opt.isOpen)
+					if(opt)
 						if(opt.isOpen === false)
 							input(type="checkbox", name="isOpen").checkbox
 							|  啟用本系統
