@@ -249,7 +249,7 @@ app
 		isLogin = true;
 		if(req.session.user.is_root) isRoot = true;
 	}
-	db.collection('course').find({stage: 1}).toArray((err, course) => {
+	db.collection('course').find({stage: {$in: [1, 2]}}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
 			for(let i=0;i<course.length;i++){
@@ -414,7 +414,7 @@ app
 		isLogin = true;
 		if(req.session.user.is_root) isRoot = true;
 	}
-	db.collection('course').find({stage: 3}).toArray((err, course) => {
+	db.collection('course').find({stage: {$in: [3, 4]}}).toArray((err, course) => {
 		if(course.length){
 			const newCourse = course.reverse();
 			for(let i=0;i<course.length;i++){
