@@ -308,7 +308,7 @@ app
 						time: new Date(),
 						user: sess.user,
 					});
-					if(course.petition_people.length === 2){
+					if(course.petition_people.length === 5){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople, stage: 2}});
 					}else{
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople}});
@@ -334,7 +334,7 @@ app
 						time: new Date(),
 						user: sess.user,
 					});
-					if(course.petition_people.length === 2){
+					if(course.petition_people.length === 10){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople, stage: 4}});
 					}else{
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople}});
