@@ -42,7 +42,9 @@ mc.connect(config.db.host, (err, database) => {
 app
 .get('/', (req, res) => {
 	let isLogin = false;
+	let isRoot = false;
 	if(req.session.user) isLogin = true;
+	if(req.session.is_root) isRoot = true;
 	db.collection('post').find({}).toArray((resp, docs) => {
 		if(docs.length){
 			const post = [];
@@ -53,10 +55,12 @@ app
 			res.render('index', {
 				posts: post.reverse(),
 				isLogin,
+				isRoot,
 			});
 		}else{
 			res.render('index', {
 				isLogin,
+				isRoot,
 			});
 		}
 	});

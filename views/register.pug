@@ -13,14 +13,45 @@ block body
 					label
 						| 信箱
 					input(type="email", name="email", autofocus).textbox#user
-					label 
+					label
 						| 姓名
 					input(type="text", name="username").textbox#pass
-					label 
+					label
 						| 系所
-					input(type="text", name="dept").textbox#pass
-					label 
+					select(name="dept").textbox
+						option(value='西洋語文學系') 西洋語文學系
+						option(value='運動健康與休閒學系') 運動健康與休閒學系
+						option(value='創意設計與建築學系') 創意設計與建築學系
+						option(value='東亞語文學系') 東亞語文學系
+						option(value='運動競技學系') 運動競技學系
+						option(value='法律學系') 法律學系
+						option(value='政治法律學系') 政治法律學系
+						option(value='財經法律學系') 財經法律學系
+						option(value='法學院博士班') 法學院博士班
+						option(value='應用經濟學系') 應用經濟學系
+						option(value='金融管理學系') 金融管理學系
+						option(value='資訊管理學系') 資訊管理學系
+						option(value='國際商業管理碩士學位學程') 國際商業管理碩士學位學程
+						option(value='經營管理研究所') 經營管理研究所
+						option(value='應用數學系') 應用數學系
+						option(value='應用化學系') 應用化學系
+						option(value='應用物理學系') 應用物理學系
+						option(value='統計學研究所') 統計學研究所
+						option(value='理學院共同課程') 理學院共同課程
+						option(value='電機工程學系') 電機工程學系
+						option(value='土木與環境工程學系') 土木與環境工程學系
+						option(value='都市發展與建築研究所') 都市發展與建築研究所
+						option(value='資訊工程學系') 資訊工程學系
+						option(value='化學工程及材料工程學系') 化學工程及材料工程學系
+						option(value='生命科學系') 生命科學系
+						option(value='生物科技研究所') 生物科技研究所
+						option(value='亞太工商管理學系') 亞太工商管理學系
+						option(value='高階經營管理碩士在職專班') 高階經營管理碩士在職專班
+						option(value='國際高階經營管理碩士在職專班') 國際高階經營管理碩士在職專班
+						option(value='高階法律暨管理碩士在職專班') 高階法律暨管理碩士在職專班
+
+					label
 						| 電話
-					input(type="tel", name="phone").textbox#pass
+					input(type="tel", name="phone").textbox
 					input(type="submit", value="完成").button#login-button 
 		include common/footer
