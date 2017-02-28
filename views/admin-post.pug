@@ -31,16 +31,16 @@ block body
 								li.news-admin-news
 									div.new-admin-list-date-button-wrapper
 										span.new-admin-list-date #{post.date}
-										button.btn.btn-Primary
-											a(href="/admin/newpost/" + post._id) 編輯
-										button.btn.btn-danger
-											a(href="/admin/delpost/" + post._id) 刪除
 										if post.sticky
 											button.btn.btn-success.ok.sticky
 												a(href="/admin/post/sticky/" + post._id) 取消置頂
 										else
 											button.btn.btn-warning.sticky
 												a(href="/admin/post/sticky/" + post._id) 置頂
+										button.btn.btn-Primary
+											a(href="/admin/newpost/" + post._id) 編輯
+										button.btn.btn-danger
+											a(href="/admin/delpost/" + post._id) 刪除
 									div.news-admin-list-title
 										a(href=post.link) #{post.title}
 									div.clear
