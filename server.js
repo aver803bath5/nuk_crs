@@ -636,6 +636,33 @@ app
 	});
 })
 
+.get('/admin/post/sticky/:id', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		db.collection('post').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
+			if(docs){
+				const doc = docs[0];
+				let sticky = false;
+				if(!doc.sticky){
+					sticky = true;
+				}else{
+					sticky = !doc.sticky;
+				}
+				db.collection('post').update({_id: new ObjectId(req.params.id)}, {
+					$set: {
+						sticky,
+					},
+				});
+			}
+			res.redirect('/admin/posts');
+		});
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
 .get('/admin/edit/intro', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
