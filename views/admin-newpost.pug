@@ -25,7 +25,8 @@ block body
 				div.newsEditor-conainter
 					form(method="post", action=post)
 						if title
-							input.textbox(name='title', type='text', placeholder='標題', value=title, required='required')
+							if title !== '🗿'
+								input.textbox(name='title', type='text', placeholder='標題', value=title, required='required')
 						else
 							input.textbox(name='title', type='text', placeholder='標題', required='required')
 						textarea#newsEditor(name='body')

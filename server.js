@@ -636,6 +636,48 @@ app
 	});
 })
 
+.get('/admin/edit/intro', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		db.collection('post').find({name: 'indexIntro'}).toArray((resp, docs) => {
+			if(docs){
+				const doc = docs[0];
+				res.render('admin-newpost', {
+					title: '🗿',
+					content: encodeURIComponent(doc.body),
+					id: req.params.id,
+					post: '/admin/edit/intro',
+				});
+			}else{
+				res.redirect('/admin/posts');
+			}
+		});
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
+.post('/admin/edit/intro', (req, res) => {
+	const sess = req.session;
+	const data = req.body;
+	if(sess.user && sess.user.is_root){
+		if(data.title && data.body){
+			db.collection('post').update({ name: 'indexIntro' }, {
+				$set: {
+					body: data.body,
+				},
+			});
+		}
+		res.redirect('/admin/');
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
 .use('/public', express.static(`${__dirname}/public`));
 
 process.on('SIGINT', () => {
