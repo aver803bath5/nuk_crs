@@ -28,10 +28,10 @@ block body
 						else
 							input(type="checkbox", name="isOpen", checked).checkbox
 							|  啟用本系統
-						input(type="text", class="textbox", value="opt.adminMail", required="required")
+						input(type="text", class="textbox", value=opt.adminMail, name="amdinMail", required="required")
 					else
 						input(type="checkbox", name="isOpen", checked).checkbox
-						input(type="text", class="textbox", value="", required="required")
+						input(type="text", class="textbox", value="", name="amdinMail", required="required")
 						|  啟用本系統
 					input(type="submit", value="儲存").button.full.ok
 					ul
