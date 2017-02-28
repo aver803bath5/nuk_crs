@@ -696,7 +696,7 @@ app
 	const sess = req.session;
 	const data = req.body;
 	if(sess.user && sess.user.is_root){
-		if(data.title && data.body){
+		if(data.body){
 			db.collection('post').update({ name: 'indexIntro' }, {
 				$set: {
 					body: data.body,
