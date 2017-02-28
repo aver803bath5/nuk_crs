@@ -50,12 +50,15 @@ app
 	db.collection('post').find({}).toArray((resp, docs) => {
 		if(docs.length){
 			const post = [];
+			let indexIntro = '';
 			Object.keys(docs).forEach((i) => {
 				post.push(docs[i]);
 				post[i].date = moment(post.create_time).format('YYYY/MM/DD');
+				if(post[i].name === 'indexIntro') indexIntro = post[i].body;
 			});
 			res.render('index', {
 				posts: post.reverse(),
+				indexIntro,
 				isLogin,
 				isRoot,
 			});
