@@ -19,6 +19,8 @@ block body
 							a(href="/admin") 系統設定
 						li
 							a(href="/admin/posts") 最新消息
+						li
+							a(href="/admin/edit/intro") 首頁文字
 			div.container.news-admin-container
 				div.news-admin-content
 					button.btn.btn-success
@@ -33,6 +35,8 @@ block body
 											a(href="/admin/newpost/" + post._id) 編輯
 										button.btn.btn-danger
 											a(href="/admin/delpost/" + post._id) 刪除
+										button.btn.button.ok
+											a(href="/admin/post/sticky/" + post._id) 置頂
 									div.news-admin-list-title
 										a(href=post.link) #{post.title}
 									div.clear
