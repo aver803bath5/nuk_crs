@@ -626,6 +626,11 @@ table{
 	margin-top: 1rem
 }
 
+.sticky {
+	float: left;
+	padding-right: .5rem
+}
+
 @media screen and (max-width: 480px) {
 	.news-date {
 		float: none;
