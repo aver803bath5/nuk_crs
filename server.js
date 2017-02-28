@@ -50,10 +50,16 @@ app
 	db.collection('post').find({}).toArray((resp, docs) => {
 		if(docs.length){
 			const post = [];
+			const stickyPost = [];
 			let indexIntro = '';
 			Object.keys(docs).forEach((i) => {
-				post.push(docs[i]);
-				post[i].date = moment(post.create_time).format('YYYY/MM/DD');
+				const newDoc = docs[i];
+				newDoc.date = moment(post.create_time).format('YYYY/MM/DD');
+				if(post.sticky){
+					stickyPost.push(newDoc);
+				}else{
+					post.push(newDoc);
+				}
 				if(post[i].name === 'indexIntro') indexIntro = post[i].body;
 			});
 			res.render('index', {
