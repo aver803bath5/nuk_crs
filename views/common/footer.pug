@@ -6,9 +6,13 @@ div#sec_footer
 				i.fa.fa-phone.fa-fw(aria-hidden='true')
 				|  886-7-5919043
 			li
-				if(opt.adminMail)
-					i.fa.fa-envelope.fa-fw(aria-hidden='true')
-					|  #{opt.adminMail}
+				if(opt)
+					if(opt.adminMail)
+						i.fa.fa-envelope.fa-fw(aria-hidden='true')
+						|  #{opt.adminMail}
+					else
+						i.fa.fa-envelope.fa-fw(aria-hidden='true')
+						|  guannn@nuk.edu.tw
 				else
 					i.fa.fa-envelope.fa-fw(aria-hidden='true')
 					|  guannn@nuk.edu.tw
