@@ -32,6 +32,11 @@ mc.connect(config.db.host, (err, database) => {
 		app.listen(process.env.PORT || config.port, () => {
 			console.log('SERVER STARTED');
 		});
+		db.collection('options').find({name: 'option'}).toArray((resp, docs) => {
+			if(docs.length){
+				app.set('opt', docs[0]);
+			}
+		});
 	}else{
 		console.error('Cannot connect to database.');
 	}
@@ -67,11 +72,13 @@ app
 				indexIntro,
 				isLogin,
 				isRoot,
+				opt: app.get('opt') || null,
 			});
 		}else{
 			res.render('index', {
 				isLogin,
 				isRoot,
+				opt: app.get('opt') || null,
 			});
 		}
 	});
@@ -109,7 +116,9 @@ app
 							res.redirect('/');
 						}
 					}else{
-						res.render('/closed');
+						res.render('/closed', {
+							opt: app.get('opt') || null,
+						});
 					}
 				}else{
 					res.redirect('/login#loginFailed');
@@ -133,7 +142,9 @@ app
 					}
 				});
 			}else{
-				res.render('/closed');
+				res.render('/closed', {
+					opt: app.get('opt') || null,
+				});
 			}
 		});
 	});
@@ -153,7 +164,9 @@ app
 	const sess = req.session;
 
 	if(sess.temp.student_id && sess.temp.password){
-		res.render('register');
+		res.render('register', {
+			opt: app.get('opt') || null,
+		});
 	}else{
 		res.redirect('/login');
 	}
@@ -190,6 +203,7 @@ app
 		res.render('suggest', {
 			name: sess.user.username,
 			isLogin: true,
+			opt: app.get('opt') || null,
 		});
 	}else{
 		res.redirect('/login');
@@ -282,12 +296,14 @@ app
 				courses: newCourse,
 				isLogin,
 				isRoot,
+				opt: app.get('opt') || null,
 			});
 		}else{
 			res.render('list', {
 				verb: '連署',
 				nextVerb: '投票',
 				isLogin,
+				opt: app.get('opt') || null,
 			});
 		}
 	});
@@ -447,12 +463,14 @@ app
 				courses: newCourse,
 				isLogin,
 				isRoot,
+				opt: app.get('opt') || null,
 			});
 		}else{
 			res.render('list', {
 				verb: '投票',
 				nextVerb: '可以開課了',
 				isLogin,
+				opt: app.get('opt') || null,
 			});
 		}
 	});
@@ -463,6 +481,7 @@ app
 		if(docs.length){
 			res.render('rules', {
 				rules: docs[0].body,
+				opt: app.get('opt') || null,
 			});
 		}
 	});
@@ -523,9 +542,12 @@ app
 			if(docs.length){
 				res.render('admin-post', {
 					posts: docs.reverse(),
+					opt: app.get('opt') || null,
 				});
 			}else{
-				res.render('admin-post');
+				res.render('admin-post', {
+					opt: app.get('opt') || null,
+				});
 			}
 		});
 	}else if(sess.user) {
@@ -540,6 +562,7 @@ app
 	if(sess.user && sess.user.is_root){
 		res.render('admin-newpost', {
 			post: '/admin/newpost',
+			opt: app.get('opt') || null,
 		});
 	}else if(sess.user) {
 		res.redirect('/');
@@ -594,6 +617,7 @@ app
 				$set: {
 					title: data.title,
 					body: data.body,
+					opt: app.get('opt') || null,
 				},
 			});
 		}
@@ -616,6 +640,7 @@ app
 					content: encodeURIComponent(doc.body),
 					id: req.params.id,
 					post: `/admin/newpost/${req.params.id}`,
+					opt: app.get('opt') || null,
 				});
 			}else{
 				res.redirect('/admin/posts');
@@ -644,6 +669,7 @@ app
 				date: moment(doc.create_time).format('YYYY/MM/DD'),
 				isLogin,
 				isRoot,
+				opt: app.get('opt') || null,
 			});
 		}else{
 			res.redirect('/');
@@ -689,6 +715,7 @@ app
 					content: encodeURIComponent(doc.body),
 					id: req.params.id,
 					post: '/admin/edit/intro',
+					opt: app.get('opt') || null,
 				});
 			}else{
 				db.collection('post').insert({name: 'indexIntro', body: ''});
@@ -697,6 +724,7 @@ app
 					content: '',
 					id: req.params.id,
 					post: '/admin/edit/intro',
+					opt: app.get('opt') || null,
 				});
 			}
 		});
@@ -737,6 +765,7 @@ app
 					content: encodeURIComponent(doc.body),
 					id: req.params.id,
 					post: '/admin/edit/process',
+					opt: app.get('opt') || null,
 				});
 			}else{
 				db.collection('post').insert({name: 'processDesc', body: ''});
@@ -745,6 +774,7 @@ app
 					content: '',
 					id: req.params.id,
 					post: '/admin/edit/process',
+					opt: app.get('opt') || null,
 				});
 			}
 		});
