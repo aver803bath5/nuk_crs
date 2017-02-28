@@ -19,8 +19,6 @@ block body
 							a(href="/admin") 系統設定
 						li
 							a(href="/admin/posts") 最新消息
-						li
-							a(href="/admin/edit/intro") 首頁文字
 			div.container.bounceInUp.animated.home-page-container
 				form(method="post", action="/admin/option")
 					if(opt)
@@ -34,4 +32,6 @@ block body
 						input(type="checkbox", name="isOpen", checked).checkbox
 						|  啟用本系統
 					input(type="submit", value="儲存").button.full.ok
+					a(href="/admin/edit/intro") 首頁文字
+					a(href="/admin/edit/process") 修改開課程序
 		include common/footer
