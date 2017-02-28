@@ -62,13 +62,10 @@ $(document).ready(function() {
 		/* Act on the event */
 	});
 
-	$('.vote').on('click', function(event) {
+	$('body').on('click', '.vote', function(event) {
 		event.preventDefault();
 		var id = $(this).data('id');
-		var coursesCountText = $(this).parent().find('.courses-count').text().split('人');
-	  $(this).removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
-	  $(this).parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
-		console.log($(this));
+		var thisElement=$(this);
 		// $.ajax({
 		// 	url: '/vote/'+id,
 		// 	type: 'delete',
@@ -80,9 +77,9 @@ $(document).ready(function() {
 
 		$.post('/vote/'+id, function(res) {
 			if (res.result === 0) {
-				var coursesCountText = $(this).parent().find('.courses-count').text().split('人');
-				$(this).removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
-				$(this).parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
+				var coursesCountText = thisElement.parent().find('.courses-count').text().split('人');
+				thisElement.removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
+				thisElement.parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
 				console.log($(this));
 				alert('投票成功！');
 				return false;
@@ -98,8 +95,10 @@ $(document).ready(function() {
 	});
 
 
-	$('.anti-vote').on('click', function(event) {
+	$('body').on('click', ".anti-vote", function(event) {
+		event.preventDefault();
 		var id = $(this).data('id');
+		var thisElement=$(this);
 
 		$.ajax({
 				url: '/vote/'+id,
@@ -109,9 +108,9 @@ $(document).ready(function() {
 					var result = $.parseJSON(res.responseText).result;
 
 					if (result === 0) {
-						var coursesCountText = $(this).parent().find('.courses-count').text().split('人');
-						$(this).removeClass().addClass("button ok vote").text("我要" + coursesCountText[1]);
-						$(this).parent().find('.courses-count').text((parseInt(coursesCountText[0]) - 1) + '人' + coursesCountText[1]);
+						var coursesCountText = thisElement.parent().find('.courses-count').text().split('人');
+						thisElement.removeClass().addClass("button ok vote").text("我要" + coursesCountText[1]);
+						thisElement.parent().find('.courses-count').text((parseInt(coursesCountText[0]) - 1) + '人' + coursesCountText[1]);
 						alert('取消成功！');
 						return false;
 					} else if (result === -1) {
