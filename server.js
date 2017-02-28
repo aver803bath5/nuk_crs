@@ -528,6 +528,7 @@ app
 				res.redirect('/admin');
 			}
 		});
+		app.set('opt', data);
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
