@@ -459,7 +459,13 @@ app
 })
 
 .get('/rule', (req, res) => {
-	res.render('rules');
+	db.collection('post').find({name: 'processDesc'}).toArray((resp, docs) => {
+		if(docs.length){
+			res.render('rules', {
+				rules: docs[0].body,
+			});
+		}
+	});
 })
 
 .get('/admin', (req, res) => {
