@@ -667,7 +667,7 @@ app
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
 		db.collection('post').find({name: 'indexIntro'}).toArray((resp, docs) => {
-			if(docs){
+			if(docs.length){
 				const doc = docs[0];
 				res.render('admin-newpost', {
 					title: '🗿',
@@ -676,6 +676,12 @@ app
 					post: '/admin/edit/intro',
 				});
 			}else{
+				res.render('admin-newpost', {
+					title: '🗿',
+					content: '',
+					id: req.params.id,
+					post: '/admin/edit/intro',
+				});
 				res.redirect('/admin/posts');
 			}
 		});
