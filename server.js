@@ -60,7 +60,7 @@ app
 				}else{
 					post.push(newDoc);
 				}
-				if(post[i].name === 'indexIntro') indexIntro = post[i].body;
+				if(newDoc.name === 'indexIntro') indexIntro = newDoc.body;
 			});
 			res.render('index', {
 				posts: stickyPost.reverse().concat(post.reverse()),
