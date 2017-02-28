@@ -676,6 +676,7 @@ app
 					post: '/admin/edit/intro',
 				});
 			}else{
+				db.collection('post').insert({name: 'indexIntro'});
 				res.render('admin-newpost', {
 					title: '🗿',
 					content: '',
