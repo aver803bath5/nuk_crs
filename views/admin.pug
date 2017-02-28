@@ -32,6 +32,9 @@ block body
 						input(type="checkbox", name="isOpen", checked).checkbox
 						|  啟用本系統
 					input(type="submit", value="儲存").button.full.ok
-					a(href="/admin/edit/intro") 首頁文字
-					a(href="/admin/edit/process") 修改開課程序
+					ul
+						li
+							a(href="/admin/edit/intro") 修改首頁文字
+						li
+							a(href="/admin/edit/process") 修改開課程序
 		include common/footer
