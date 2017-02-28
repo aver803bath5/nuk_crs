@@ -17,6 +17,9 @@ block body
 							each post in posts
 								if !post.name
 									li.news
+										if post.sticky
+											div.sticky
+												<i class="fa fa-thumb-tack" aria-hidden="true"></i>
 										a(href='/post/' + post._id)
 											div.news-date
 												i.fa.fa-calendar-o.fa-fw(aria-hidden='true')
