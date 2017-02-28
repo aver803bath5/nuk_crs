@@ -55,7 +55,7 @@ app
 			Object.keys(docs).forEach((i) => {
 				const newDoc = docs[i];
 				newDoc.date = moment(post.create_time).format('YYYY/MM/DD');
-				if(post.sticky){
+				if(newDoc.sticky){
 					stickyPost.push(newDoc);
 				}else{
 					post.push(newDoc);
@@ -63,7 +63,7 @@ app
 				if(post[i].name === 'indexIntro') indexIntro = post[i].body;
 			});
 			res.render('index', {
-				posts: post.reverse(),
+				posts: stickyPost.reverse().concat(post.reverse()),
 				indexIntro,
 				isLogin,
 				isRoot,
