@@ -15,7 +15,7 @@ block body
 					ul.news-list
 						if posts
 							each post in posts
-								if post.title !== '🗿'
+								if !post.name
 									li.news
 										a(href='/post/' + post._id)
 											div.news-date
