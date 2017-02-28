@@ -682,7 +682,6 @@ app
 					id: req.params.id,
 					post: '/admin/edit/intro',
 				});
-				res.redirect('/admin/posts');
 			}
 		});
 	}else if(sess.user) {
