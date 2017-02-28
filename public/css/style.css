@@ -97,6 +97,16 @@ button {
 	background-color: #09509b;
 }
 
+.btn-warning {
+	background-color: #c6be23;
+	color: #fff
+}
+
+.btn-warning:hover {
+	background-color: #8e8818;
+	color: #fff
+}
+
 .nav {
 	transition: color .5s;
 }
