@@ -8,7 +8,17 @@ block body
 			h1.title-admin
 				a(href="/")
 					|自主開課平台 | 高大通識中心
-			include common/nav
+			div.container_nav#con_nav
+				nav
+					ul
+						li
+							a(href="/logout").nav.login-link
+								i.fa.fa-user
+								| 登出
+						li
+							a(href="/admin") 系統設定
+						li
+							a(href="/admin/posts") 最新消息
 			div.container
 				table.userlist
 					tr
