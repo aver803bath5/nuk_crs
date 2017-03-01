@@ -15,8 +15,8 @@ block body
 						th 學號
 						th 姓名
 						th 系所
-					tr
-						each user in users
+					each user in users
+						tr
 							td #{user.student_id}
 							td #{user.name}
 							td #{user.dept}
