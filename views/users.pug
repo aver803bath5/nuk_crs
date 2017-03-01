@@ -15,9 +15,10 @@ block body
 						th 學號
 						th 姓名
 						th 系所
-					tr
-						td A1033312
-						td KP#
-						td 資訊管理學系
+					each user in users
+						tr
+							td #{user.student_id}
+							td #{user.name}
+							td #{user.dept}
 
 			include common/footer
