@@ -59,7 +59,7 @@ app
 			let indexIntro = '';
 			Object.keys(docs).forEach((i) => {
 				const newDoc = docs[i];
-				newDoc.date = moment(post.create_time).format('YYYY/MM/DD');
+				newDoc.date = moment(newDoc.create_time).format('YYYY/MM/DD');
 				if(newDoc.sticky){
 					stickyPost.push(newDoc);
 				}else{
