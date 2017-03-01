@@ -345,7 +345,6 @@ app
 					res.end();
 				}
 			}else if(course.stage === 3){ // course.stage === 3
-				console.log('VVVVVVVVOOOOOOOOOTTTTTTTTEEEEEEEEEEE');
 				let hasVote = false;
 				if(course.petition_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
@@ -356,11 +355,11 @@ app
 					}
 				}
 				if(hasVote !== true){
-					const newVotePeople = course.vote_people.push({
+					const newVotePeople = course.vote_people;
+					newVotePeople.push({
 						time: new Date(),
 						user: sess.user,
 					});
-					console.log(newVotePeople);
 					if(course.petition_people.length === 10){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople, stage: 4}});
 					}else{
