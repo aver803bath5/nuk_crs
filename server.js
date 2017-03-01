@@ -808,7 +808,7 @@ app
 .get('/admin/nextstage/:id', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
-		db.post.find({_id: new ObjectId(req.params.id)}).toArray((err, docs) => {
+		db.collection('post').find({_id: new ObjectId(req.params.id)}).toArray((err, docs) => {
 			if(docs.length){
 				const newStage = docs[0].stage + 1;
 				db.post.update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
