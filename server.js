@@ -344,7 +344,8 @@ app
 					res.status(200).write(JSON.stringify({result: -2}));
 					res.end();
 				}
-			}else{ // course.stage === 3
+			}else if(course.stage === 3){ // course.stage === 3
+				console.log('VVVVVVVVOOOOOOOOOTTTTTTTTEEEEEEEEEEE');
 				let hasVote = false;
 				if(course.petition_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
@@ -359,6 +360,7 @@ app
 						time: new Date(),
 						user: sess.user,
 					});
+					console.log(newVotePeople);
 					if(course.petition_people.length === 10){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople, stage: 4}});
 					}else{
@@ -405,7 +407,7 @@ app
 					res.status(200).write(JSON.stringify({result: 0}));
 					res.end();
 				}
-			}else{ // course.stage === 2
+			}else if(course.stage === 3){ // course.stage === 3
 				let hasVoted = false;
 				if(course.vote_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
