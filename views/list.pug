@@ -44,7 +44,7 @@ block body
 													button.btn.btn-danger.delete-course(data-id=course._id) 刪除
 													if (course.stage === 2 || course.stage === 4)
 														button.btn.btn-success
-															a(href="/admin/nextstage/" + course._id) 可以#{nextVerb}
+															a(href="/admin/nextstage/" + course._id) 可以#{nextVerb}了
 											div.courses-date
 												i.fa.fa-calendar
 													|  #{course.create_time}~#{course.end_time}
