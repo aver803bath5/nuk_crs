@@ -812,9 +812,10 @@ app
 			if(docs.length){
 				const newStage = docs[0].stage + 1;
 				db.post.update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
+				console.log(stage + ',' + newStage);
 			}
 		});
-		res.redirect(req.path);
+		res.redirect('/');
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
