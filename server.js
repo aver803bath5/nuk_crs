@@ -22,7 +22,7 @@ function sendMail(mailto, subject, body) {
 		}));
 
 		transporter.sendMail({
-			from: 'a1033312@nuk.edu.tw',
+			from: app.get('opt').adminMail || 'guannn@nuk.edu.tw',
 			to: mailto,
 			subject,
 			html: body,
@@ -63,12 +63,6 @@ mc.connect(config.db.host, (err, database) => {
 		console.error('Cannot connect to database.');
 	}
 	/* eslint-enable no-console */
-});
-
-sendMail('noob@noob.tw, aver803bath261@gmail.com', '測試郵件', '測試內容').then(() => {
-	console.log('mail sent.');
-}).catch((err) => {
-	console.error(err);
 });
 
 app
@@ -362,6 +356,7 @@ app
 					});
 					if(course.petition_people.length === 5){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople, stage: 2}});
+						sendMail(app.get('opt').adminMail || 'guannn@nuk.edu.tw', '[自主開課平台]連署達成通知', `${course.name}已達成連署門檻，可以投票了。請前往<a href="http://140.127.232.203">自主開課平台</a>審查`);
 					}else{
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople}});
 					}
@@ -389,6 +384,7 @@ app
 					});
 					if(course.petition_people.length === 10){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople, stage: 4}});
+						sendMail(app.get('opt').adminMail || 'guannn@nuk.edu.tw', '[自主開課平台]投票達成通知', `${course.name}已達成投票門檻，可以送審了。請前往<a href="http://140.127.232.203">自主開課平台</a>審查`);
 					}else{
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople}});
 					}
@@ -840,6 +836,18 @@ app
 		db.collection('course').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
 			if(docs.length){
 				const newStage = docs[0].stage + 1;
+				const mailList = [];
+				if(docs[0].stage === 2) {
+					Object.keys(docs[0].petition_people).forEach((i) => {
+						mailList.push(`${docs[0].petition_people[i].user.student_id}@mail.nuk.edu.tw`);
+					});
+				}
+				if(docs[0].stage === 4) {
+					Object.keys(docs[0].vote_people).forEach((i) => {
+						mailList.push(`${docs[0].vote[i].user.student_id}@mail.nuk.edu.tw`);
+					});
+				}
+				sendMail(mailList.join(','), '[自主開課平台]課程完成審查', `${docs[0].name}已經通過審查，請前往<a href="http://140.127.232.203">自主開課平台</a>查看`);
 				db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
 			}
 		});
