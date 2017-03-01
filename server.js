@@ -834,7 +834,6 @@ app
 				});
 			}
 		});
-		res.redirect('/');
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
