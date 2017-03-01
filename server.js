@@ -808,12 +808,10 @@ app
 .get('/admin/nextstage/:id', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
-		db.collection('post').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
-			console.log(docs);
+		db.collection('course').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
 			if(docs.length){
 				const newStage = docs[0].stage + 1;
-				db.post.update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
-				console.log(stage + ',' + newStage);
+				db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
 			}
 		});
 		res.redirect('/');
