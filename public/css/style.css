@@ -496,6 +496,10 @@ nav ul li a{
 	background: #cdcdcd;
 }
 
+table {
+	width: 100%;
+}
+
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
