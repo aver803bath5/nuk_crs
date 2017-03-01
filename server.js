@@ -344,7 +344,7 @@ app
 					res.status(200).write(JSON.stringify({result: -2}));
 					res.end();
 				}
-			}else{ // course.stage === 3
+			}else if(course.stage === 3){ // course.stage === 3
 				let hasVote = false;
 				if(course.petition_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
@@ -355,7 +355,8 @@ app
 					}
 				}
 				if(hasVote !== true){
-					const newVotePeople = course.vote_people.push({
+					const newVotePeople = course.vote_people;
+					newVotePeople.push({
 						time: new Date(),
 						user: sess.user,
 					});
@@ -405,7 +406,7 @@ app
 					res.status(200).write(JSON.stringify({result: 0}));
 					res.end();
 				}
-			}else{ // course.stage === 2
+			}else if(course.stage === 3){ // course.stage === 3
 				let hasVoted = false;
 				if(course.vote_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
@@ -450,12 +451,13 @@ app
 				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
 				newCourse[i].didIVote = false;
 				if(req.session.user){
-					Object.keys(newCourse[i].petition_people).forEach((j) => {
-						if(newCourse[i].petition_people[j].user.student_id === req.session.user.student_id){
+					Object.keys(newCourse[i].vote_people).forEach((j) => {
+						if(newCourse[i].vote_people[j].user.student_id === req.session.user.student_id){
 							newCourse[i].didIVote = true;
 						}
 					});
 				}
+				newCourse[i].petition_people = newCourse[i].vote_people;
 			}
 			res.render('list', {
 				verb: '投票',
@@ -808,13 +810,13 @@ app
 .get('/admin/nextstage/:id', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
-		db.post.find({_id: new ObjectId(req.params.id)}).toArray((err, docs) => {
+		db.collection('course').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
 			if(docs.length){
 				const newStage = docs[0].stage + 1;
-				db.post.update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
+				db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
 			}
 		});
-		res.redirect(req.path);
+		res.redirect('/');
 	}else if(sess.user) {
 		res.redirect('/');
 	}else{
