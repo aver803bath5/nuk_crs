@@ -5,14 +5,36 @@ const session = require('express-session');
 const moment = require('moment');
 const request = require('request');
 const xml2json = require('xml2json');
-// const nodemailer = require('nodemailer');
-// const smtpTransport = require('nodemailer-smtp-transport');
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 const config = require('./config');
 
 const app = express();
 const mc = mongo.MongoClient;
 const ObjectId = mongo.ObjectID;
 let db;
+
+function sendMail(mailto, subject, body) {
+	return new Promise((res, rej) => {
+		const transporter = nodemailer.createTransport(smtpTransport({
+			host: 'mail.nuk.edu.tw',
+			port: 25,
+		}));
+
+		transporter.sendMail({
+			from: 'a1033312@nuk.edu.tw',
+			to: mailto,
+			subject,
+			html: body,
+		}, (error, resp) => {
+			if(!error){
+				res(resp);
+			}else{
+				rej(error);
+			}
+		});
+	});
+}
 
 app
 .set('view engine', 'pug')
@@ -43,6 +65,11 @@ mc.connect(config.db.host, (err, database) => {
 	/* eslint-enable no-console */
 });
 
+sendMail('noob@noob.tw, aver803bath261@gmail.com', '測試郵件', '測試內容').then(() => {
+	console.log('mail sent.');
+}).catch((err) => {
+	console.error(err);
+});
 
 app
 .get('/', (req, res) => {
@@ -850,23 +877,3 @@ process.on('SIGINT', () => {
 	db.close();
 	process.exit();
 });
-
-// function mail(mailto, subject, body, callback) {
-// 	let transporter = nodemailer.createTransport(smtpTransport({
-// 		host: 'mail.nuk.edu.tw',
-// 		port: 25,
-// 	}));
-
-// 	transporter.sendMail({
-// 		from: 'a1033312@nuk.edu.tw',
-// 		to: mailto,
-// 		subject: subject,
-// 		html: body
-// 	}, function(error, response) {
-// 		if (error) {
-// 			console.log(error);
-// 		} else {
-// 			callback();
-// 		}
-// 	});
-// }
