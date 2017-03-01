@@ -496,41 +496,9 @@ nav ul li a{
 	background: #cdcdcd;
 }
 
-table, td{
-	border: 1px solid black;
-}
-
-table{
-	border-collapse: collapse;
-}
-
-.table-admin-option{
-	background: #333;
-	color: #efefef;
-	padding: 1rem;
-	text-decoration: underline;
-	position: fixed;
-	bottom: 1rem;
-	right: 1rem;
-	width: 2rem;
-	height: 2rem;
-	font-size: 2rem;
-	border-radius: 2rem;
-	line-height: 2rem;
-	text-align: center;
-	animation-duration: .2s;
-}
-
-.table-admin-option:hover{
-	background: #424242;
-}
-
-.table-admin-option a, .table-admin-option a:visited{
-	color: inherit;
-}
-
-.table-admin-option{
-	display: block;
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
 }
 
 .course.old{
