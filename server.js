@@ -824,7 +824,7 @@ app
 	}
 })
 
-.get('/admin/list', (req, res) => {
+.get('/admin/userlist', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
 		db.collection('user').find({username: {$not: '通識教育中心'}}).toArray((resp, docs) => {
