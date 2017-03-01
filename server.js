@@ -346,7 +346,6 @@ app
 				}
 			}else{ // course.stage === 3
 				let hasVote = false;
-				if(typeof course.vote_people === 'undefined') course.vote_people = [];
 				if(course.petition_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
 						if(course.vote_people[i].user.username === sess.user.username) {
