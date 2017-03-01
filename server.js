@@ -827,7 +827,7 @@ app
 .get('/admin/userlist', (req, res) => {
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
-		db.collection('user').find({username: {$not: '通識教育中心'}}).toArray((resp, docs) => {
+		db.collection('user').find({username: {$ne: '通識教育中心'}}).toArray((resp, docs) => {
 			if(docs.length){
 				res.render('users', {
 					users: docs,
