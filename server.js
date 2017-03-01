@@ -805,6 +805,23 @@ app
 	}
 })
 
+.get('/admin/nextstage/:id', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		db.post.find({_id: new ObjectId(req.params.id)}).toArray((err, docs) => {
+			if(docs.length){
+				const newStage = docs[0].stage + 1;
+				db.post.update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
+			}
+		});
+		res.redirect(req.path);
+	}else if(sess.user) {
+		res.redirect('/');
+	}else{
+		res.redirect('/login?next=admin');
+	}
+})
+
 .use('/public', express.static(`${__dirname}/public`));
 
 process.on('SIGINT', () => {
