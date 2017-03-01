@@ -456,6 +456,7 @@ app
 						}
 					});
 				}
+				newCourse[i].petition_people = newCourse[i].vote_people;
 			}
 			res.render('list', {
 				verb: '投票',
