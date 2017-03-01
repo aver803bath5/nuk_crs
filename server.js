@@ -829,7 +829,7 @@ app
 	if(sess.user && sess.user.is_root){
 		db.collection('user').find({username: {$ne: '通識教育中心'}}).toArray((resp, docs) => {
 			if(docs.length){
-				res.render('users', {
+				res.render('admin-users', {
 					users: docs,
 				});
 			}
