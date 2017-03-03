@@ -236,7 +236,7 @@ app
 	const sess = req.session;
 
 	if(sess.user){
-		if(data.name && data.desc && data.teacher){
+		if(data.name && data.desc){
 			db.collection('course').insert({
 				name: data.name,
 				desc: data.desc,
@@ -837,10 +837,12 @@ app
 			if(docs.length){
 				const newStage = docs[0].stage + 1;
 				const mailList = [];
+				let mailBody = '';
 				if(docs[0].stage === 2) {
 					Object.keys(docs[0].petition_people).forEach((i) => {
 						mailList.push(`${docs[0].petition_people[i].user.student_id}@mail.nuk.edu.tw`);
 					});
+					mailBody = `${docs[0].name}已達 3 名學生連署，開始邀約和你志同道合的同學們至<a href="http://140.127.232.203/alp/vote">「最近投票課程」</a>投票吧！`
 				}
 				if(docs[0].stage === 4) {
 					Object.keys(docs[0].vote_people).forEach((i) => {
