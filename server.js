@@ -354,7 +354,7 @@ app
 						time: new Date(),
 						user: sess.user,
 					});
-					if(course.petition_people.length === 5){
+					if(course.petition_people.length === 3){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople, stage: 2}});
 						sendMail(app.get('opt').adminMail || 'guannn@nuk.edu.tw', '[自主開課平台]連署達成通知', `${course.name}已達成連署門檻，可以投票了。請前往<a href="http://140.127.232.203">自主開課平台</a>審查`);
 					}else{
