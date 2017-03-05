@@ -27,10 +27,14 @@ block body
 						th 學號
 						th 姓名
 						th 系所
+						th 信箱
+						th 電話
 					each user in users
 						tr
 							td #{user.student_id}
 							td #{user.username}
 							td #{user.dept}
+							td #{user.mail}
+							td #{user.phone}
 
 		include common/footer
