@@ -75,7 +75,7 @@ $(document).ready(function() {
 		// 	}
 		// });
 
-		$.post('/vote/'+id, function(res) {
+		$.post('/alp/vote/'+id, function(res) {
 			if (res.result === 0) {
 				var coursesCountText = thisElement.parent().find('.courses-count').text().split('人');
 				thisElement.removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
