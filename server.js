@@ -158,6 +158,7 @@ app
 								sess.user.student_id = data.student_id;
 								sess.user.username = usr.username;
 								sess.user.email = usr.email;
+								sess.user.phone = usr.phone;
 								res.redirect('/');
 							}else{
 								sess.temp = {};
