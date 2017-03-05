@@ -124,6 +124,7 @@ app
 				sess.user = {};
 				sess.user.username = usr.username;
 				sess.user.email = usr.email;
+				sess.user.phone = usr.phone;
 				sess.user.is_root = true;
 				if(req.query.next && req.query.next === 'admin'){
 					res.redirect('/admin');
@@ -903,7 +904,7 @@ app
 				if(course.stage === 1 || course.stage === 2 || course.stage === 3 || course.stage === 4){
 					result.text = '<b>連署名單</b><br>';
 					Object.keys(course.petition_people).forEach((i) => {
-						result.text += `${course.petition_people[i].user.student_id}${course.petition_people[i].user.name} `;
+						result.text += `${course.petition_people[i].user.student_id}${course.petition_people[i].user.username} `;
 						result.text += `${course.petition_people[i].user.phone} ${course.petition_people[i].user.email} `;
 						result.text += '<br>';
 					});
@@ -911,7 +912,7 @@ app
 				if(course.stage === 3 || course.stage === 4){
 					result.text += '<b>連署名單</b><br>';
 					Object.keys(course.vote_people).forEach((i) => {
-						result.text += `${course.vote_people[i].user.student_id}${course.vote_people[i].user.name} `;
+						result.text += `${course.vote_people[i].user.student_id}${course.vote_people[i].user.username} `;
 						result.text += `${course.vote_people[i].user.phone} ${course.vote_people[i].user.email} `;
 						result.text += '<br>';
 					});
