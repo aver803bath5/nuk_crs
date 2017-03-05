@@ -569,6 +569,11 @@ app
 				res.redirect('/admin');
 			}
 		});
+		if(data.adminPass) {
+			if(data.adminPass.length > 0){
+				db.collection('user').update({student_id: 'admin'}, {$set: {password: data.adminPass}});
+			}
+		}
 		app.set('opt', data);
 	}else if(sess.user) {
 		res.redirect('/');

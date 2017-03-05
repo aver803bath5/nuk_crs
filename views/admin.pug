@@ -22,7 +22,7 @@ block body
 						li
 							a(href="/admin/userlist") 使用者名單
 			div.container.bounceInUp.animated.home-page-container
-				form(method="post", action="/admin/option")
+				form(method="post", action="/admin/option")#adminForm
 					if(opt)
 						if(opt.isOpen === false)
 							input(type="checkbox", name="isOpen").checkbox
@@ -37,6 +37,8 @@ block body
 						|  啟用本系統
 						h3 管理員信箱
 						input(type="text", class="textbox", value="", name="adminMail", required="required")
+					h3 更改管理員密碼
+					input(type="text", name="adminPass", class="textbox", placeholder="不改請留空")#adminPass
 					input(type="submit", value="儲存").button.full.ok
 					ul
 						li
@@ -44,3 +46,7 @@ block body
 						li
 							a(href="/admin/edit/process") 修改開課程序
 		include common/footer
+		script.
+			$('#adminForm').on('submit', function(){
+				$('#adminPass').val(md5($('#adminPass').val()));
+			});
