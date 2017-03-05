@@ -917,14 +917,18 @@ app
 					});
 				}
 				res.write(JSON.stringify(result));
+				res.end();
 			}else{
 				res.write(JSON.stringify({result: -1}));
+				res.end();
 			}
 		});
 	}else if(sess.user) {
 		res.write(JSON.stringify({result: -1}));
+		res.end();
 	}else{
 		res.write(JSON.stringify({result: -1}));
+		res.end();
 	}
 })
 
