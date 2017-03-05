@@ -126,13 +126,9 @@ app
 				sess.user.mail = usr.mail;
 				sess.user.is_root = true;
 				if(req.query.next && req.query.next === 'admin'){
-					res.redirect('/admin', {
-						opt: app.get('opt') || null,
-					});
+					res.redirect('/admin');
 				}else{
-					res.redirect('/', {
-						opt: app.get('opt') || null,
-					});
+					res.redirect('/');
 				}
 			}else{
 				res.redirect('/login#loginFailed');
