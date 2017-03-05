@@ -123,7 +123,7 @@ app
 			if(usr.password === data.password){
 				sess.user = {};
 				sess.user.username = usr.username;
-				sess.user.mail = usr.mail;
+				sess.user.email = usr.email;
 				sess.user.is_root = true;
 				if(req.query.next && req.query.next === 'admin'){
 					res.redirect('/admin');
@@ -156,7 +156,7 @@ app
 								sess.user = {};
 								sess.user.student_id = data.student_id;
 								sess.user.username = usr.username;
-								sess.user.mail = usr.mail;
+								sess.user.email = usr.email;
 								res.redirect('/');
 							}else{
 								sess.temp = {};
@@ -394,7 +394,7 @@ app
 						sendMail(app.get('opt').adminMail || 'guannn@nuk.edu.tw', '[自主開課平台]投票達成通知', `${course.name}已達成投票門檻，可以送審了。請前往<a href="http://140.127.232.203">自主開課平台</a>審查`);
 						const mailList = [];
 						Object.keys(course.vote_people).forEach((i) => {
-							mailList.push(course.vote_people[i].user.mail);
+							mailList.push(course.vote_people[i].user.email);
 						});
 						sendMail(mailList, '[自主開課平台]投票達成通知', `您投票的${course.name}課程，投票人數已達10人，中心會開始做課程媒合，敬請期待!`);
 					}else{
@@ -857,7 +857,7 @@ app
 				let mailBody = '';
 				if(docs[0].stage === 2) {
 					Object.keys(docs[0].petition_people).forEach((i) => {
-						mailList.push(docs[0].vote_people[i].user.mail);
+						mailList.push(docs[0].vote_people[i].user.email);
 					});
 					mailBody = `${docs[0].name}已達 3 名學生連署，開始邀約和你志同道合的同學們至<a href="http://140.127.232.203/alp/vote">「最近投票課程」</a>投票吧！`;
 					sendMail(mailList.join(','), '[自主開課平台]課程完成審查', mailBody);
