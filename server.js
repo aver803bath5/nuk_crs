@@ -117,34 +117,34 @@ app
 		return;
 	}
 	data.student_id = data.student_id.toLowerCase();
-	db.collection('options').find({name: 'isOpen'}, (err, docs) => {
-		let closed = false;
-		if (docs){
-			if(docs.isOpen === false) closed = true;
-		}
-		db.collection('user').find({student_id: data.student_id}).toArray((err3, usrs) => {
-			if(usrs.length){
-				const usr = usrs[0];
-				if(usr.password === data.password){
-					sess.user = {};
-					sess.user.student_id = data.student_id;
-					sess.user.username = usr.username;
-					if(usr.is_root===true) sess.user.is_root = true;
-					if(usr.is_root===true || !closed){
-						if(req.query.next && req.query.next === 'admin'){
-							res.redirect('/admin');
-						}else{
-							res.redirect('/');
-						}
-					}else{
-						res.render('/closed', {
-							opt: app.get('opt') || null,
-						});
-					}
+	if(data.student_id === 'admin'){
+		db.collection('user').find({student_id: 'admin'}).toArray((err2, usr2) => {
+			const usr = usr2[0];
+			if(usr.password === data.password){
+				sess.user = {};
+				sess.user.username = usr.username;
+				sess.user.mail = usr.mail;
+				sess.user.is_root = true;
+				if(req.query.next && req.query.next === 'admin'){
+					res.redirect('/admin', {
+						opt: app.get('opt') || null,
+					});
 				}else{
-					res.redirect('/login#loginFailed');
+					res.redirect('/', {
+						opt: app.get('opt') || null,
+					});
 				}
-			}else if(!closed){
+			}else{
+				res.redirect('/login#loginFailed');
+			}
+		});
+	}else if(/[ab][0-9]{7}/.test(data.student_id)) {
+		db.collection('options').find({name: 'isOpen'}, (err, docs) => {
+			let closed = false;
+			if (docs){
+				if(docs.isOpen === false) closed = true;
+			}
+			if(!closed){
 				request.get({
 					url: config.auth_page,
 					qs: {
@@ -154,21 +154,32 @@ app
 					},
 				}, (err2, resp, b) => {
 					if(!err2 && b && JSON.parse(xml2json.toJson(b)).result==='Y'){
-						sess.temp = {};
-						sess.temp.student_id = data.student_id;
-						sess.temp.password = data.password;
-						res.redirect('/register');
+						db.collection('user').find({student_id: data.student_id}).toArray((err3, usrs) => {
+							if(usrs.length){
+								const usr = usrs[0];
+								sess.user = {};
+								sess.user.student_id = data.student_id;
+								sess.user.username = usr.username;
+								sess.user.mail = usr.mail;
+								res.redirect('/');
+							}else{
+								sess.temp = {};
+								sess.temp.student_id = data.student_id;
+								sess.temp.password = data.password;
+								res.redirect('/register');
+							}
+						});
 					}else{
 						res.redirect('/login#loginFailed');
 					}
 				});
 			}else{
-				res.render('/closed', {
+				res.render('closed', {
 					opt: app.get('opt') || null,
 				});
 			}
 		});
-	});
+	}
 })
 
 .get('/logout', (req, res) => {
@@ -368,7 +379,7 @@ app
 				}
 			}else if(course.stage === 3){ // course.stage === 3
 				let hasVote = false;
-				if(course.petition_people.length){
+				if(course.vote_people.length){
 					for(let i=0;i<course.vote_people.length;i++){
 						if(course.vote_people[i].user.username === sess.user.username) {
 							hasVote = true;
@@ -385,6 +396,11 @@ app
 					if(course.petition_people.length === 10){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople, stage: 4}});
 						sendMail(app.get('opt').adminMail || 'guannn@nuk.edu.tw', '[自主開課平台]投票達成通知', `${course.name}已達成投票門檻，可以送審了。請前往<a href="http://140.127.232.203">自主開課平台</a>審查`);
+						const mailList = [];
+						Object.keys(course.vote_people).forEach((i) => {
+							mailList.push(course.vote_people[i].user.mail);
+						});
+						sendMail(mailList, '[自主開課平台]投票達成通知', `您投票的${course.name}課程，投票人數已達10人，中心會開始做課程媒合，敬請期待!`);
 					}else{
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople}});
 					}
@@ -840,18 +856,12 @@ app
 				let mailBody = '';
 				if(docs[0].stage === 2) {
 					Object.keys(docs[0].petition_people).forEach((i) => {
-						mailList.push(`${docs[0].petition_people[i].user.student_id}@mail.nuk.edu.tw`);
+						mailList.push(docs[0].vote_people[i].user.mail);
 					});
 					mailBody = `${docs[0].name}已達 3 名學生連署，開始邀約和你志同道合的同學們至<a href="http://140.127.232.203/alp/vote">「最近投票課程」</a>投票吧！`;
+					sendMail(mailList.join(','), '[自主開課平台]課程完成審查', mailBody);
+					db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
 				}
-				if(docs[0].stage === 4) {
-					Object.keys(docs[0].vote_people).forEach((i) => {
-						mailList.push(`${docs[0].vote[i].user.student_id}@mail.nuk.edu.tw`);
-					});
-					mailBody = `${docs[0].name}已經通過審查，請前往<a href="http://140.127.232.203">自主開課平台</a>查看`;
-				}
-				sendMail(mailList.join(','), '[自主開課平台]課程完成審查', mailBody);
-				db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
 			}
 		});
 		res.redirect('/');
