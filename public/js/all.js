@@ -124,8 +124,25 @@ $(document).ready(function() {
 				}
 			});
 	});
+
+	$('.showPeople').on('click', function(){
+		var id = $(this).data('id');
+		$.ajax({
+			type: 'GET',
+			url: '/admin/getpeople/'+id,
+			dataType: 'application/json; charset=utf-8',
+			complete: function(res){
+				if(result === 0){
+					showMsg('查詢結果', res.text, '關閉', null, closeMsg);
+				}else{
+					showMsg('查詢失敗', '找不到結果', '關閉', null, closeMsg);
+				}
+			}
+		})
+	});
 });
 
+var nextDialog = [];
 function showMsg(title, msg, ok, no, todoOk, todoNo, todo){
 	nextDialog.push(title);
 	$('.msg-title').text(title);

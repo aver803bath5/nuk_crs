@@ -890,6 +890,44 @@ app
 	}
 })
 
+.get('/admin/getpeople/:id', (req, res) => {
+	const sess = req.session;
+	if(sess.user && sess.user.is_root){
+		db.collection('course').find({_id: new ObjectId(req.params.id)}).toArray((resp, docs) => {
+			if(docs.length){
+				const course = docs[0];
+				const result = {
+					result: 0,
+					text: '',
+				};
+				if(course.stage === 1 || course.stage === 2 || course.stage === 3 || course.stage === 4){
+					result.text = '<b>連署名單</b><br>';
+					Object.keys(course.petition_people).forEach((i) => {
+						result.text += `${course.petition_people[i].student_id}${course.petition_people[i].name} `;
+						result.text += `${course.petition_people[i].phone} ${course.petition_people[i].email} `;
+						result.text += '<br>';
+					});
+				}
+				if(course.stage === 3 || course.stage === 4){
+					result.text += '<b>連署名單</b><br>';
+					Object.keys(course.vote_people).forEach((i) => {
+						result.text += `${course.vote_people[i].student_id}${course.vote_people[i].name} `;
+						result.text += `${course.vote_people[i].phone} ${course.vote_people[i].email} `;
+						result.text += '<br>';
+					});
+				}
+				res.write(JSON.stringify(result));
+			}else{
+				res.write(JSON.stringify({result: -1}));
+			}
+		});
+	}else if(sess.user) {
+		res.write(JSON.stringify({result: -1}));
+	}else{
+		res.write(JSON.stringify({result: -1}));
+	}
+})
+
 .use('/public', express.static(`${__dirname}/public`));
 
 process.on('SIGINT', () => {
