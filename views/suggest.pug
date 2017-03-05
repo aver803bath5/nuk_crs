@@ -12,14 +12,14 @@ block body
 			div.container
 				h2.title-admin 推薦課程
 				form(method="post").suggest-form.pull-left#formSuggest
-					div.category 申請人姓名
+					div.category 申請人姓名*
 					input(type="text", readonly, value=name).textbox
-					div.category 欲推薦課程名稱
+					div.category 欲推薦課程名稱*
 					input(type="text", name="name", required).textbox
-					div.category 欲推薦課程內容說明
+					div.category 欲推薦課程內容說明*
 					textarea.textbox(name="desc", rows="10", cols="50", required)
 					div.category 推薦師資
-					input(type="text", name="teacher", required).textbox
+					input(type="text", name="teacher").textbox
 					input(type="checkbox", name="agree", required).checkbox#checkSuggest
 					|     我已經詳細閱讀<a target="_blank" href="/rule">自主開課平台相關規定</a>
 					input(type="submit", value="推薦課程！").button.disabled#btnSuggest
