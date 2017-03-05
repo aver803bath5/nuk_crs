@@ -125,3 +125,52 @@ $(document).ready(function() {
 			});
 	});
 });
+
+function showMsg(title, msg, ok, no, todoOk, todoNo, todo){
+	nextDialog.push(title);
+	$('.msg-title').text(title);
+	$('.msg-content').html(msg);
+	$('.msg-ok').text(ok);
+	$('.msg-no').text(no);
+	$('.msg-wrapper').show(0);
+	$('.msg-ok').on('click', todoOk);
+	$('.msg-no').on('click', todoNo || closeMsg);
+	if(no==null){
+		$('.msg-ok').css('width', '100%');
+		$('.msg-no').css('width', '0');
+	}else{
+		$('.msg-ok').css('width', '50%');
+		$('.msg-no').css('width', '50%');
+	}
+	animateCss($('.msg'), 'bounceInDown');
+	$(document).off('keypress');
+	var todoOk = todoOk;
+	var todoNo = todoNo || closeMsg;
+	$(document).on('keypress', function(e){
+		//if(e.which==13) todoOK();
+		if(e.which==27) todoNo();
+	});
+	if(todo) todo();
+}
+
+function closeMsg(){
+	if(nextDialog.length<1){
+		animateCss($('.msg'), 'fadeOutUp', function(){$('.msg-wrapper').hide(0);});
+		$(document).off('keypress');
+	}
+	nextDialog.pop();
+}
+$('.msg-close').on('click', closeMsg);
+
+function animateCss(element, animate, todo){
+	var todo = todo;
+	var animate = animate;
+	element.addClass('animated ' + animate);
+	element.on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+		$(this).removeClass('animated ' + animate);
+		if(typeof todo !== 'undefined') {
+			todo();
+			todo = undefined;
+		}
+	});
+}
