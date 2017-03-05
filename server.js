@@ -903,16 +903,16 @@ app
 				if(course.stage === 1 || course.stage === 2 || course.stage === 3 || course.stage === 4){
 					result.text = '<b>連署名單</b><br>';
 					Object.keys(course.petition_people).forEach((i) => {
-						result.text += `${course.petition_people[i].student_id}${course.petition_people[i].name} `;
-						result.text += `${course.petition_people[i].phone} ${course.petition_people[i].email} `;
+						result.text += `${course.petition_people[i].user.student_id}${course.petition_people[i].user.name} `;
+						result.text += `${course.petition_people[i].user.phone} ${course.petition_people[i].user.email} `;
 						result.text += '<br>';
 					});
 				}
 				if(course.stage === 3 || course.stage === 4){
 					result.text += '<b>連署名單</b><br>';
 					Object.keys(course.vote_people).forEach((i) => {
-						result.text += `${course.vote_people[i].student_id}${course.vote_people[i].name} `;
-						result.text += `${course.vote_people[i].phone} ${course.vote_people[i].email} `;
+						result.text += `${course.vote_people[i].user.student_id}${course.vote_people[i].user.name} `;
+						result.text += `${course.vote_people[i].user.phone} ${course.vote_people[i].user.email} `;
 						result.text += '<br>';
 					});
 				}
