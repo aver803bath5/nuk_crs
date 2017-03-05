@@ -42,18 +42,18 @@ $(document).ready(function() {
 				var result = $.parseJSON(res.responseText).result;
 
 				if (result === 0) {
-					alert('取消成功！');
+					showMsg('刪除課程', '取消成功', '確定', null, closeMsg);
 					location.reload();
 					return false;
 				} else if (result === -1) {
-					alert('你還沒登入哦！');
+					showMsg('刪除課程', '你還沒登入哦！', '確定', null, closeMsg);
 					$(location).attr('href', '/login');
 					return false;
 				} else if (result === -2) {
-					alert('課程不存在哦！');
+					showMsg('刪除課程', '課程不存在哦！', '確定', null, closeMsg);
 					return false;
 				} else if (result === -3) {
-					alert('你似乎不是管理員哦！');
+					showMsg('刪除課程', '你似乎不是管理員哦！', '確定', null, closeMsg);
 					return false;
 				}
 
@@ -81,14 +81,14 @@ $(document).ready(function() {
 				thisElement.removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
 				thisElement.parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
 				console.log($(this));
-				alert('投票成功！');
+				showMsg('投票', '投票成功', '確定', null, closeMsg);
 				return false;
 			} else if(res.result === -1){
-				alert('你還沒登入哦！');
+				showMsg('投票', '你還沒登入哦！', '確定', null, closeMsg);
 				$(location).attr('href', '/login');
 				return false;
 			} else if(res.result === -2) {
-				alert('你已經投過票囉！');
+				showMsg('投票', '你已經投過票囉！', '確定', null, closeMsg);
 				return false;
 			}
 		});
@@ -111,14 +111,14 @@ $(document).ready(function() {
 						var coursesCountText = thisElement.parent().find('.courses-count').text().split('人');
 						thisElement.removeClass().addClass("button ok vote").text("我要" + coursesCountText[1]);
 						thisElement.parent().find('.courses-count').text((parseInt(coursesCountText[0]) - 1) + '人' + coursesCountText[1]);
-						alert('取消成功！');
+						showMsg('取消投票', '取消成功！', '確定', null, closeMsg);
 						return false;
 					} else if (result === -1) {
-						alert('你還沒登入哦！');
+						showMsg('取消投票', '你還沒登入哦！', '確定', null, closeMsg);
 						$(location).attr('href', '/login');
 						return false;
 					} else if (result === -2) {
-						alert('你還沒投票怎麼能夠退票R！');
+						showMsg('取消投票', '你還沒投票怎麼能夠退票R！', '確定', null, closeMsg);
 						return false;
 					}
 				}
