@@ -132,7 +132,8 @@ $(document).ready(function() {
 			url: '/admin/getpeople/'+id,
 			dataType: 'application/json; charset=utf-8',
 			complete: function(res){
-				if(result === 0){
+				console.log('a');
+				if(res.result === 0){
 					showMsg('查詢結果', res.text, '關閉', null, closeMsg);
 				}else{
 					showMsg('查詢失敗', '找不到結果', '關閉', null, closeMsg);
