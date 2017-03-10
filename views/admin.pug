@@ -48,5 +48,5 @@ block body
 		include common/footer
 		script.
 			$('#adminForm').on('submit', function(){
-				$('#adminPass').val(md5($('#adminPass').val()));
+				if($('#adminPass').val().length) $('#adminPass').val(md5($('#adminPass').val()));
 			});
