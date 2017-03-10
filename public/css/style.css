@@ -169,6 +169,15 @@ button {
 	padding: 1.2rem
 }
 
+#sec_footer a, #sec_footer a:hover, #sec_footer a:visited, #sec_footer a:visited:hover{
+	color: inherit;
+	text-decoration: none;
+}
+
+#sec_footer a:hover, #sec_footer a:visited:hover {
+	text-decoration: underline;
+}
+
 .footer-content {
 	list-style: none;
 }
