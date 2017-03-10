@@ -515,6 +515,41 @@ app
 	});
 })
 
+.get('/recent', (req, res) => {
+	let isLogin = false;
+	let isRoot = false;
+	if(req.session.user){
+		isLogin = true;
+		if(req.session.user.is_root) isRoot = true;
+	}
+	db.collection('course').find({stage: 5}).toArray((err, course) => {
+		if(course.length){
+			const newCourse = course.reverse();
+			for(let i=0;i<course.length;i++){
+				if((new Date()).getTime() - newCourse[i].create_time > 1000 * 86400 * 30 * 3){
+					newCourse[i].old = true;
+				}
+				newCourse[i].end_time = moment(newCourse[i].create_time + (1000 * 86400 * 30 * 3)).format('YYYY/MM/DD');
+				newCourse[i].create_time = moment(newCourse[i].create_time).format('YYYY/MM/DD');
+			}
+			res.render('list', {
+				verb: '開課',
+				courses: newCourse,
+				isLogin,
+				isRoot,
+				opt: app.get('opt') || null,
+			});
+		}else{
+			res.render('list', {
+				verb: '開課',
+				isLogin,
+				isRoot,
+				opt: app.get('opt') || null,
+			});
+		}
+	});
+})
+
 .get('/rule', (req, res) => {
 	db.collection('post').find({name: 'processDesc'}).toArray((resp, docs) => {
 		if(docs.length){
