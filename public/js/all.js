@@ -1,6 +1,10 @@
 /* eslint-disable */
 $(document).ready(function() {
 	if(window.location.hash.indexOf('loginFailed') > 0){
+		$('#loginFailed').text('驗證失敗，帳號密碼錯誤？');
+		$('#loginFailed').show();
+	}else if(window.location.hash.indexOf('registerSuccess') > 0){
+		$('#loginFailed').text('註冊成功，請重新登入');
 		$('#loginFailed').show();
 	}
 	$('#login').on('submit', function(){

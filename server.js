@@ -217,7 +217,7 @@ app
 				dept: data.dept,
 			});
 			sess.user = sess.temp;
-			res.redirect('/');
+			res.redirect('/logout#registerSuccess');
 		}else{
 			res.redirect('/register#invalidData');
 		}
