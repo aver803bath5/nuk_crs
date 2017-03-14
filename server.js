@@ -641,7 +641,7 @@ app
 	const sess = req.session;
 	if(sess.user && sess.user.is_root){
 		res.render('admin-newpost', {
-			post: '/admin/newpost',
+			post: '/alp/admin/newpost',
 			opt: app.get('opt') || null,
 		});
 	}else if(sess.user) {
@@ -678,7 +678,6 @@ app
 				title: data.title,
 				create_time: new Date().setHours(0, 0, 0, 0),
 				body: data.body,
-				post: '/alp/admin/new-post',
 			});
 		}
 		res.redirect('/admin/posts');
