@@ -678,6 +678,7 @@ app
 				title: data.title,
 				create_time: new Date().setHours(0, 0, 0, 0),
 				body: data.body,
+				post: '/alp/admin/new-post',
 			});
 		}
 		res.redirect('/admin/posts');
@@ -719,7 +720,7 @@ app
 					title: doc.title,
 					content: encodeURIComponent(doc.body),
 					id: req.params.id,
-					post: `/admin/newpost/${req.params.id}`,
+					post: `/alp/admin/newpost/${req.params.id}`,
 					opt: app.get('opt') || null,
 				});
 			}else{
