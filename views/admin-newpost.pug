@@ -26,9 +26,9 @@ block body
 					form(method="post", action=post)
 						if title
 							if title !== '🗿'
-								input.textbox(name='title', type='text', placeholder='標題', value=title, required='required')
+								input.textbox(name='title', type='text', placeholder='標題', value=title, autocomplete="off", required='required')
 						else
-							input.textbox(name='title', type='text', placeholder='標題', required='required')
+							input.textbox(name='title', type='text', placeholder='標題', autocomplete="off", required='required')
 						textarea#newsEditor(name='body')
 						button.btn.btn-success.sent-news-button 送出
 			script(src='/public/tinymce/tinymce.min.js')
