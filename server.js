@@ -794,7 +794,7 @@ app
 					title: '🗿',
 					content: encodeURIComponent(doc.body),
 					id: req.params.id,
-					post: '/admin/edit/intro',
+					post: '/alp/admin/edit/intro',
 					opt: app.get('opt') || null,
 				});
 			}else{
@@ -803,7 +803,7 @@ app
 					title: '🗿',
 					content: '',
 					id: req.params.id,
-					post: '/admin/edit/intro',
+					post: '/alp/admin/edit/intro',
 					opt: app.get('opt') || null,
 				});
 			}
@@ -844,7 +844,7 @@ app
 					title: '🗿',
 					content: encodeURIComponent(doc.body),
 					id: req.params.id,
-					post: '/admin/edit/process',
+					post: '/alp/admin/edit/process',
 					opt: app.get('opt') || null,
 				});
 			}else{
