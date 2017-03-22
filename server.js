@@ -384,6 +384,14 @@ app
 							break;
 						}
 					}
+					if(!hasVote) {
+						for(let i=0;i<course.petition_people.length;i++){
+							if(course.petition_people[i].user.username === sess.user.username) {
+								hasVote = true;
+								break;
+							}
+						}
+					}
 				}
 				if(hasVote !== true){
 					const newVotePeople = course.vote_people;
