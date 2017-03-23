@@ -145,7 +145,7 @@ app
 				request.get({
 					url: config.auth_page,
 					qs: {
-						id: 'Test0004',
+						id: 'W000003',
 						a: data.student_id,
 						p: data.password,
 					},
