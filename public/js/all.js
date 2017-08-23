@@ -84,7 +84,6 @@ $(document).ready(function() {
 				var coursesCountText = thisElement.parent().find('.courses-count').text().split('人');
 				thisElement.removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
 				thisElement.parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
-				console.log($(this));
 				showMsg('投票', '投票成功', '確定', null, closeMsg);
 				return false;
 			} else if(res.result === -1){
