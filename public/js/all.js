@@ -70,14 +70,6 @@ $(document).ready(function() {
 		event.preventDefault();
 		var id = $(this).data('id');
 		var thisElement=$(this);
-		// $.ajax({
-		// 	url: '/vote/'+id,
-		// 	type: 'delete',
-		// 	dataType: 'application/json; charset=utf-8',
-		// 	complete: function(res) {
-		// 		console.log($.parseJSON(res.responseText).result);
-		// 	}
-		// });
 
 		$.post('/alp/vote/'+id, function(res) {
 			if (res.result === 0) {
