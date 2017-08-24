@@ -70,21 +70,12 @@ $(document).ready(function() {
 		event.preventDefault();
 		var id = $(this).data('id');
 		var thisElement=$(this);
-		// $.ajax({
-		// 	url: '/vote/'+id,
-		// 	type: 'delete',
-		// 	dataType: 'application/json; charset=utf-8',
-		// 	complete: function(res) {
-		// 		console.log($.parseJSON(res.responseText).result);
-		// 	}
-		// });
 
 		$.post('/alp/vote/'+id, function(res) {
 			if (res.result === 0) {
 				var coursesCountText = thisElement.parent().find('.courses-count').text().split('人');
 				thisElement.removeClass().addClass("btn btn-danger anti-vote").text("我要取消" + coursesCountText[1]);
 				thisElement.parent().find('.courses-count').text((parseInt(coursesCountText[0]) + 1) + '人' + coursesCountText[1]);
-				console.log($(this));
 				showMsg('投票', '投票成功', '確定', null, closeMsg);
 				return false;
 			} else if(res.result === -1){
@@ -127,7 +118,24 @@ $(document).ready(function() {
 					}
 				}
 			});
-	});
+  });
+  
+  $('.nextstage').on('click', function() {
+    var id = $(this).data('id')
+    $.ajax({
+      type: 'GET',
+      url: '/admin/nextstage/' + id,
+      datatType: 'application/json; charset=utf-8',
+      complete: function(res) {
+        res = $.parseJSON(res.resposneText);
+        if(res.result === 0) {
+          showMsg('開課啦', '成功開課囉！', '確定', null, closeMsg);
+        } else {
+          showMsg('Oops', '開課失敗，請聯絡網站管理人員', '確定', null, closeMsg);
+        }
+      }
+    });
+  });
 
 	$('.showPeople').on('click', function(){
 		var id = $(this).data('id');
@@ -137,7 +145,6 @@ $(document).ready(function() {
 			dataType: 'application/json; charset=utf-8',
 			complete: function(res){
 				res = $.parseJSON(res.responseText);
-				console.log(res);
 				if(res.result === 0){
 					showMsg('查詢結果', res.text, '關閉', null, closeMsg);
 				}else{

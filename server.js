@@ -909,12 +909,20 @@ app
 					db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
 				}
 			}
-		});
-		res.redirect('/');
+    });
+    result = {
+      result: 0
+    }
+    res.write(JSON.stringify(result));
+    res.end();
 	}else if(sess.user) {
-		res.redirect('/');
+    res.write(JSON.stringify({result: -1}));
+    res.end();
+		// res.redirect('/');
 	}else{
-		res.redirect('/login?next=admin');
+    res.write(JSON.stringify({result: -2}));
+    res.end();
+		// res.redirect('/login?next=admin');
 	}
 })
 
