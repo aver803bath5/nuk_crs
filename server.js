@@ -909,11 +909,16 @@ app
 					db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
 				}
 			}
-		});
-		res.redirect('/');
+    });
+    result = {
+      result: 0
+    }
+		res.write(JSON.stringify(result));
 	}else if(sess.user) {
+    res.write(JSON.stringify({result: -1}));
 		res.redirect('/');
 	}else{
+    res.write(JSON.stringify({result: -2}));
 		res.redirect('/login?next=admin');
 	}
 })
