@@ -913,13 +913,16 @@ app
     result = {
       result: 0
     }
-		res.write(JSON.stringify(result));
+    res.write(JSON.stringify(result));
+    res.end();
 	}else if(sess.user) {
     res.write(JSON.stringify({result: -1}));
-		res.redirect('/');
+    res.end();
+		// res.redirect('/');
 	}else{
     res.write(JSON.stringify({result: -2}));
-		res.redirect('/login?next=admin');
+    res.end();
+		// res.redirect('/login?next=admin');
 	}
 })
 
