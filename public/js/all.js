@@ -118,7 +118,24 @@ $(document).ready(function() {
 					}
 				}
 			});
-	});
+  });
+  
+  $('.nextstage').on('click', function() {
+    var id = $(this).data('id')
+    $.ajax({
+      type: 'GET',
+      url: '/admin/nextstage/' + id,
+      datatType: 'application/json; charset=utf-8',
+      complete: function(res) {
+        res = $.parseJSON(res.resposneText);
+        if(res.result === 0) {
+          showMsg('開課啦', '成功開課囉！', '確定', null, closeMsg);
+        } else {
+          showMsg('Oops', '開課失敗，請聯絡網站管理人員', '確定', null, closeMsg);
+        }
+      }
+    });
+  });
 
 	$('.showPeople').on('click', function(){
 		var id = $(this).data('id');
@@ -128,7 +145,6 @@ $(document).ready(function() {
 			dataType: 'application/json; charset=utf-8',
 			complete: function(res){
 				res = $.parseJSON(res.responseText);
-				console.log(res);
 				if(res.result === 0){
 					showMsg('查詢結果', res.text, '關閉', null, closeMsg);
 				}else{

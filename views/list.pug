@@ -24,7 +24,7 @@ block body
 												div.root-buttons-container
 													button.btn.btn-danger.delete-course(data-id=course._id) 刪除
 													if (course.stage === 2 || course.stage === 4)
-														a.btn.btn-success(href="/admin/nextstage/" + course._id) #{nextVerb}
+														button.btn.success.nextstage(data-id=course._id) 可以#{nextVerb}
 													button.btn.btn-primary.showPeople(data-id=course._id) 顯示#{verb}人
 											div.courses-date
 												i.fa.fa-calendar
@@ -49,7 +49,7 @@ block body
 												div.root-buttons-container
 													button.btn.btn-danger.delete-course(data-id=course._id) 刪除
 													if (course.stage === 2 || course.stage === 4)
-														a.btn.btn-success(href="/admin/nextstage/" + course._id) #{nextVerb}
+														button.btn.success.nextstage(data-id=course.id) 可以#{nextVerb}
 													button.btn.btn-primary.showPeople(data-id=course._id) 顯示#{verb}人
 											div.courses-date
 												i.fa.fa-calendar
