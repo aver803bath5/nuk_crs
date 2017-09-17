@@ -134,7 +134,7 @@ $(document).ready(function() {
 			url: '/alp/admin/nextstage/' + id,
 			datatType: 'application/json; charset=utf-8',
 			complete: function(res) {
-				res = $.parseJSON(res.resposneText);
+				// res = $.parseJSON(res.resposneText);
 				if(res.result === 0) {
 					showMsg('開課啦', '成功開課囉！', '確定', null, closeMsg);
 				} else {
