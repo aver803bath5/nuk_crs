@@ -506,7 +506,7 @@ app
 			}
 			res.render('list', {
 				verb: '投票',
-				nextVerb: '可以開課了',
+				nextVerb: '開課了',
 				courses: newCourse,
 				isLogin,
 				isRoot,
@@ -515,7 +515,7 @@ app
 		}else{
 			res.render('list', {
 				verb: '投票',
-				nextVerb: '可以開課了',
+				nextVerb: '開課了',
 				isLogin,
 				opt: app.get('opt') || null,
 			});

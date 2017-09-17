@@ -38,31 +38,36 @@ $(document).ready(function() {
 		var id = $(this).data('id');
 		var pathname = window.location.pathname;
 
-		$.ajax({
-			url: '/suggest/'+id,
-			type: 'delete',
-			dataType: 'application/json; charset=utf-8',
-			complete: function(res) {
-				var result = $.parseJSON(res.responseText).result;
+		// showMsg(title, msg, ok, no, todoOk, todoNo, todo)
+		showMsg('確定要刪除嗎？', '刪除救回不來了哦！', '好的', '不要', deleteCourse, closeMsg);
 
-				if (result === 0) {
-					showMsg('刪除課程', '取消成功', '確定', null, closeMsg);
-					location.reload();
-					return false;
-				} else if (result === -1) {
-					showMsg('刪除課程', '你還沒登入哦！', '確定', null, closeMsg);
-					$(location).attr('href', '/login');
-					return false;
-				} else if (result === -2) {
-					showMsg('刪除課程', '課程不存在哦！', '確定', null, closeMsg);
-					return false;
-				} else if (result === -3) {
-					showMsg('刪除課程', '你似乎不是管理員哦！', '確定', null, closeMsg);
-					return false;
+		var deleteCourse = function() {
+			$.ajax({
+				url: '/suggest/'+id,
+				type: 'delete',
+				dataType: 'application/json; charset=utf-8',
+				complete: function(res) {
+					var result = $.parseJSON(res.responseText).result;
+	
+					if (result === 0) {
+						showMsg('刪除課程', '取消成功', '確定', null, closeMsg);
+						location.reload();
+						return false;
+					} else if (result === -1) {
+						showMsg('刪除課程', '你還沒登入哦！', '確定', null, closeMsg);
+						$(location).attr('href', '/login');
+						return false;
+					} else if (result === -2) {
+						showMsg('刪除課程', '課程不存在哦！', '確定', null, closeMsg);
+						return false;
+					} else if (result === -3) {
+						showMsg('刪除課程', '你似乎不是管理員哦！', '確定', null, closeMsg);
+						return false;
+					}
+	
 				}
-
-			}
-		});
+			});
+		}
 		/* Act on the event */
 	});
 
@@ -118,24 +123,24 @@ $(document).ready(function() {
 					}
 				}
 			});
-  });
-  
-  $('.nextstage').on('click', function() {
-    var id = $(this).data('id')
-    $.ajax({
-      type: 'GET',
-      url: '/alp/admin/nextstage/' + id,
-      datatType: 'application/json; charset=utf-8',
-      complete: function(res) {
-        res = $.parseJSON(res.resposneText);
-        if(res.result === 0) {
-          showMsg('開課啦', '成功開課囉！', '確定', null, closeMsg);
-        } else {
-          showMsg('Oops', '開課失敗，請聯絡網站管理人員', '確定', null, closeMsg);
-        }
-      }
-    });
-  });
+	});
+	
+	$('.nextstage').on('click', function() {
+		var id = $(this).data('id')
+		$.ajax({
+			type: 'GET',
+			url: '/alp/admin/nextstage/' + id,
+			datatType: 'application/json; charset=utf-8',
+			complete: function(res) {
+				res = $.parseJSON(res.resposneText);
+				if(res.result === 0) {
+					showMsg('開課啦', '成功開課囉！', '確定', null, closeMsg);
+				} else {
+					showMsg('Oops', '開課失敗，請聯絡網站管理人員', '確定', null, closeMsg);
+				}
+			}
+		});
+	});
 
 	$('.showPeople').on('click', function(){
 		var id = $(this).data('id');
