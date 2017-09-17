@@ -907,21 +907,23 @@ app
 					mailBody = `${docs[0].name}已達 3 名學生連署，開始邀約和你志同道合的同學們至<a href="http://140.127.232.203/alp/vote">「最近投票課程」</a>投票吧！`;
 					sendMail(mailList.join(','), '[自主開課平台]課程完成審查', mailBody);
 					db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
+				}else if(docs[0].stage === 4){
+					db.collection('course').update({_id: new ObjectId(req.params.id)}, {$set: {stage: newStage}});
 				}
 			}
-    });
-    result = {
-      result: 0
-    }
-    res.write(JSON.stringify(result));
-    res.end();
+		});
+		result = {
+			result: 0
+		};
+		res.write(JSON.stringify(result));
+		res.end();
 	}else if(sess.user) {
-    res.write(JSON.stringify({result: -1}));
-    res.end();
+		res.write(JSON.stringify({result: -1}));
+		res.end();
 		// res.redirect('/');
 	}else{
-    res.write(JSON.stringify({result: -2}));
-    res.end();
+		res.write(JSON.stringify({result: -2}));
+		res.end();
 		// res.redirect('/login?next=admin');
 	}
 })
