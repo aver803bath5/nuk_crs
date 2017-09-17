@@ -38,10 +38,8 @@ $(document).ready(function() {
 		var id = $(this).data('id');
 		var pathname = window.location.pathname;
 
-		// showMsg(title, msg, ok, no, todoOk, todoNo, todo)
-		showMsg('確定要刪除嗎？', '刪除救回不來了哦！', '好的', '不要', deleteCourse, closeMsg);
-
 		var deleteCourse = function() {
+			console.log(123);
 			$.ajax({
 				url: '/suggest/'+id,
 				type: 'delete',
@@ -69,6 +67,11 @@ $(document).ready(function() {
 			});
 		}
 		/* Act on the event */
+
+		// showMsg(title, msg, ok, no, todoOk, todoNo, todo)
+		showMsg('確定要刪除嗎？', '刪除救回不來了哦！', '好的', '不要', deleteCourse, closeMsg);
+
+		
 	});
 
 	$('body').on('click', '.vote', function(event) {
@@ -182,7 +185,7 @@ function showMsg(title, msg, ok, no, todoOk, todoNo, todo){
 	var todoOk = todoOk;
 	var todoNo = todoNo || closeMsg;
 	$(document).on('keypress', function(e){
-		//if(e.which==13) todoOK();
+		// if(e.which==13) todoOK();
 		if(e.which==27) todoNo();
 	});
 	if(todo) todo();
