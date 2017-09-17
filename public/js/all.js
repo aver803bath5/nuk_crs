@@ -135,11 +135,11 @@ $(document).ready(function() {
 			datatType: 'application/json; charset=utf-8',
 			complete: function(res) {
 				res = $.parseJSON(res.responseText);
-				
+
 				if(res.result === 0) {
-					showMsg('開課啦', '成功開課囉！', '確定', null, closeMsg);
+					showMsg('成功', '操作成功！', '確定', null, function() { location.reload(); });
 				} else {
-					showMsg('Oops', '開課失敗，請聯絡網站管理人員', '確定', null, closeMsg);
+					showMsg('Oops', '操作失敗，請聯絡網站管理人員', '確定', null, closeMsg);
 				}
 			}
 		});
