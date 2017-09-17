@@ -39,7 +39,6 @@ $(document).ready(function() {
 		var pathname = window.location.pathname;
 
 		var deleteCourse = function() {
-			console.log(123);
 			$.ajax({
 				url: '/suggest/'+id,
 				type: 'delete',
