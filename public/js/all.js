@@ -124,7 +124,7 @@ $(document).ready(function() {
     var id = $(this).data('id')
     $.ajax({
       type: 'GET',
-      url: '/admin/nextstage/' + id,
+      url: '/alp/admin/nextstage/' + id,
       datatType: 'application/json; charset=utf-8',
       complete: function(res) {
         res = $.parseJSON(res.resposneText);
@@ -141,7 +141,7 @@ $(document).ready(function() {
 		var id = $(this).data('id');
 		$.ajax({
 			type: 'GET',
-			url: '/admin/getpeople/'+id,
+			url: '/alp/admin/getpeople/'+id,
 			dataType: 'application/json; charset=utf-8',
 			complete: function(res){
 				res = $.parseJSON(res.responseText);
