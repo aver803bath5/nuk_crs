@@ -67,7 +67,7 @@ block body
 												|推薦師資：
 												=course.teacher
 											if (course.stage === 2 || course.stage === 4 )
-												div.btn.btn-disabled.vote 管理員審核中，無法#{verb}
+												div.button.ok.vote 管理員審核中，無法#{verb}
 											else
 												if course.didIVote
 													div.btn.btn-danger.anti-vote(data-id=course._id) 我要取消#{verb}
