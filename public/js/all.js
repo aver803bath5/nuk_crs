@@ -16,7 +16,7 @@ $(document).ready(function() {
 			return false;
 		} else {
 			$('#btnSuggest').text('資料送出中');
-			$('#btnSuggest').attr('disabled', true);
+			$('#btnSuggest').prop('disabled', true);
 		}
 	});
 
