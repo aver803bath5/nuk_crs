@@ -14,6 +14,9 @@ $(document).ready(function() {
 	$('#formSuggest').on('submit', function(){
 		if (!$('#checkSuggest').is(':checked')){
 			return false;
+		} else {
+			$('#btnSuggest').text('資料送出中');
+			$('#btnSuggest').attr('disabled', true);
 		}
 	});
 
