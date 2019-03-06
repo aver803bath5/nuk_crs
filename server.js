@@ -14,6 +14,10 @@ const mc = mongo.MongoClient;
 const ObjectId = mongo.ObjectID;
 let db;
 
+const thresholdOne = 6;
+const thresholdTwo = 20;
+
+
 function sendMail(mailto, subject, body) {
 	return new Promise((res, rej) => {
 		const transporter = nodemailer.createTransport(smtpTransport({
@@ -363,7 +367,7 @@ app
 						time: new Date(),
 						user: sess.user,
 					});
-					if(course.petition_people.length === 3){
+					if(course.petition_people.length === thresholdOne){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {petition_people: newPetitionPeople, stage: 2}});
 						sendMail(app.get('opt').adminMail || 'guannn@nuk.edu.tw', '[自主開課平台]連署達成通知', `${course.name}已達成連署門檻，可以投票了。請前往<a href="http://140.127.232.203">自主開課平台</a>審查`);
 					}else{
@@ -399,7 +403,7 @@ app
 						time: new Date(),
 						user: sess.user,
 					});
-					if(course.petition_people.length >= 10){
+					if(course.petition_people.length >= thresholdTwo){
 						db.collection('course').update({_id: new ObjectId(courseId)}, {$set: {vote_people: newVotePeople, stage: 4}});
 						sendMail(app.get('opt').adminMail || 'guannn@nuk.edu.tw', '[自主開課平台]投票達成通知', `${course.name}已達成投票門檻，可以送審了。請前往<a href="http://140.127.232.203">自主開課平台</a>審查`);
 						const mailList = [];
